@@ -227,7 +227,7 @@
       <select id="quarter" title="Quarter"></select>
       <label class="btn admin-only" title="One-time history: the CSVs saved by screener_quarters.py">Add Screener CSV<input type="file" id="csvfiles" accept=".csv,text/csv" multiple hidden></label>
       <label class="btn admin-only" title="Each quarter: the NSE XBRL .xml file">Add XBRL<input type="file" id="files" accept=".xml,.xbrl,text/xml,application/xml" multiple hidden></label>
-      <button id="save" class="admin-only" title="Download results_data_test.js to replace the one in this folder">Save data file</button>
+      <button id="save" class="admin-only" title="Download results_data.js to replace the one in this folder">Save data file</button>
     </div>
   </div>
   <div class="audit admin-only" id="bfline" style="margin-bottom:14px" hidden></div>
@@ -262,7 +262,7 @@
   </div>
 </div>
 
-<script src="results_data_test.js"></script>
+<script src="results_data.js"></script>
 <script>
 const ROWS = [["Sales","sales"],["Operating Profit","op"],["OPM %","opm"],["PBT","pbt"],["Net Profit","np"],["EPS (₹)","eps"]];
 const TABS = ["Latest Results","Best Performer","Worst Performer","Positive Turnaround","Negative Turnaround"];
@@ -908,7 +908,7 @@ function saveFile() {
     "window.BACKFILL_DATA = " + JSON.stringify(bfOut) + ";\n";
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([text], { type: "text/javascript" }));
-  a.download = "results_data_test.js";
+  a.download = "results_data.js";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
