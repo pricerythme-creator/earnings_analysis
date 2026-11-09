@@ -37,6 +37,40 @@
   .searchwrap svg { position:absolute; right:9px; top:50%; transform:translateY(-50%); width:15px; height:15px; color:#555; pointer-events:none; }
   .rtools { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
   .basisline { font-size:12px; color:#666; margin:-6px 0 16px; }
+  .screen { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; font-size:12px; color:#374151; background:#fff; border:1px solid #e1e7ef; border-radius:10px; padding:10px 14px; margin:-6px 0 14px; }
+  .screen input[type=number] { width:56px; font:inherit; padding:3px 5px; border:1px solid #cfd5dd; border-radius:5px; }
+  .screen button { font-size:12px; padding:5px 12px; border-radius:6px; }
+  .strset[hidden] { display:none; }
+  .presets { display:flex; align-items:center; gap:18px; flex-wrap:wrap; font-size:13px; color:#374151; margin:0 0 14px; }
+  .presets b { font-weight:600; color:var(--green-ink); }
+  .presets button { font-size:12px; padding:5px 12px; border-radius:6px; }
+  .presets label { display:flex; align-items:center; gap:6px; cursor:pointer; }
+  .rtools { gap:12px; } .rtools .sortby { gap:6px; } .rtools .sortby select { min-width:0; }
+  .strset { margin:-8px 0 16px; display:flex; align-items:center; gap:8px; font-size:12px; color:#444; flex-wrap:wrap; }
+  .strset input[type=number] { width:52px; font:inherit; padding:4px 5px; border:1px solid #cfd5dd; border-radius:5px; }
+  .strset button { font-size:12px; padding:5px 12px; border-radius:6px; }
+  .sc-out { flex-basis:100%; color:#6b7280; overflow-wrap:anywhere; }
+  .toplist { position:relative; background:#fff; border:1px solid #e1e7ef; border-radius:10px; margin:0 0 14px; }
+  .toplist summary { cursor:pointer; padding:10px 14px; font-size:13px; font-weight:600; color:var(--blue); padding-right:150px; }
+  .toplist #csvbtn { position:absolute; top:6px; right:10px; font-size:12px; padding:5px 12px; border-radius:6px; }
+  #toptable { overflow-x:auto; padding:0 14px 10px; }
+  .ttable { width:100%; min-width:720px; border-collapse:collapse; font-size:12.5px; font-variant-numeric:tabular-nums; }
+  .ttable th { font-weight:500; color:#5b6b7f; font-size:11px; text-align:right; padding:5px 6px; border-bottom:1px solid #d6e2ee; }
+  .ttable td { text-align:right; padding:5px 6px; border-bottom:1px solid rgba(17,24,39,.06); }
+  .ttable th:nth-child(-n+2), .ttable td:nth-child(-n+2) { text-align:left; }
+  .ttable td.m { font-weight:600; }
+  .card .tbox td:nth-child(2) { font-weight:600; color:#0b2545; }
+  .card .tbox td:nth-child(3), .card .tbox td:nth-child(4) { font-weight:400; color:#4b5563; }
+  .card .tbox th:nth-child(2) { color:var(--ink); font-weight:600; }
+  .card .tbox th:nth-child(4) { color:#5b6b7f; font-weight:400; }
+  .name, .ttable td:nth-child(2) { text-transform:uppercase; }   /* company names shown in capitals; stored names unchanged */
+  .rwrap { background:#fff; border:1px solid #e1e7ef; border-radius:10px; padding:10px 14px 12px; overflow-x:auto; }
+  .rbar { display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:12.5px; color:#5b6b7f; margin-bottom:6px; }
+  .rbar button { font-size:12px; padding:5px 12px; border-radius:6px; }
+  .rtable th { cursor:pointer; user-select:none; white-space:nowrap; } .rtable th:hover { color:var(--blue); }
+  .rtable th.on { color:var(--blue); font-weight:600; }
+  .rtable th:nth-child(-n+3), .rtable td:nth-child(-n+3) { text-align:left; }
+  .ttable tr[data-c] { cursor:pointer; } .ttable tr[data-c]:hover td { background:#f3f8fd; }
   .sortby { font-size:12px; color:#444; display:flex; align-items:center; gap:8px; }
   .sortby select { font:inherit; font-size:13px; padding:5px 8px; border:1px solid #bbb; border-radius:3px; background:#fff; min-width:96px; }
   .mode label { margin-left:14px; font-size:13px; font-weight:600; cursor:pointer; }
@@ -163,6 +197,73 @@
   .basis { border:none; font-weight:600; font-size:10.5px; padding:2px 9px; border-radius:10px; }
   .basis.consolidated { background:#f1e9fe; color:#7c3aed; }
   .basis.standalone { background:#e3f4f7; color:#0e7490; }
+  .name .sym { margin-left:10px; font-size:12px; font-weight:600; color:var(--muted); letter-spacing:.3px; }
+  .sitags { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:-4px 0 10px; }
+  .stag { display:inline-flex; align-items:center; gap:5px; font-size:12.5px; font-weight:500; color:var(--blue); }
+  .stag svg { width:13px; height:13px; flex:none; }
+  .sitags .chev { color:#6b7280; font-size:15px; line-height:1; margin:0 2px; }
+  #fsec, #find { width:auto; max-width:200px; min-width:0; }
+  .secwrap { margin:0 0 14px; font-size:12px; color:#374151; }
+  .secwrap summary { cursor:pointer; font-weight:600; color:var(--green-ink); font-size:13px; margin-bottom:6px; }
+  .sectable { border-collapse:collapse; width:100%; background:#fff; border:1px solid var(--line); }
+  .sectable th, .sectable td { padding:5px 8px; border-bottom:1px solid var(--line); text-align:right; white-space:nowrap; }
+  .sectable th:first-child, .sectable td:first-child { text-align:left; white-space:normal; }
+  .sectable td.up { color:var(--up); } .sectable td.dn { color:var(--down); } .sectable .gsec { font-size:10.5px; color:var(--muted); }
+  #secpanel, #indpanel { overflow-x:auto; }
+  .sectable th { white-space:normal; vertical-align:bottom; font-size:11px; line-height:1.3; } .sectable td:first-child, .sectable th:first-child { min-width:170px; }
+  .sectable th { background:#f7f9fb; font-weight:600; cursor:pointer; user-select:none; } .sectable th:hover { color:var(--green-ink); }
+  .sectable tr[data-sec] { cursor:pointer; } .sectable tr[data-sec]:hover td { background:#f3f8f5; } .sectable tr.on td { background:#e8f3ec; font-weight:600; }
+  /* Tags in the card's top row: same size and font as the Consolidated / Standalone box (colours unchanged) */
+  .grp.fresh { color:var(--blue); background:#e6f0fa; } .grp.sust { color:var(--green-ink); background:#e3f5ea; } .grp.fade { color:var(--down); background:#fde8e8; }
+  .stx.lo { color:var(--green-ink); background:#e3f5ea; } .stx.mid { color:#b45309; background:#fef3c7; } .stx.hi { color:var(--down); background:#fde8e8; }
+  .fos.na { color:#4b5563; background:#eef1f5; } .grp.pe { color:#374151; background:#eef1f5; }
+  .gcards { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin:4px 0 6px; }
+  @media (max-width:640px) { .gcards { grid-template-columns:1fr; } }
+  .gcard { border:1px solid var(--line); border-radius:10px; padding:10px 10px 4px; background:#fff; }
+  .gct { font-size:12px; font-weight:700; letter-spacing:.4px; margin:0 0 2px 4px; } .grp.acc { color:#0e7490; background:#e3f4f7; }
+  .hidrow { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 0 4px; }
+  .hid { font-weight:600; color:#374151; letter-spacing:0; text-transform:none; font-size:11.5px; }
+  .card .name { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .nlogo { height:1.9em; width:auto; flex:none; margin:-0.45em 0; }   /* logo letters about the height of the company name */
+  .fidl { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .hlogo { height:22px; width:auto; vertical-align:middle; margin:-6px 0 -6px 8px; }
+  .fidl { font-size:12.5px; font-weight:600; color:#374151; margin:2px 0 0; } .stx.gb { color:var(--blue); background:#e6f0fa; }
+  .cagr { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:4px 0 16px; }
+  @media (max-width:560px) { .cagr { grid-template-columns:1fr; } }
+  .cbox { border-radius:10px; padding:12px 16px; border:1px solid; }
+  .cbox.s { background:#f1f7fd; border-color:#d6e6f5; } .cbox.p { background:#f0f9f3; border-color:#cfe9d8; }
+  .cbox h4 { margin:0 0 8px; font-size:14px; font-weight:600; color:#1a1d23; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .cbox .r { display:flex; justify-content:space-between; font-size:13px; padding:3px 0; }
+  .cbox .r span { color:#4b5563; } .cbox .r b { font-weight:600; font-variant-numeric:tabular-nums; color:#1a1d23; } .cbox .r b.neg { color:var(--down); }
+  .cbox .acc { font-size:10.5px; font-weight:600; padding:2px 9px; border-radius:10px; color:var(--green-ink); background:#dcf1e4; white-space:nowrap; }
+  .cnote { grid-column:1 / -1; font-size:11px; color:var(--muted); margin-top:-6px; }
+  .fosp { border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin:4px 0 16px; background:#fbfcfd; }
+  .fosp .fh { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .fosp .fh b { font-size:14px; font-weight:600; color:#1a1d23; }
+  .fosp .ft { font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; } .fosp .ft small { font-size:12px; color:var(--muted); font-weight:500; }
+  .fosp .fn { font-size:11.5px; color:var(--muted); margin:2px 0 10px; }
+  .fosp .fr { margin:0 0 10px; }
+  .fosp .frh { display:flex; justify-content:space-between; font-size:12.5px; font-weight:600; color:#1f2937; }
+  .fosp .fb { height:7px; background:#e9edf2; border-radius:4px; margin:4px 0 3px; overflow:hidden; } .fosp .fb i { display:block; height:100%; border-radius:4px; }
+  .fosp .fd { font-size:11px; color:#4b5563; line-height:1.5; }
+  .fosp .fg { font-size:12px; border-top:1px dashed var(--line); padding-top:8px; margin-top:4px; }
+  .stl { display:flex; overflow-x:auto; padding:4px 0 2px; }
+  .sn { flex:1 0 66px; text-align:center; font-size:11px; position:relative; cursor:pointer; padding:2px 2px 6px; border-radius:8px; }
+  .sn::before { content:""; position:absolute; top:17px; left:0; right:0; height:2px; background:#e3e6eb; }
+  .sn .dot { width:14px; height:14px; border-radius:50%; margin:10px auto 6px; position:relative; border:2px solid #fff; box-shadow:0 0 0 1px #cfd5dd; }
+  .sn.lo .dot { background:var(--green); } .sn.mid .dot { background:#d97706; } .sn.hi .dot { background:var(--down); }
+  .sn.brk .dot, .sn.rcv .dot { width:22px; height:22px; margin:6px auto 2px; }
+  .sn.brk .dot { background:var(--down); box-shadow:0 0 0 4px #fde8e8; } .sn.rcv .dot { background:var(--green); box-shadow:0 0 0 4px #e3f5ea; }
+  .sn.on { background:#eef5fc; box-shadow:inset 0 0 0 1px #bcd6ee; }
+  .sn .q { font-weight:600; color:#374151; } .sn .v { font-weight:600; font-variant-numeric:tabular-nums; } .sn .v small { color:var(--muted); font-weight:400; }
+  .sn .dl { display:inline-block; font-size:10px; padding:0 6px; border-radius:8px; margin-top:2px; }
+  .dl.up { color:var(--down); background:#fde8e8; } .dl.dn { color:var(--green-ink); background:#e3f5ea; } .dl.eq { color:#4b5563; background:#eef1f5; }
+  .sn .fl { display:block; font-size:9.5px; font-weight:700; margin-top:3px; letter-spacing:.3px; } .fl.b { color:var(--down); } .fl.r { color:var(--green-ink); }
+  .sd { font-size:12px; background:#f7f9fb; border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin:6px 0 14px; line-height:1.7; }
+  .sd b { font-weight:600; }
+  .meta .rs, .meta .rec, .meta .grp, .meta .stx, .meta .fos, .meta .badge { margin:0; font-size:10.5px; font-weight:600; padding:2px 9px; border-radius:10px; line-height:normal; }
+  .meta .badge small { font-size:10.5px; font-weight:600; opacity:.75; margin-right:4px; }
+  .meta .badge::before { display:none; }
   .badge { display:inline-flex; align-items:center; gap:6px; padding:4px 11px; border-radius:14px; font-size:12.5px; }
   .badge::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; }
   .badge.up { background:#e3f5ea; } .badge.down { background:#fde8e8; } .badge.flat { background:#e6f0fa; color:var(--blue); }
@@ -204,6 +305,10 @@
   .htable td { text-align:right; padding:5px 0 5px 6px; border-bottom:1px solid rgba(17,24,39,.06); }
   .htable tr.cur td { font-weight:600; color:#0b2545; }
   .htable .g { font-size:11.5px; font-weight:600; }
+  .rec { font-size:9.5px; color:var(--blue); background:#e6f0fa; border-radius:6px; padding:0 5px; margin-left:4px; font-weight:600; }
+  .breadth { font-size:12px; color:#374151; background:#f7f9fb; border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin:0 0 14px; line-height:1.9; }
+  .breadth b { color:var(--green-ink); font-weight:600; }
+  .breadth span { white-space:nowrap; margin-right:14px; }
   .rs { font-size:9.5px; color:#b45309; background:#fef3c7; border-radius:6px; padding:0 5px; margin-left:4px; font-weight:600; }
   .fy { margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
   .fy span { background:linear-gradient(135deg,#eef5fd,#eef8f2); border-radius:8px; padding:6px 10px; font-size:12px; color:#1f2937; }
@@ -227,6 +332,9 @@
       <select id="quarter" title="Quarter"></select>
       <label class="btn admin-only" title="One-time history: the CSVs saved by screener_quarters.py">Add Screener CSV<input type="file" id="csvfiles" accept=".csv,text/csv" multiple hidden></label>
       <label class="btn admin-only" title="Each quarter: the NSE XBRL .xml file">Add XBRL<input type="file" id="files" accept=".xml,.xbrl,text/xml,application/xml" multiple hidden></label>
+      <label class="btn admin-only" title="Pick the NSE XBRL FETCHER folder: every .xml in its subfolders is read; files that pass the checks are added, the rest wait below for review">Add XBRL folder<input type="file" id="xfolder" webkitdirectory directory multiple hidden></label>
+      <label class="btn admin-only" title="Prices for P/E and PEG: a CSV exported from an AmiBroker exploration (Ticker, Date/Time, Close)">Add prices<input type="file" id="pricefile" accept=".csv,text/csv" hidden></label>
+      <button id="tblbtn" title="Show the selected quarter as one sortable table">Table view</button>
       <button id="save" class="admin-only" title="Download results_data.js to replace the one in this folder">Save data file</button>
     </div>
   </div>
@@ -235,21 +343,62 @@
   <div class="bar">
     <div class="tabs" id="tabs"></div>
   </div>
+  <div class="breadth" id="breadth" hidden></div>
+  <details class="secwrap" id="secwrap" hidden><summary>Sector breakdown</summary><div id="secpanel"></div></details>
+  <details class="secwrap" id="indwrap" hidden><summary>Industry breakdown</summary><div id="indpanel"></div></details>
+  <div class="presets" id="presets"><b>Quick lists:</b>
+    <label><input type="radio" name="preset" value="" checked> Off</label>
+    <label title="Min Sales ≥ ₹100 Cr · Sustained · EPS · sorted by Earnings Strength · Grade A/B only · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="core"> Core watchlist</label>
+    <label title="Min Sales ≥ ₹100 Cr · Fresh strength · EPS · sorted by Acceleration · Grade A/B only · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="early"> Early movers</label>
+    <label title="Min Sales ≥ ₹100 Cr · all companies · EPS · sorted by Earnings Strength · Grade A only · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="gradeA"> Grade A</label>
+    <label title="Min Sales ≥ ₹100 Cr · EPS growth rising 3+ quarters in a row, backed by operating profit · sorted by acceleration run, then Earnings Strength · Grade A/B only · net profit ₹10 Cr+ · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="accel"> Accelerators</label>
+    <label title="Min Sales ≥ ₹100 Cr · sales ₹1,000 Cr or less this quarter · EPS · accelerating 2Q+ or Fresh strength · PEG below 1, not a turnaround (year-earlier 4Q EPS positive, 4Q EPS growth 200% or less) · final score only (no *) · cyclical industries left out · sorted by PEG, lowest first · Grade A/B only · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="gems"> Hidden gems</label>
+    <button id="pr-tls" hidden title="This quick list's NSE symbols, for an AmiBroker watchlist">Watchlist (.tls)</button>
+    <button id="pr-csv" hidden title="This quick list as a CSV, with Sector and Industry after the company name">List (.csv)</button>
+  </div>
   <div class="tools">
     <div class="searchwrap">
-      <input type="search" id="search" class="search" placeholder="Search By Company Name" autocomplete="off">
+      <input type="search" id="search" class="search" placeholder="Search By Company Name or NSE Symbol" autocomplete="off">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
     </div>
     <div class="rtools">
       <label class="sortby">Min Sales
-        <select id="minsales"><option value="0">All</option><option value="10">≥ ₹10 Cr</option><option value="50">≥ ₹50 Cr</option><option value="100">≥ ₹100 Cr</option><option value="500">≥ ₹500 Cr</option></select>
+        <select id="minsales"><option value="0">All</option><option value="10">≥ ₹10 Cr</option><option value="50">≥ ₹50 Cr</option><option value="100">≥ ₹100 Cr</option><option value="200">≥ ₹200 Cr</option><option value="300">≥ ₹300 Cr</option><option value="400">≥ ₹400 Cr</option><option value="500">≥ ₹500 Cr</option></select>
+      </label>
+      <label class="sortby">Show
+        <select id="flt"><option value="">All</option><option value="rec">Record quarters</option><option value="qual">Profit-quality flags</option>
+          <option value="fresh">Fresh strength</option><option value="sust">Sustained</option><option value="fade">Fading</option><option value="sbrk">Stress break</option><option value="acc3">Accelerating 3Q+</option></select>
+      </label>
+      <label class="sortby" id="fsecl" hidden>Sector
+        <select id="fsec"></select>
+      </label>
+      <label class="sortby" id="findl" hidden>Industry
+        <select id="find"></select>
+      </label>
+      <label class="sortby">Growth On
+        <select id="gbasis"><option value="np">Net Profit</option><option value="eps">EPS</option></select>
       </label>
       <label class="sortby">Sort By
         <select id="sortby"></select>
       </label>
     </div>
   </div>
+  <div class="strset" id="strset" hidden title="Strong = Sales YoY and profit YoY at or above these levels (or loss → profit)">Strong: Sales YoY ≥ <input type="number" id="st-s" value="15" step="1">% · <span id="st-glab">NP</span> YoY ≥ <input type="number" id="st-g" value="20" step="1">%
+        <button id="st-tls">Watchlist (.tls)</button></div>
+  <div class="screen admin-only" id="screen">
+    <b>Earnings screen</b>
+    <label>EPS YoY ≥ <input type="number" id="sc-eps" value="25" step="1">%</label>
+    <label>Sales YoY ≥ <input type="number" id="sc-sales" value="20" step="1">%</label>
+    <label><input type="checkbox" id="sc-acc" checked> EPS accelerating</label>
+    <label>Dilution gap ≤ <input type="number" id="sc-dil" value="10" step="1"> pts</label>
+    <button id="sc-export">Export watchlist</button>
+    <div class="sc-out" id="sc-out"></div>
+  </div>
   <div class="basisline" id="basisline"></div>
+  <div class="toplist" id="toplist">
+    <details id="topd"><summary id="topsum">Top 50</summary><div id="toptable"></div></details>
+    <button id="csvbtn">Export CSV</button>
+  </div>
   <div class="abbr-key"><b>Key:</b> L→P Loss to Profit · P→L Profit to Loss · LR Loss Reduced · LW Loss Widened</div>
   <div class="grid" id="grid"></div>
   <div class="foot"><img src="logo.png" alt="price rythm">
@@ -272,7 +421,9 @@ const STORE = "priceRythm.xbrlTest.v1", BF_STORE = "priceRythm.xbrlTest.backfill
 // Without it, everyone (including you) sees exactly what is in results_data.js.
 const ADMIN = /[?&]admin\b/i.test(location.search);
 if (ADMIN) document.body.classList.add("admin");
-let tab = 0, mode = "yoy", quarter = null, search = "", sortBy = "latest", minSales = 0;
+let fSec = "", fInd = "";   // Sector / Industry filters (from the AmiBroker price file)
+let preset = "";   // quick list: "core" | "early" | "" (off)
+let tab = 0, mode = "yoy", quarter = null, search = "", sortBy = "latest", minSales = 0, gKey = "np", flt = "";   // gKey: growth sorts on Net Profit or EPS
 // Best / Worst Performer rank by Net Profit growth by default; the other views by latest result date.
 const defaultSort = () => (tab === 1 || tab === 2) && !search.trim() ? "growth" : "latest";
 let queue = [];   // snapshot images waiting for review
@@ -284,26 +435,63 @@ let local = (() => {
   catch (e) { return { items:[], removed:[] }; }
 })();
 const loadLocal = () => local;
-function saveLocal(s) { local = s; try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {} }
-function allData() {
-  if (!ADMIN) return (window.RESULTS_DATA || []).slice();
-  const s = loadLocal(), map = new Map();
-  (window.RESULTS_DATA || []).forEach(d => map.set(keyOf(d), d));
-  s.items.forEach(d => map.set(keyOf(d), d));
-  s.removed.forEach(k => map.delete(k));
-  return [...map.values()];
+function saveLocal(s) { local = s; adCache = adByCk = null; hCache = new Map(); try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {} }
+// The combined list is built once and reused until the stored data changes (saveLocal clears it).
+let adCache = null, adByCk = null;
+function allData() { if (!adCache) adCache = buildAllData(); return adCache.slice(); }
+function cardsOfCompany(ck) {   // stored cards of one company, oldest quarter first
+  if (!adByCk) { adByCk = new Map(); allData().forEach(d => { const k = companyKey(d); (adByCk.get(k) || adByCk.set(k, []).get(k)).push(d); });
+    adByCk.forEach(a => a.sort((x, z) => qRank(x.periods[2]) - qRank(z.periods[2]))); }
+  return adByCk.get(ck) || [];
+}
+function buildAllData() {
+  let list;
+  if (!ADMIN) list = (window.RESULTS_DATA || []).slice();
+  else {
+    const s = loadLocal(), map = new Map();
+    (window.RESULTS_DATA || []).forEach(d => map.set(keyOf(d), d));
+    s.items.forEach(d => map.set(keyOf(d), d));
+    s.removed.forEach(k => map.delete(k));
+    list = [...map.values()];
+  }
+  // One company (symbol + basis), one card per quarter:
+  //  - a Screener card is dropped wherever that company has an XBRL card for the same quarter;
+  //  - two XBRL cards for the same company and quarter (e.g. after a company renamed itself) keep the one added last.
+  // The next "Save data file" therefore leaves such duplicates out of results_data.js for good.
+  const kq = d => companyKey(d) + "#" + d.periods[2], xbrl = new Map();
+  list.forEach(d => { if (d.src !== "screener") xbrl.set(kq(d), d); });
+  return list.filter(d => d.src === "screener" ? !xbrl.has(kq(d)) : xbrl.get(kq(d)) === d);
 }
 // Screener backfill: { "symbol|basis": { "Q2 FY27": { sales, op, opm, pbt, np, eps } } }
 let bfLocal = (() => { try { return JSON.parse(localStorage.getItem(BF_STORE)) || {}; } catch (e) { return {}; } })();
 let bfCache = null;
+// Yearly Sales / Net Profit from <SYMBOL>_<basis>_annual.csv: { "symbol|basis": { "FY26": { sales, np } } }
+const AN_STORE = "priceRythm.xbrlTest.annual.v1";
+let anLocal = (() => { try { return JSON.parse(localStorage.getItem(AN_STORE)) || {}; } catch (e) { return {}; } })();
+function allAnnual() {
+  const out = JSON.parse(JSON.stringify(window.ANNUAL_DATA || {}));
+  if (ADMIN) { Object.keys(anLocal).forEach(k => out[k] = Object.assign(out[k] || {}, anLocal[k])); bfRemoved.forEach(k => delete out[k]); }
+  return out;
+}
+// Companies whose history was deleted (so the copy inside the saved data file is ignored too).
+let bfRemoved = (() => { try { return JSON.parse(localStorage.getItem(BF_STORE + ".removed")) || []; } catch (e) { return []; } })();
+const saveBfRemoved = () => { try { localStorage.setItem(BF_STORE + ".removed", JSON.stringify(bfRemoved)); } catch (e) {} };
 function allBackfill() {
   if (bfCache) return bfCache;
   const out = JSON.parse(JSON.stringify(window.BACKFILL_DATA || {}));
-  if (ADMIN) Object.keys(bfLocal).forEach(k => out[k] = Object.assign(out[k] || {}, bfLocal[k]));
+  if (ADMIN) { Object.keys(bfLocal).forEach(k => out[k] = Object.assign(out[k] || {}, bfLocal[k])); bfRemoved.forEach(k => delete out[k]); }
   return (bfCache = out);
 }
+function removeBackfill(ck) {
+  bfCache = null; hCache = new Map();
+  if (anLocal[ck]) { delete anLocal[ck]; try { localStorage.setItem(AN_STORE, JSON.stringify(anLocal)); } catch (e) {} }
+  delete bfLocal[ck];
+  try { localStorage.setItem(BF_STORE, JSON.stringify(bfLocal)); } catch (e) {}
+  if (!bfRemoved.includes(ck)) { bfRemoved.push(ck); saveBfRemoved(); }
+}
 function addBackfill(ck, quarters) {
-  bfCache = null;
+  bfCache = null; hCache = new Map();
+  if (bfRemoved.includes(ck)) { bfRemoved = bfRemoved.filter(k => k !== ck); saveBfRemoved(); }   // loading its CSV again brings it back
   bfLocal[ck] = Object.assign(bfLocal[ck] || {}, quarters);
   try { localStorage.setItem(BF_STORE, JSON.stringify(bfLocal)); } catch (e) {}
 }
@@ -312,6 +500,14 @@ function addEntry(d) {
   s.items = s.items.filter(x => keyOf(x) !== k); s.items.push(d);
   s.removed = s.removed.filter(x => x !== k);
   saveLocal(s);
+}
+// Many cards at once (folder load): one write to browser storage instead of one per card.
+function addEntries(list, removeKeys) {
+  const s = loadLocal(), add = new Map(list.map(d => [keyOf(d), d])), rm = new Set(removeKeys);
+  s.items = s.items.filter(x => !add.has(keyOf(x)) && !rm.has(keyOf(x))).concat([...add.values()]);
+  const removed = new Set(s.removed.filter(k => !add.has(k))); rm.forEach(k => removed.add(k)); s.removed = [...removed];
+  local = s; adCache = adByCk = null; hCache = new Map();
+  try { localStorage.setItem(STORE, JSON.stringify(s)); return true; } catch (e) { return false; }
 }
 function removeEntry(k) {
   const s = loadLocal();
@@ -332,14 +528,16 @@ function growth(prev, cur) {
   if (prev >= 0 && cur < 0) return { kind:"neg", text:"Profit → Loss" };
   if (prev === 0) return { kind:"na", text:"–" };
   const p = (cur - prev) / Math.abs(prev) * 100;
-  return { kind:"num", val:p, text:(p >= 0 ? "+" : "") + p.toFixed(1) + "%" };
+  // From +100% (at least double) the multiple is shown too: +335.7% (4.4×) — easier to picture than a big percentage.
+  const x = 1 + p / 100, times = p >= 100 ? ` (${x >= 10 ? Math.round(x) : x.toFixed(1)}×)` : "";
+  return { kind:"num", val:p, text:(p >= 0 ? "+" : "") + p.toFixed(1) + "%" + times };
 }
-// Per-parameter rules: OPM change in bps; EPS turnarounds as Negative/Positive; loss to smaller/bigger loss labelled.
+// Per-parameter rules: OPM change in percentage points (pp); EPS turnarounds as Negative/Positive; loss to smaller/bigger loss labelled.
 function growthK(k, prev, cur) {
   if (k === "opm") {
     if (prev == null || cur == null) return { kind:"na", text:"N/D" };
-    const bp = Math.round((cur - prev) * 100);
-    return { kind:"num", val:bp, text:(bp > 0 ? "+" : "") + bp + " bps" };
+    const pp = Math.round((cur - prev) * 10) / 10;
+    return { kind:"num", val:pp, text:(pp > 0 ? "+" : "") + pp.toFixed(1) + " pp" };
   }
   const g = growth(prev, cur);
   if (k === "eps") g.text = g.text.replace("Loss → Profit", "Negative → Positive").replace("Profit → Loss", "Positive → Negative");
@@ -372,31 +570,547 @@ function bucket(d) {
 }
 
 // ---------- extra sort metrics ----------
-// OPM change (bps, YoY) — banks excluded; Acceleration = NP YoY now minus NP YoY last quarter (% points);
+// OPM change (pp, YoY) — banks excluded; Acceleration = NP YoY now minus NP YoY last quarter (% points);
 // Growth Streak = consecutive quarters, ending now, with Net Profit up YoY (loss → profit counts).
+// Table view: one row per company for the selected quarter; click a header to sort, again to reverse.
+let tableMode = false, tKey = "date", tDir = -1, tableRows = [];
+const T_COLS = [["date", "Date of Result"], ["sym", "NSE Symbol"], ["name", "Stock Name"], ["sec", "Sector"], ["ind", "Industry"], ["q", "Quarter"], ["sales", "Sales (₹ Cr)"], ["op", "Operating Profit (₹ Cr)"],
+  ["opm", "OPM (%)"], ["np", "Net Profit (₹ Cr)"], ["eps", "EPS (₹)"]];
+function tVal(d, k) {
+  if (k === "date") { const v = dateVal(d.date); return v || null; }
+  if (k === "name") return d.name; if (k === "q") return d.periods[2];
+  if (k === "sym") return d.symbol ? String(d.symbol).toUpperCase() : null;
+  if (k === "sec") return secOf(d) || null; if (k === "ind") return indOf(d) || null;
+  return d[k] ? d[k][2] : null;
+}
+function renderTable(list) {
+  tableRows = list.slice().sort((x, y) => {
+    const a = tVal(x, tKey), b = tVal(y, tKey);
+    if (a == null || b == null) return (a == null) - (b == null);   // blanks always last
+    return (typeof a === "string" ? a.localeCompare(b, "en", { sensitivity: "base" }) : a - b) * tDir;
+  });
+  const head = T_COLS.map(([k, l]) => `<th data-sk="${k}" class="${k === tKey ? "on" : ""}">${l}${k === tKey ? (tDir > 0 ? " ▲" : " ▼") : ""}</th>`).join("");
+  const rows = tableRows.map(d => `<tr><td>${esc(d.date && dateVal(d.date) ? d.date : "")}</td><td>${esc(tVal(d, "sym") || "")}</td><td>${esc(d.name)}</td><td>${esc(secOf(d))}</td><td>${esc(indOf(d))}</td><td>${esc(d.periods[2])}</td>
+    <td>${fmt(tVal(d, "sales"))}</td><td>${fmt(tVal(d, "op"))}</td><td>${fmtK("opm", tVal(d, "opm"))}</td><td>${fmt(tVal(d, "np"))}</td><td>${fmt(tVal(d, "eps"))}</td></tr>`).join("");
+  return `<div class="rwrap"><div class="rbar"><span>${tableRows.length} companies · ${esc(quarter || "")} · click a column heading to sort</span><button id="rcsv">Download CSV</button></div>
+    <table class="ttable rtable"><tr>${head}</tr>${rows}</table></div>`;
+}
+function exportTable() {
+  const q = c => { const t = c == null ? "" : String(c); return /[",\r\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
+  const lines = tableRows.map(d => [d.date && dateVal(d.date) ? d.date : "", tVal(d, "sym") || "", String(d.name).toUpperCase(), secOf(d), indOf(d), d.periods[2], tVal(d, "sales"), tVal(d, "op"), tVal(d, "opm"), tVal(d, "np"), tVal(d, "eps")].map(q).join(","));
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["\ufeff" + T_COLS.map(c => c[1]).join(",") + "\r\n" + lines.join("\r\n") + "\r\n"], { type: "text/csv" }));
+  a.download = `EarningsRythm_${(quarter || "").replace(/\s+/g, "")}_table.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+let autoOpened = "";   // company auto-opened by the current search (cleared when the search box is emptied)
 let mCache = new Map();   // cleared on every render
-function metrics(d) {
-  if (mCache.has(d)) return mCache.get(d);
+// YoY growth of one parameter for any stored quarter of this company, from history.
+function yoyAt(byP, key, q) { const a = byP[prevQ(q, 4)], z = byP[q]; return a && z ? growthK(key, a[key], z[key]) : { kind: "na" }; }
+function metrics(d, key = gKey) {
+  const ck = mCache.get(d) || {}; if (ck[key]) return ck[key];
   const m = {};
   const o = growthK("opm", d.opm ? d.opm[0] : null, d.opm ? d.opm[2] : null);
   m.opm = d.bank || o.kind !== "num" ? null : o.val;
   const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r]));
-  const yoy = q => { const a = byP[prevQ(q, 4)], z = byP[q]; return a && z ? growth(a.np, z.np) : { kind: "na" }; };
-  const g0 = gOf(d, "np", 0), g1 = yoy(prevQ(d.periods[2], 1));
+  const yoy = q => yoyAt(byP, key, q);
+  const g0 = gOf(d, key, 0), g1 = yoy(prevQ(d.periods[2], 1));
   m.accel = g0.kind === "num" && g1.kind === "num" ? g0.val - g1.val : null;
   let n = 0, q = d.periods[2];
   while (byP[q]) { const g = yoy(q); if ((g.kind === "num" && g.val > 0) || g.kind === "pos") { n++; q = prevQ(q, 1); } else break; }
   m.streak = n;
-  mCache.set(d, m);
+  ck[key] = m; mCache.set(d, ck);
   return m;
+}
+// ---------- records, profit quality, TTM growth ----------
+// Record: this quarter's Sales / Net Profit / EPS is above every earlier stored quarter (needs at least 4 earlier quarters, value above zero).
+// Profit quality: Net Profit up 20%+ YoY (or loss → profit) and the rise in NP (₹) exceeds the rise in Operating Profit (₹) by more than 25% of this quarter's NP.
+// TTM: sum of the last 4 quarters vs the 4 quarters before that (needs all 8 quarters in history).
+function extras(d) {
+  const ck = mCache.get(d) || {}; if (ck.x) return ck.x;
+  const hist = historyOf(d), byP = Object.fromEntries(hist.map(r => [r.p, r])), Q = d.periods[2], rk = qRank(Q), x = { rec: [], qual: "", ttm: {} };
+  [["sales", "Sales"], ["np", "NP"], ["eps", "EPS"]].forEach(([k, l]) => {
+    const cur = d[k] ? d[k][2] : null; if (cur == null || cur <= 0) return;
+    const prev = hist.filter(r => qRank(r.p) < rk && r[k] != null).map(r => r[k]);
+    if (prev.length >= 4 && cur > Math.max(...prev)) x.rec.push(l);
+  });
+  const n = gOf(d, "np", 0), v = k => d[k] ? d[k] : [], dNp = v("np")[2] - v("np")[0], dOp = v("op")[2] - v("op")[0];
+  if ((n.kind === "pos" || (n.kind === "num" && n.val >= 20)) && isFinite(dNp) && isFinite(dOp) && v("op")[0] != null && v("op")[2] != null &&
+      dNp - dOp > 0.25 * Math.abs(v("np")[2]))
+    x.qual = `Net Profit up ₹${fmt(dNp)} Cr YoY but Operating Profit ${dOp >= 0 ? "up only ₹" + fmt(dOp) : "down ₹" + fmt(-dOp)} Cr: the extra profit came from other income, lower interest or depreciation, one-off items or tax.`;
+  const sum = (k, from) => { let t = 0; for (let i = 0; i < 4; i++) { const r = byP[prevQ(Q, from + i)]; if (!r || r[k] == null) return null; t += r[k]; } return Math.round(t * 100) / 100; };
+  ["sales", "np", "eps"].forEach(k => x.ttm[k] = growthK(k, sum(k, 4), sum(k, 0)));
+  ck.x = x; mCache.set(d, ck);
+  return x;
+}
+// ---------- Fresh strength / Sustained / Fading ----------
+// Each quarter is judged against the same quarter last year (YoY). Strong = Sales YoY ≥ st-s % and
+// profit YoY (Net Profit or EPS, per Growth On) ≥ st-g %, or loss → profit. Weak = anything else with both figures known.
+// Fresh strength: previous quarter weak, this quarter strong. Sustained: both strong. Fading: previous strong, this quarter weak.
+const STR = { fresh: "Fresh strength", sust: "Sustained", fade: "Fading" };
+const stLevels = () => ({ s: parseFloat(document.getElementById("st-s").value) || 0, g: parseFloat(document.getElementById("st-g").value) || 0 });
+function judge(sg, pg, L) {
+  if (sg.kind === "na" || pg.kind === "na") return null;
+  return sg.kind === "num" && sg.val >= L.s && (pg.kind === "pos" || (pg.kind === "num" && pg.val >= L.g));
+}
+function strength(d) {
+  const L = stLevels(), key = "st" + gKey + L.s + "|" + L.g, ck = mCache.get(d) || {}; if (ck[key]) return ck[key];
+  const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), pq = prevQ(d.periods[2], 1);
+  const ps = yoyAt(byP, "sales", pq), pp = yoyAt(byP, gKey, pq);
+  const now = judge(gOf(d, "sales", 0), gOf(d, gKey, 0), L), prev = judge(ps, pp, L);
+  const x = { now, prev, pq, ps, pp,
+    grp: now == null || prev == null ? "" : now && !prev ? "fresh" : now && prev ? "sust" : !now && prev ? "fade" : "" };
+  ck[key] = x; mCache.set(d, ck);
+  return x;
+}
+function grpTitle(st) {
+  const L = stLevels(), g = gKey === "eps" ? "EPS" : "Net Profit", w = b => b ? "strong" : "weak";
+  return `${st.pq}: ${w(st.prev)} · ${quarter}: ${w(st.now)} (each vs the same quarter a year earlier; strong = Sales YoY ≥ ${L.s}% and ${g} YoY ≥ ${L.g}% or loss → profit)`;
+}
+// ---------- stress score (0–100, higher = more strain), from XBRL cards only ----------
+// Other income 30–50% / >50% of PBT: 10 / 15 · Exceptional items >15% of PBT: 15 · Tax rate <15% or >40%, or 10+ pp swing YoY: 10
+// Interest cover (Operating Profit ÷ Finance costs) <3× / <1.5×: 15 / 20 · Cash flow from operations <0.5× profit / negative: 20 / 25 (half-year, Sep & Mar)
+// Auditor change: +15 in the quarter a different auditor first appears (all companies, banks included).
+// Tax rate swing counts only when the rate FELL 10+ pp YoY (a return to a normal rate is not strain).
+// Debt/Equity >1 / >2: 10 / 15 (Sep & Mar). Sep figures carry to Dec, Mar to Jun. Banks: exceptional + tax only; NBFCs: + other income.
+// BREAK = score 30+ and at least 20 above the average of the previous 4 scored quarters;
+// RECOVERY = after a break, the score falls back to that pre-break average or below.
+// Auditor change (+15): the statutory auditor named in this filing differs from the one in the company's previous filing that named one.
+// Names are compared loosely ("S.T.Mohite & Co" = "S T Mohite & Co", "& Co" / "LLP" / "M/s" ignored). Flagged in the quarter the change appears.
+const audKey = t => String(t).toLowerCase().replace(/m\/s\.?/g, " ").split(/[^a-z0-9]+/)
+  .filter(w => w && !["llp", "co", "company", "and", "the", "chartered", "accountants", "ms"].includes(w)).join("");
+const audSame = (a, b) => a === b || (a.length > 3 && b.length > 3 && (a.includes(b) || b.includes(a)));
+let sCache = new Map();
+function stressCalc(e, byQ) {
+  const s = e.st, q = e.periods[2], pbt = e.pbt ? e.pbt[2] : null, op = e.op ? e.op[2] : null, pts = [];
+  const pc = v => Math.round(v * 100) + "%", bank = s.fmt === "bank", nb = s.fmt === "nbfc";
+  if (!bank && pbt > 0 && s.oi != null) { const r = s.oi / pbt; if (r > .5) pts.push(["Other income", 15, pc(r) + " of PBT"]); else if (r > .3) pts.push(["Other income", 10, pc(r) + " of PBT"]); }
+  if (pbt && s.exc && Math.abs(s.exc) / Math.abs(pbt) > .15) pts.push(["Exceptional items", 15, `₹${fmt(s.exc)} Cr, ${pc(Math.abs(s.exc) / Math.abs(pbt))} of PBT`]);
+  if (pbt > 0 && s.tax != null) {
+    const r = s.tax / pbt, y = byQ.get(prevQ(q, 4)), ry = y && y.st.tax != null && y.pbt && y.pbt[2] > 0 ? y.st.tax / y.pbt[2] : null;
+    if (r < .15 || r > .40) pts.push(["Tax rate", 10, pc(r) + " of PBT"]);
+    else if (ry != null && ry - r >= .10) pts.push(["Tax rate", 10, `fell to ${pc(r)} from ${pc(ry)} a year earlier`]);   // only a fall flatters profit
+  }
+  if (!bank && !nb && s.fin > 0 && op != null) { const c = op / s.fin; if (c < 1.5) pts.push(["Interest cover", 20, c.toFixed(1) + "×"]); else if (c < 3) pts.push(["Interest cover", 15, c.toFixed(1) + "×"]); }
+  if (!bank && !nb) {
+    const has = x => x && (x.st.cfo != null || x.st.eq != null), h = has(e) ? e : has(byQ.get(prevQ(q, 1))) ? byQ.get(prevQ(q, 1)) : null;
+    const hs = h && h.st, tag = h && h !== e ? ` (from ${h.periods[2]})` : "";
+    if (hs && hs.cfo != null && hs.cfNp > 0) {
+      if (hs.cfo < 0) pts.push(["Cash conversion", 25, `operating cash flow −₹${fmt(-hs.cfo)} Cr vs profit ₹${fmt(hs.cfNp)} Cr${tag}`]);
+      else if (hs.cfo / hs.cfNp < .5) pts.push(["Cash conversion", 20, `operating cash flow ${(hs.cfo / hs.cfNp).toFixed(2)}× profit${tag}`]);
+    }
+    if (hs && hs.eq != null) {
+      const de = hs.eq > 0 ? hs.debt / hs.eq : null;
+      if (de == null ? hs.debt > 0 : de > 2) pts.push(["Debt/Equity", 15, (de == null ? "negative equity" : de.toFixed(2)) + tag]);
+      else if (de > 1) pts.push(["Debt/Equity", 10, de.toFixed(2) + tag]);
+    }
+  }
+  return { score: Math.min(100, pts.reduce((t, x) => t + x[1], 0)), pts };
+}
+function stressSeries(ck) {
+  if (sCache.has(ck)) return sCache.get(ck);
+  const es = cardsOfCompany(ck).filter(e => e.st), byQ = new Map(es.map(e => [e.periods[2], e])), out = new Map();
+  let base = null;   // pre-break average while a break is open
+  const past = [];
+  let lastAud = null;
+  es.forEach(e => {
+    const q = e.periods[2], r = stressCalc(e, byQ), pr = out.get(prevQ(q, 1));
+    if (e.st.aud) {
+      if (lastAud) {
+        const now = e.st.aud.map(audKey), was = lastAud.names.map(audKey);
+        const gone = lastAud.names.filter((t, i) => !now.some(k => audSame(k, was[i]))), added = e.st.aud.filter((t, i) => !was.some(k => audSame(k, now[i])));
+        if (gone.length || added.length)
+          r.pts.push(["Auditor change", 15, `${gone.join(", ") || "—"} → ${added.join(", ") || "—"} (since ${lastAud.q}). Check whether it was a scheduled rotation or a resignation.`]);
+      }
+      lastAud = { names: e.st.aud, q };
+    }
+    r.score = Math.min(100, r.pts.reduce((t, x) => t + x[1], 0));
+    r.delta = pr ? r.score - pr.score : null;
+    const last4 = past.slice(-4), avg = last4.length ? last4.reduce((t, v) => t + v, 0) / last4.length : null;
+    r.avg = avg;
+    r.brk = avg != null && r.score >= 30 && r.score - avg >= 20;
+    r.rcv = !r.brk && base != null && r.score <= base;
+    if (r.brk) base = avg; else if (r.rcv) base = null;
+    past.push(r.score);
+    out.set(q, r);
+  });
+  sCache.set(ck, out);
+  return out;
+}
+const stressNow = d => stressSeries(companyKey(d)).get(d.periods[2]) || null;
+const sLevel = v => v < 20 ? "lo" : v <= 40 ? "mid" : "hi";
+function stressLabel(d) {
+  const r = stressNow(d); if (!r) return "";
+  const why = r.pts.length ? r.pts.map(x => `${x[0]}: ${x[2]} (+${x[1]})`).join(" · ") : "No checks fired";
+  const dl = r.delta == null || r.delta === 0 ? "" : r.delta > 0 ? ` ▲${r.delta}` : ` ▼${-r.delta}`;
+  return `<span class="grp stx ${sLevel(r.score)}" title="Stress ${r.score}/100${r.brk ? " · BREAK" : r.rcv ? " · RECOVERY" : ""} — ${esc(why)}">Stress ${r.score}${dl}</span>`;
+}
+// ---------- compounded growth (History) ----------
+// n-year CAGR = (latest full year ÷ the year n years earlier)^(1/n) − 1, from the annual CSV; a year missing there is
+// filled from four stored quarters. Not shown when either year is zero or a loss. TTM = last 4 quarters vs the 4 before.
+// Company · symbol · quarter on every History section, so a cropped snapshot of one part still says whose it is.
+const idText = d => `${String(d.name).toUpperCase()}${d.symbol ? " · " + String(d.symbol).toUpperCase() : ""} · ${d.periods[2]}`;
+const LOGO = `<img class="hlogo" src="logo.png" alt="price rythm">`;
+// Section heading: company · symbol · quarter on the left (logo on the right), the section name on the line below.
+const idTag = d => `<div class="hidrow"><span class="hid">${esc(idText(d))}</span>${LOGO}</div>`;
+function cagrPanel(d) {
+  const ck = companyKey(d), yrs = Object.assign({}, allAnnual()[ck] || {});
+  const fy = {};
+  historyOf(d).forEach(r => { const m = /Q([1-4]) FY(\d{2})/.exec(r.p); if (m) (fy[m[2]] = fy[m[2]] || {})[m[1]] = r; });
+  Object.keys(fy).forEach(y => { const q = fy[y], k = "FY" + y;
+    if ([1, 2, 3, 4].every(n => q[n])) { yrs[k] = Object.assign({}, yrs[k]);
+      ["sales", "np"].forEach(f => { if (yrs[k][f] == null && [1, 2, 3, 4].every(n => q[n][f] != null)) yrs[k][f] = Math.round([1, 2, 3, 4].reduce((t, n) => t + q[n][f], 0) * 100) / 100; }); } });
+  const x = extras(d), byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), Q = d.periods[2];
+  const sum4 = (f, from) => { let t = 0; for (let i = 0; i < 4; i++) { const r = byP[prevQ(Q, from + i)]; if (!r || r[f] == null) return null; t += r[f]; } return t; };
+  const box = (f, title, cls) => {
+    const have = Object.keys(yrs).filter(k => yrs[k] && yrs[k][f] != null).sort();
+    const last = have[have.length - 1], ln = last ? +last.slice(2) : null;
+    // n-year row only when the year n years back is on file (annual CSV); "–" there means a loss or zero year
+    const val = n => { if (!last) return undefined; const b = yrs["FY" + String(ln - n).padStart(2, "0")]; if (!b || b[f] === undefined) return undefined;
+      const v0 = b[f], v1 = yrs[last][f]; return v0 > 0 && v1 > 0 && v0 >= v1 * .1 ? (Math.pow(v1 / v0, 1 / n) - 1) * 100 : null; };
+    const now4 = sum4(f, 0), two = sum4(f, 8);   // 2 years: last 4 quarters vs the same 4 quarters two years earlier
+    const c2 = now4 == null || two == null ? undefined : now4 > 0 && two > 0 && two >= now4 * .1 ? (Math.pow(now4 / two, 1 / 2) - 1) * 100 : null;
+    const rows = [["10 Years", val(10)], ["5 Years", val(5)], ["3 Years", val(3)], ["2 Years", c2]].filter(r => r[1] !== undefined);
+    const cell = v => v == null ? "<b>–</b>" : `<b class="${v < 0 ? "neg" : ""}">${Math.round(v)}%</b>`;
+    const t = x.ttm[f], ttm = t.kind === "num" ? cell(t.val) : `<b>${esc(t.kind === "na" ? "–" : t.text)}</b>`;
+    // Accelerating: each shorter period grows faster than the longer one before it (TTM > 2Y > 3Y > 5Y, as far as available)
+    const ladder = [t.kind === "num" ? t.val : null].concat(rows.slice().reverse().map(r => r[1]));
+    const acc = ladder.length >= 2 && ladder.every(v => v != null) && ladder.every((v, i) => i === 0 || ladder[i - 1] > v);
+    return { html: `<div class="cbox ${cls}"><h4><span>${title}</span>${acc ? `<span class="acc" title="Each shorter period grows faster than the longer one: growing faster now than before">Accelerating</span>` : ""}</h4>
+      ${rows.map(([l, v]) => `<div class="r"><span>${l}:</span>${cell(v)}</div>`).join("")}<div class="r"><span>TTM:</span>${ttm}</div></div>`, n: rows.length };
+  };
+  const S = box("sales", "Compounded Sales Growth", "s"), P = box("np", "Compounded Profit Growth", "p");
+  if (!S.n && !P.n && x.ttm.sales.kind === "na" && x.ttm.np.kind === "na") return "";
+  return `<div class="hlabel">${idTag(d)}COMPOUNDED GROWTH</div><div class="cagr">${S.html}${P.html}<div class="cnote">Yearly growth rate, compounded. 2 Years = last 4 quarters vs the same 4 quarters two years earlier; TTM = last 4 quarters vs the 4 before. – = a loss, or a base too small (under 10% of today's figure) for a meaningful rate.</div></div>`;
+}
+function stressTimeline(d) {
+  const ser = stressSeries(companyKey(d)); if (!ser.size) return "";
+  const qs = [...ser.keys()].slice(-12), cur = qs.includes(d.periods[2]) ? d.periods[2] : qs[qs.length - 1];
+  const nodes = qs.map(q => { const r = ser.get(q);
+    const dl = r.delta == null ? `<span class="dl eq">base</span>` : `<span class="dl ${r.delta > 0 ? "up" : r.delta < 0 ? "dn" : "eq"}">${r.delta > 0 ? "+" : ""}${r.delta}</span>`;
+    return `<div class="sn ${sLevel(r.score)}${r.brk ? " brk" : r.rcv ? " rcv" : ""}${q === cur ? " on" : ""}" data-sq="${esc(q)}"><div class="dot"></div>
+      <div class="q">${esc(q.replace(" FY", "'"))}</div><div class="v">${r.score}<small>/100</small></div>${dl}${r.brk ? `<span class="fl b">BREAK</span>` : r.rcv ? `<span class="fl r">RECOVERY</span>` : ""}</div>`; }).join("");
+  const det = qs.map(q => { const r = ser.get(q);
+    return `<div class="sd" data-sd="${esc(q)}"${q === cur ? "" : " hidden"}><b>${esc(q)} · Stress ${r.score}/100</b>${r.brk ? " · BREAK" : r.rcv ? " · RECOVERY" : ""}<br>${r.pts.length ? r.pts.map(x => `${esc(x[0])}: ${esc(x[2])} <b>+${x[1]}</b>`).join("<br>") : "No checks fired."}</div>`; }).join("");
+  return `<div class="stwrap"><div class="hlabel">${idTag(d)}<span>STRESS SCORE (0–100, HIGHER = MORE STRAIN) · CLICK A QUARTER FOR DETAILS</span></div><div class="stl">${nodes}</div>${det}</div>`;
+}
+// ---------- Quarterly Earnings Strength (0–100) + grade A–D ----------
+// 7 parameters: Revenue growth 15 · Profit growth 20 · OPM expansion 20 · Operating leverage 15 · Growth consistency 10 ·
+// Earnings quality 10 · EPS growth 10. Growth figures are ranked against every company with results for the same quarter
+// (percentile 0–100); operating leverage, consistency, earnings quality and dilution use fixed rules. Loss → profit counts as 75,
+// profit → loss as 0. Missing measures are left out (never counted as zero); no score without Sales and PAT YoY, or when under
+// 60 of the 100 points could be measured. Banks and NBFCs are not scored. Profit = Net Profit (PAT) throughout.
+// Risk flags: PAT growth far above operating profit growth · other income / exceptional items material (XBRL) · sales up but OPM down 2+ pp.
+// Grade A: score 75+, sales, PAT and OPM up YoY, operating leverage ≥ 1×, growth in 3 of the last 4 quarters, share count up
+// no more than 15% (EPS growth vs PAT growth), no flag.
+// Grade B: score 60+, sales and PAT up, OPM within 1 pp, no flag.
+// Grades A and B also need a profit this quarter: a smaller loss ("loss reduced") is never A or B.
+// They also need the last 4 quarters together in profit; Grade A also needs that 4-quarter profit not falling vs the 4 before. Grade D: sales and PAT both down, or score under 35. Otherwise C.
+const F_PIL = [
+  ["rv", "Revenue growth", 15, "var(--green)", [["sy", "Sales YoY", 6, "p"], ["sq", "Sales QoQ", 4, "p"], ["sa", "Sales acceleration", 5, "p"]]],
+  ["pg", "Profit growth", 20, "#007a3a", [["py", "PAT YoY", 8, "p"], ["pq", "PAT QoQ", 6, "p"], ["pv", "PAT growth vs sales growth", 6, "p"]]],
+  ["om", "Operating margin expansion", 20, "var(--blue)", [["oq", "OPM vs last quarter", 6, "p"], ["oy", "OPM vs last year", 8, "p"], ["ov", "OP growth vs sales growth", 6, "p"]]],
+  ["ol", "Operating leverage", 15, "#0e7490", [["lv", "OP growth ÷ sales growth", 15, "a"]]],
+  ["cs", "Growth consistency", 10, "#7c3aed", [["ts", "Rolling 4Q sales growth", 4, "p"], ["tp", "Rolling 4Q PAT growth", 4, "p"], ["cn", "Quarters with sales and PAT up YoY", 2, "a"]]],
+  ["eq", "Earnings quality", 10, "#d97706", [["qq", "Profit from the business", 10, "a"]]],
+  ["ep", "EPS growth", 10, "#0071bc", [["ey", "EPS YoY", 4, "p"], ["eq", "EPS QoQ", 3, "p"], ["dl", "Dilution", 3, "a"]]],
+];
+let fCache = new Map();
+const isFin = d => !!(d.bank || (d.st && d.st.fmt));
+const pc1 = x => (x > 0 ? "+" : "") + x.toFixed(1);
+function fosRaw(d) {
+  const v = {}, t = {}, gv = g => g.kind === "num" ? g.val : g.kind === "pos" ? "pos" : g.kind === "neg" ? "neg" : null;
+  const hist = historyOf(d), byP = Object.fromEntries(hist.map(r => [r.p, r])), Q = d.periods[2], x = extras(d);
+  const sY = gOf(d, "sales", 0), sQ = gOf(d, "sales", 1), pY = gOf(d, "np", 0), pQ = gOf(d, "np", 1), oY = gOf(d, "op", 0);
+  const mY = gOf(d, "opm", 0), mQ = gOf(d, "opm", 1), eY = gOf(d, "eps", 0), eQ = gOf(d, "eps", 1);
+  const num = g => g.kind === "num" ? g.val : null, pp = z => z == null ? "N/D" : pc1(z) + " pp";
+  [["sy", sY], ["sq", sQ], ["py", pY], ["pq", pQ], ["ey", eY], ["eq", eQ]].forEach(([k, g]) => { v[k] = gv(g); t[k] = g.text; });
+  const s1 = yoyAt(byP, "sales", prevQ(Q, 1));
+  v.sa = num(sY) != null && num(s1) != null ? num(sY) - num(s1) : null; t.sa = pp(v.sa);
+  v.pv = num(pY) != null && num(sY) != null ? num(pY) - num(sY) : null; t.pv = v.pv == null ? "N/D" : pc1(v.pv) + " pts";
+  v.oq = num(mQ); t.oq = pp(v.oq); v.oy = num(mY); t.oy = pp(v.oy);
+  v.ov = num(oY) != null && num(sY) != null ? num(oY) - num(sY) : null; t.ov = v.ov == null ? "N/D" : pc1(v.ov) + " pts";
+  // Operating leverage (fixed bands): OP growth ÷ sales growth, both YoY
+  const sg = num(sY), og = oY.kind === "pos" ? Infinity : oY.kind === "neg" ? -Infinity : num(oY);
+  if (sg == null || og == null) { v.lv = null; t.lv = "N/D"; }
+  else if (sg <= 0) { v.lv = og > 0 ? 40 : 0; t.lv = `sales ${pc1(sg)}%, OP ${oY.text}`; }
+  else if (sg < 2) { v.lv = og > 5 ? 60 : og > 0 ? 30 : 0; t.lv = `sales only ${pc1(sg)}%, OP ${oY.text}`; }
+  else { const r = og / sg; v.lv = r >= 2 ? 100 : r >= 1.5 ? 80 : r >= 1 ? 60 : r >= .5 ? 30 : r > 0 ? 10 : 0;
+    t.lv = isFinite(r) ? `${r.toFixed(1)}× (OP ${oY.text} vs sales ${sY.text})` : `OP ${oY.text} vs sales ${sY.text}`; }
+  // Consistency
+  [["ts", x.ttm.sales], ["tp", x.ttm.np]].forEach(([k, g]) => { v[k] = gv(g); t[k] = g.text; });
+  let up = 0, seen = 0;
+  [0, 1, 2, 3].forEach(i => { const q = prevQ(Q, i), a = i ? yoyAt(byP, "sales", q) : sY, b = i ? yoyAt(byP, "np", q) : pY;
+    if (a.kind === "na" || b.kind === "na") return; seen++;
+    if ((a.kind === "pos" || (a.kind === "num" && a.val > 0)) && (b.kind === "pos" || (b.kind === "num" && b.val > 0))) up++; });
+  v.cn = seen >= 3 ? up / seen * 100 : null; t.cn = seen >= 3 ? `${up} of ${seen}` : "N/D";
+  // Earnings quality (fixed): starts at 100, deductions for each concern
+  let qs = 100; const why = [], st = d.st, pbt = d.pbt ? d.pbt[2] : null;
+  if (x.qual) { qs -= 40; why.push("PAT rise far above OP rise"); }
+  if (st && pbt > 0) {
+    if (st.oi != null && st.oi / pbt > .5) { qs -= 40; why.push(`other income ${Math.round(st.oi / pbt * 100)}% of PBT`); }
+    else if (st.oi != null && st.oi / pbt > .3) { qs -= 25; why.push(`other income ${Math.round(st.oi / pbt * 100)}% of PBT`); }
+    if (st.tax != null && st.tax / pbt < .15) { qs -= 20; why.push(`tax ${Math.round(st.tax / pbt * 100)}% of PBT`); }
+  }
+  if (st && pbt && st.exc && Math.abs(st.exc) / Math.abs(pbt) > .15) { qs -= 30; why.push(`exceptional items ${Math.round(Math.abs(st.exc) / Math.abs(pbt) * 100)}% of PBT`); }
+  v.qq = Math.max(0, qs); t.qq = (why.length ? why.join(", ") : "no concerns found") + (st ? "" : " (partial check: no XBRL detail)");
+  // Dilution: EPS growth vs PAT growth
+  // implied rise in share count = 1 − (1 + EPS growth) ÷ (1 + PAT growth); ≤ 5%: 100 · ≤ 15%: 50 · more: 0
+  const de = num(eY) != null && num(pY) != null && num(pY) > -100 ? (1 - (1 + num(eY) / 100) / (1 + num(pY) / 100)) * 100 : null;
+  v.dl = de == null ? null : de <= 5 ? 100 : de <= 15 ? 50 : 0;
+  t.dl = de == null ? "N/D" : `EPS ${eY.text} vs PAT ${pY.text}, ${de > 0.5 ? `share count up about ${Math.round(de)}%` : "no dilution"}`;
+  // Risk flags
+  const flags = [];
+  if (x.qual) flags.push("PAT growth far exceeds operating profit growth");
+  if (st && pbt && ((st.oi != null && pbt > 0 && st.oi / pbt > .3) || (st.exc && Math.abs(st.exc) / Math.abs(pbt) > .15))) flags.push("Other income or exceptional items materially support profit");
+  if (num(sY) > 0 && num(mY) != null && num(mY) <= -2) flags.push(`Sales up but OPM down ${Math.abs(num(mY)).toFixed(1)} pp`);
+  return { v, t, flags, sg: num(sY), sPos: sY.kind === "pos" || num(sY) > 0, pPos: pY.kind === "pos" || num(pY) > 0, sNeg: num(sY) != null && num(sY) < 0,
+    pNeg: pY.kind === "neg" || (num(pY) != null && num(pY) < 0), mY: num(mY), lr: sg > 0 && og != null ? og / sg : null, cnUp: up, cnSeen: seen, npNow: d.np ? d.np[2] : null,
+    ttmNp: (() => { let t = 0; for (let i = 0; i < 4; i++) { const h = byP[prevQ(Q, i)]; if (!h || h.np == null) return null; t += h.np; } return t; })(),
+    ttmG: x.ttm.np, need: sY.kind === "na" || pY.kind === "na" };
+}
+function fosAll(Q) {
+  if (fCache.has(Q)) return fCache.get(Q);
+  const cohort = cardsFor(Q).filter(d => !isFin(d)), raws = cohort.map(d => [d, fosRaw(d)]), out = new Map(), sorted = {};
+  F_PIL.forEach(([, , , , parts]) => parts.forEach(([k, , , ty]) => { if (ty === "p") sorted[k] = raws.map(([, r]) => r.v[k]).filter(z => typeof z === "number").sort((a, b) => a - b); }));
+  const pct = (k, z) => { const a = sorted[k]; if (!a.length) return null; let lo = 0, eq = 0; for (const y of a) { if (y < z) lo++; else if (y === z) eq++; } return (lo + eq / 2) / a.length * 100; };
+  raws.forEach(([d, r]) => {
+    let tot = 0, max = 0, cov = 0, prov = false;
+    const pil = F_PIL.map(([id, label, w, col, parts]) => {
+      let sc = 0, wa = 0; const items = [];
+      parts.forEach(([k, lab, pw, ty]) => {
+        const z = r.v[k], p = z === "pos" ? 75 : z === "neg" ? 0 : typeof z !== "number" ? null : ty === "p" ? pct(k, z) : z;
+        if (p == null) { prov = true; items.push(`${lab} N/D`); return; }
+        sc += p * pw; wa += pw; cov += pw;
+        items.push(`${lab} ${r.t[k]}${ty === "p" && typeof z === "number" ? ` (top ${Math.max(1, Math.round(100 - p))}%)` : ""}`);
+      });
+      const pts = wa ? sc / wa / 100 * w : null;
+      if (pts != null) { tot += pts; max += w; }
+      return { id, label, w, col, pts, items };
+    });
+    const need = r.need || cov < 60, score = need || !max ? null : Math.round(tot / max * 100);
+    let grade = null;
+    if (score != null) {
+      const fl = r.flags.length > 0;
+      if ((r.sNeg && r.pNeg) || score < 35) grade = "D";
+      else if (!fl && r.npNow > 0 && r.ttmNp !== null && r.ttmNp <= 0) grade = "C";   // full year in loss: never A or B
+      else if (!fl && r.npNow > 0 && (r.ttmG.kind === "pos" || (r.ttmG.kind === "num" && r.ttmG.val >= 0) || r.ttmG.kind === "na") && score >= 75 && r.sPos && r.pPos && r.mY != null && r.mY > 0 && r.lr != null && r.lr >= 1 && r.cnSeen >= 3 && r.cnUp >= 3 && r.v.dl >= 50) grade = "A";
+      else if (!fl && r.npNow > 0 && score >= 60 && r.sPos && r.pPos && r.mY != null && r.mY >= -1) grade = "B";
+      else grade = "C";
+    }
+    out.set(companyKey(d), { score, grade, need, cov, prov: prov || max < 100, pil, flags: r.flags, n: cohort.length });
+  });
+  fCache.set(Q, out);
+  return out;
+}
+const fosOf = d => isFin(d) ? null : fosAll(d.periods[2]).get(companyKey(d)) || null;
+const GRADE = { A: ["lo", "Exceptional"], B: ["gb", "Strong"], C: ["mid", "Mixed"], D: ["hi", "Weak"] };
+function fosLabel(d) {
+  if (isFin(d)) return "";
+  const f = fosOf(d); if (!f) return "";
+  if (f.need) return `<span class="grp fos na" title="Earnings Strength not given: needs the same quarter a year earlier (only ${f.cov} of 100 points could be measured)">Earnings: needs history</span>`;
+  const g = GRADE[f.grade], why = f.pil.map(p => `${p.label} ${p.pts == null ? "N/D" : Math.round(p.pts)}/${p.w}`).join(" · ");
+  return `<span class="grp fos stx ${g[0]}" title="Quarterly Earnings Strength ${f.score}/100, Grade ${f.grade} (${g[1]})${f.prov ? " — provisional: some measures missing" : ""} — ${esc(why)}${f.flags.length ? " · Flags: " + esc(f.flags.join("; ")) : ""}">Grade ${f.grade} · ${f.score}${f.prov ? "*" : ""}</span>`;
+}
+function fosPanel(d) {
+  if (isFin(d)) return `<div class="fosp"><div class="fh"><b>Quarterly Earnings Strength</b></div><div class="fidl">${esc(idText(d))}${LOGO}</div><div class="fn">Banks and NBFCs are not scored: their figures need a different model.</div></div>`;
+  const f = fosOf(d); if (!f) return "";
+  if (f.need) return `<div class="fosp"><div class="fh"><b>Quarterly Earnings Strength</b><span class="ft">–<small>/100</small></span></div><div class="fidl">${esc(idText(d))}${LOGO}</div>
+    <div class="fn">Not scored yet: needs more history. Sales and PAT YoY need the same quarter a year earlier (${esc(prevQ(d.periods[2], 4))}); only ${f.cov} of 100 points could be measured.</div></div>`;
+  const g = GRADE[f.grade];
+  const rows = f.pil.map(p => `<div class="fr"><div class="frh"><span>${p.label}</span><span>${p.pts == null ? "N/D" : Math.round(p.pts)}/${p.w}</span></div>
+    <div class="fb"><i style="width:${p.pts == null ? 0 : p.pts / p.w * 100}%;background:${p.col}"></i></div><div class="fd">${esc(p.items.join(" · "))}</div></div>`).join("");
+  return `<div class="fosp"><div class="fh"><b>Quarterly Earnings Strength <span class="grp stx ${g[0]}" style="font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;margin-left:6px">Grade ${f.grade} · ${g[1]}</span></b><span class="ft">${f.score}${f.prov ? "*" : ""}<small>/100</small></span></div><div class="fidl">${esc(idText(d))}${LOGO}</div>
+    <div class="fn">Growth figures are ranked against ${f.n} companies with ${esc(d.periods[2])} results ("top 5%" = only 5% of them did better). Weights are starting values to test, not proven.${f.prov ? " * Provisional: some measures could not be worked out and are left out." : ""}</div>
+    ${rows}<div class="fg"><b>Risk flags:</b> ${f.flags.length ? f.flags.map(x => `<span class="rs" style="font-size:11px;padding:2px 9px;border-radius:10px;margin-left:4px">${esc(x)}</span>`).join("") : `<span style="color:var(--green-ink)">none</span>`}</div></div>`;
+}
+// ---------- P/E and PEG from an AmiBroker price export ----------
+// Prices: { asOf: "03-Nov-2026", prices: { SYMBOL: close } } from results_data.js (PRICE_DATA), or loaded in the admin view.
+// P/E = price ÷ EPS of the last 4 quarters (split-adjusted). PEG = P/E ÷ that 4-quarter EPS growth % (YoY).
+// N/A when 4-quarter EPS is zero or negative (P/E), or when its growth is not a positive % (PEG).
+const PR_STORE = "priceRythm.xbrlTest.prices.v1";
+let prLocal = (() => { try { return JSON.parse(localStorage.getItem(PR_STORE)) || null; } catch (e) { return null; } })();
+const allPrices = () => (ADMIN && prLocal) || window.PRICE_DATA || null;
+function valuation(d) {
+  const P = allPrices(), sym = d.symbol ? String(d.symbol).toUpperCase() : ""; if (!P || !sym || P.prices[sym] == null) return null;
+  const price = P.prices[sym], byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), Q = d.periods[2];
+  let eps = 0; for (let i = 0; i < 4; i++) { const r = byP[prevQ(Q, i)]; if (!r || r.eps == null) { eps = null; break; } eps += r.eps; }
+  const pe = eps > 0 ? price / eps : null, g = extras(d).ttm.eps, peg = pe != null && g.kind === "num" && g.val > 0 ? pe / g.val : null;
+  return { price, eps: eps == null ? null : Math.round(eps * 100) / 100, pe, peg, g, asOf: P.asOf };
+}
+function valLabel(d) {
+  const v = valuation(d); if (!v) return "";
+  const pe = v.pe == null ? "N/A" : v.pe >= 1000 ? Math.round(v.pe / 1000) + "k" : v.pe.toFixed(v.pe < 10 ? 1 : 0), peg = v.peg == null ? "N/A" : v.peg.toFixed(2);
+  return `<span class="grp pe" title="Price ₹${fmt(v.price)} (${esc(v.asOf)}) · EPS last 4 quarters ₹${v.eps == null ? "N/D" : fmt(v.eps)} · EPS 4-quarter growth ${esc(v.g.text || "N/D")}. P/E = price ÷ 4-quarter EPS; PEG = P/E ÷ that growth (below 1 = growth cheap for its rate).">P/E ${pe} · PEG ${peg}</span>`;
+}
+const ICO_SEC = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 2.05A10 10 0 1 0 21.95 13H11z"/><path d="M13 2.05V11h8.95A10 10 0 0 0 13 2.05z" opacity=".55"/></svg>`;
+const ICO_IND = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V10l6 4V10l6 4V4h6v17z"/><path d="M7 17h2M12 17h2M17 17h2"/></svg>`;
+const secOf = d => { const P = allPrices(); return (P && P.sector && d.symbol && P.sector[String(d.symbol).toUpperCase()]) || ""; };
+const indOf = d => { const P = allPrices(); return (P && P.industry && d.symbol && P.industry[String(d.symbol).toUpperCase()]) || ""; };
+const hasSec = () => { const P = allPrices(); return !!(P && ((P.sector && Object.keys(P.sector).length) || (P.industry && Object.keys(P.industry).length))); };
+// Hidden gems leaves out commodity / cyclical industries (AmiBroker industry names; matched ignoring case).
+const CYCLICAL = ["Iron & Steel", "Iron & Steel Products", "Pig Iron", "Sponge Iron", "Ferro & Silica Manganese", "Refineries & Marketing", "Oil Exploration & Production", "Oil Equipment & Services",
+  "Sugar", "Zinc", "Aluminium", "Copper", "Coal"];
+const isCyclical = d => { const i = indOf(d).toLowerCase(); return !!i && CYCLICAL.some(c => c.toLowerCase() === i); };
+// AmiBroker exploration export: "Ticker,Date/Time,Close" (any order; Symbol works for Ticker; a "Close" column, else the last number).
+function addPriceCsv(text, fileName) {
+  const split = l => { const out = []; let c = "", q = false;   // quote-aware: "Oil, Gas & Fuels" stays one field
+    for (let i = 0; i < l.length; i++) { const ch = l[i];
+      if (q) { if (ch === '"') { if (l[i + 1] === '"') { c += '"'; i++; } else q = false; } else c += ch; }
+      else if (ch === '"') q = true; else if (ch === ",") { out.push(c.trim()); c = ""; } else c += ch; }
+    out.push(c.trim()); return out; };
+  const rows = text.replace(/^\ufeff/, "").split(/\r?\n/).filter(l => l.trim()).map(split);
+  const head = rows[0].map(h => h.toLowerCase()), ti = head.findIndex(h => /^(ticker|symbol)$/.test(h)), ci = head.findIndex(h => /^close$/.test(h)), di = head.findIndex(h => /date/.test(h));
+  const si = head.findIndex(h => /^sector$/.test(h)), ii = head.findIndex(h => /^industry$/.test(h)), sector = {}, industry = {};
+  const okName = v => v && !/^(undefined|-|none|n\/a)$/i.test(v);
+  if (ti < 0) { alert(fileName + ": no Ticker / Symbol column. Export the AmiBroker exploration with columns Ticker, Date/Time, Close."); return; }
+  const prices = {}; let asOf = "";
+  rows.slice(1).forEach(r => { const sym = (r[ti] || "").toUpperCase().replace(/\.(NS|NSE|BO)$/, ""); const v = parseFloat(ci >= 0 ? r[ci] : r[r.length - 1]);
+    if (sym && isFinite(v) && v > 0) { prices[sym] = v; if (di >= 0 && r[di] && !asOf) asOf = r[di].split(" ")[0]; }
+    if (sym && si >= 0 && okName(r[si])) sector[sym] = r[si];
+    if (sym && ii >= 0 && okName(r[ii])) industry[sym] = r[ii]; });
+  const n = Object.keys(prices).length;
+  if (!n) { alert(fileName + ": no prices found."); return; }
+  prLocal = { asOf: asOf || new Date().toISOString().slice(0, 10), prices, sector, industry };
+  fSec = ""; fInd = "";
+  try { localStorage.setItem(PR_STORE, JSON.stringify(prLocal)); } catch (e) {}
+  const el = document.getElementById("bfline"); el.innerHTML = `<b>Prices loaded:</b> ${n} symbols, as of ${esc(prLocal.asOf)}${Object.keys(industry).length ? `, with sector and industry for ${Object.keys(industry).length}` : si < 0 && ii < 0 ? " (no SECTOR / INDUSTRY columns in this file)" : ""}. P/E and PEG now show on the cards. Click <b>Save data file</b> to keep them.`;
+  el.hidden = false; clearTimeout(bfTimer); render();
+}
+// ---------- acceleration run ----------
+// Number of quarters in a row, ending this quarter, in which YoY profit growth (Net Profit or EPS, per Growth On) was higher
+// than the quarter before — the climb out of losses counts (−30% → −20% → 0% is improving; loss → profit is a step up).
+// A step counts only when operating profit backs it: OP YoY above 0 (or loss → profit) and higher than the quarter before.
+// Example: NP YoY 10% → 18% → 29% → 43% with OP growth rising too = run of 3. Shown on the card from 2 quarters.
+function accelRun(d) {
+  const ck = mCache.get(d) || {}, key = "run" + gKey; if (ck[key]) return ck[key];
+  const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), Q = d.periods[2];
+  const val = g => g.kind === "num" ? g.val : g.kind === "pos" ? Infinity : g.kind === "neg" ? -Infinity : null;
+  const g = (k, q) => q === Q ? (k === "op" ? gOf(d, "op", 0) : gOf(d, k, 0)) : yoyAt(byP, k, q);
+  const seq = []; let n = 0;
+  for (let i = 0; i < 8; i++) {
+    const q = prevQ(Q, i), p = prevQ(Q, i + 1);
+    const a = val(g(gKey, q)), b = val(g(gKey, p)), oa = val(g("op", q)), ob = val(g("op", p));
+    if (i === 0 && a != null) seq.push([q, g(gKey, q).text]);
+    if (a == null || b == null || oa == null || ob == null) break;
+    const up = a > b && !(a === Infinity && b === Infinity), opOk = oa > 0 && (oa > ob || (oa === Infinity && ob !== Infinity));
+    if (!up || !opOk) break;
+    n++; seq.push([p, g(gKey, p).text]);
+  }
+  const x = { n, seq: seq.reverse() };
+  ck[key] = x; mCache.set(d, ck);
+  return x;
+}
+function accelLabel(d) {
+  const r = accelRun(d); if (r.n < 2) return "";
+  const nm = gKey === "eps" ? "EPS" : "NP";
+  return `<span class="grp acc" title="${nm} YoY growth rose ${r.n} quarters in a row, backed by rising operating profit growth: ${esc(r.seq.map(([q, t]) => q + " " + t).join(" → "))}">Accelerating ${r.n}Q</span>`;
+}
+// Quick lists keep only Grade A/B, no "Check NP", and stress 40 or less with no BREAK (no stress data = not excluded).
+const presetKeep = d => { const f = fosOf(d), r = stressNow(d);
+  if (preset === "accel" && !(d.np && d.np[2] >= 10)) return false;   // Accelerators: a run on a tiny profit is fragile
+  if (preset === "gems") {   // small, turning up, still cheap for its growth, not a commodity cycle
+    if (!(d.sales && d.sales[2] != null && d.sales[2] <= 1000)) return false;
+    if (!(accelRun(d).n >= 2 || strength(d).grp === "fresh")) return false;
+    const v = valuation(d); if (!(v && v.peg != null && v.peg > 0 && v.peg < 1)) return false;
+    // No turnaround PEG: the 4 quarters a year earlier must have positive EPS, and 4-quarter EPS growth 200% or less.
+    const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])); let e0 = 0;
+    for (let i = 4; i < 8; i++) { const r = byP[prevQ(d.periods[2], i)]; if (!r || r.eps == null) { e0 = null; break; } e0 += r.eps; }
+    if (!(e0 > 0) || !(v.g.kind === "num" && v.g.val <= 200)) return false;
+    const f = fosOf(d); if (!f || f.prov) return false;   // a provisional score (*) is not enough proof
+    if (isCyclical(d)) return false;
+  }
+  return !!(f && (f.grade === "A" || (f.grade === "B" && preset !== "gradeA"))) && !extras(d).qual && !(r && (r.brk || r.score > 40)); };
+const PRESET = { core: { flt: "sust", sortBy: "fos", name: "Core watchlist" }, early: { flt: "fresh", sortBy: "accel", name: "Early movers" }, gradeA: { flt: "", sortBy: "fos", name: "Grade A" }, accel: { flt: "acc3", sortBy: "run", name: "Accelerators" }, gems: { flt: "", sortBy: "peg", name: "Hidden gems" } };
+function setPreset(v) {
+  preset = v; tab = 0; search = ""; document.getElementById("search").value = "";
+  if (v) { const P = PRESET[v]; minSales = 100; gKey = "eps"; flt = P.flt; sortBy = P.sortBy; }
+  else { minSales = 0; gKey = "np"; flt = ""; sortBy = defaultSort(); }
+  document.getElementById("minsales").value = String(minSales); document.getElementById("gbasis").value = gKey; document.getElementById("flt").value = flt;
+  render();
+}
+// A setting changed by hand ends the quick list but keeps the settings; no button stays selected, so "Off" then resets the view.
+const clearPreset = () => { if (!preset) return; preset = ""; document.querySelectorAll('input[name=preset]').forEach(r => r.checked = false); };
+const passFlt = d => (!preset || presetKeep(d)) && passFlt0(d);
+const passSec = d => (!fSec || secOf(d) === fSec) && (!fInd || indOf(d) === fInd);
+const passFlt0 = d => passSec(d) && (!flt || (flt === "acc3" ? accelRun(d).n >= 3 : flt === "sbrk" ? !!(stressNow(d) && stressNow(d).brk) : STR[flt] ? strength(d).grp === flt : flt === "rec" ? extras(d).rec.length > 0 : !!extras(d).qual));
+let shownList = [];
+function exportStrength() {
+  const syms = [...new Set(shownList.map(d => (d.symbol || d.name).toUpperCase()))];
+  if (!syms.length) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([syms.join("\r\n") + "\r\n"], { type: "text/plain" }));
+  a.download = `EarningsRythm_${(quarter || "").replace(/\s+/g, "")}_${preset || flt}_${gKey}.tls`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+// Sector breakdown for the quarter (after Min Sales): companies, Grade A / B, average Earnings Strength, accelerating 2Q+.
+let secSort = { k: "ab", dir: -1 }, indSort = { k: "ab", dir: -1 };   // default: most Grade A + B first; click a header to sort
+// Sector / Industry breakdown for the quarter (after Min Sales). prev = last quarter's companies, for the change in A+B share.
+function groupHtml(data, prev, keyOf, S, what, minN = 0) {   // minN: leave out groups with fewer companies
+  if (!hasSec() || !data.length) return "";
+  const med = a => { if (!a.length) return null; a.sort((x, y) => x - y); const h = a.length >> 1; return a.length % 2 ? a[h] : (a[h - 1] + a[h]) / 2; };
+  const yoy = (d, k) => { const g = gOf(d, k, 0); return g.kind === "num" && d[k][0] > 0 ? g.val : null; };   // positive base only
+  const ab = d => { const f = fosOf(d); return !!f && (f.grade === "A" || f.grade === "B"); };
+  const pm = new Map(); prev.forEach(d => { const k = keyOf(d) || "(none)"; const r = pm.get(k) || { n: 0, ab: 0 }; r.n++; if (ab(d)) r.ab++; pm.set(k, r); });
+  const m = new Map();
+  data.forEach(d => { const k = keyOf(d) || "(none)"; if (!m.has(k)) m.set(k, { n: 0, a: 0, b: 0, sum: 0, sc: 0, acc: 0, sy: [], ny: [], pe: [], peg: [], sec: secOf(d) });
+    const r = m.get(k), f = fosOf(d); r.n++;
+    if (f && f.grade === "A") r.a++; else if (f && f.grade === "B") r.b++;
+    if (f && f.score != null && !f.prov) { r.sum += f.score; r.sc++; }
+    if (accelRun(d).n >= 2) r.acc++;
+    const sy = yoy(d, "sales"), ny = yoy(d, "np"); if (sy != null) r.sy.push(sy); if (ny != null) r.ny.push(ny);
+    const v = valuation(d); if (v && v.pe != null && v.pe > 0) r.pe.push(v.pe); if (v && v.peg != null && v.peg > 0) r.peg.push(v.peg); });
+  m.forEach((r, k) => { r.share = (r.a + r.b) / r.n * 100; const p = pm.get(k); r.dsh = p && p.n ? r.share - p.ab / p.n * 100 : null;
+    r.avg = r.sc ? r.sum / r.sc : null; r.msy = med(r.sy); r.mny = med(r.ny); r.mpe = med(r.pe); r.mpeg = med(r.peg); });
+  const val = (k, r) => { const v = k === "ab" ? r.a + r.b : r[k]; return v == null ? -1e9 : v; };
+  const { k: sk, dir } = S;
+  const all = [...m.entries()], skip = all.filter(([, r]) => r.n < minN).length;
+  const rows = all.filter(([, r]) => r.n >= minN).sort((x, y) => sk === "name" ? dir * x[0].localeCompare(y[0])
+    : dir * (val(sk, x[1]) - val(sk, y[1])) || (y[1].a + y[1].b) - (x[1].a + x[1].b) || y[1].n - x[1].n);
+  const th = (k, l, t) => `<th data-k="${k}" title="${t || "Click to sort"}">${l}${sk === k ? (dir < 0 ? " ▼" : " ▲") : ""}</th>`;
+  const pct = v => v == null ? "–" : (v > 0 ? "+" : "") + Math.round(v) + "%", cls = v => v == null ? "" : v > 0 ? "up" : v < 0 ? "dn" : "";
+  const x1 = v => v == null ? "–" : v.toFixed(v < 10 ? 2 : 1);
+  const lab = what === "sec" ? "Sector" : "Industry", cur = what === "sec" ? fSec : fInd;
+  return `<table class="sectable"><tr>${th("name", lab + " (click a row to filter)")}${th("n", "Companies")}${th("a", "Grade A")}${th("b", "Grade B")}${th("share", "A+B share")}${th("dsh", "vs last Q", "Change in A+B share since last quarter, in percentage points")}${th("avg", "Avg strength")}${th("acc", "Accelerating 2Q+")}${th("msy", "Median Sales YoY")}${th("mny", "Median NP YoY", "Median Net Profit YoY (companies with a profit a year ago)")}${th("mpe", "Median P/E")}${th("mpeg", "Median PEG")}</tr>
+    ${rows.map(([k, r]) => `<tr${k === "(none)" ? "" : ` data-${what}="${esc(k)}"`} class="${k === cur ? "on" : ""}"><td>${esc(k === "(none)" ? "(no " + lab.toLowerCase() + ")" : k)}${what === "ind" && r.sec ? `<div class="gsec">${esc(r.sec)}</div>` : ""}</td><td>${r.n}</td><td>${r.a}</td><td>${r.b}</td><td>${Math.round(r.share)}%</td><td class="${cls(r.dsh)}">${r.dsh == null ? "–" : (r.dsh > 0 ? "+" : "") + Math.round(r.dsh) + " pp"}</td><td>${r.avg == null ? "–" : Math.round(r.avg)}</td><td>${r.acc}</td><td class="${cls(r.msy)}">${pct(r.msy)}</td><td class="${cls(r.mny)}">${pct(r.mny)}</td><td>${x1(r.mpe)}</td><td>${x1(r.mpeg)}</td></tr>`).join("")}</table>${skip ? `<div class="gsec" style="margin-top:4px">${skip} ${what === "sec" ? "sectors" : "industries"} with fewer than ${minN} companies left out.</div>` : ""}`;
+}
+function syncSecSel(data) {
+  const on = hasSec(); document.getElementById("fsecl").hidden = !on; document.getElementById("findl").hidden = !on;
+  if (!on) { fSec = ""; fInd = ""; return; }
+  const uniq = a => [...new Set(a.filter(Boolean))].sort((x, y) => x.localeCompare(y));
+  const secs = uniq(data.map(secOf)), inds = uniq(data.filter(d => !fSec || secOf(d) === fSec).map(indOf));
+  if (fSec && !secs.includes(fSec)) fSec = ""; if (fInd && !inds.includes(fInd)) fInd = "";
+  const opt = (v, l, cur) => `<option value="${esc(v)}"${v === cur ? " selected" : ""}>${esc(l)}</option>`;
+  document.getElementById("fsec").innerHTML = opt("", "All", fSec) + secs.map(v => opt(v, v, fSec)).join("");
+  document.getElementById("find").innerHTML = opt("", "All", fInd) + inds.map(v => opt(v, v, fInd)).join("");
+}
+function breadthHtml(data) {
+  if (!data.length) return "";
+  const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "–";
+  const med = a => { if (!a.length) return null; a = a.slice().sort((x, y) => x - y); const m = a.length >> 1; return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2; };
+  const sg = v => v == null ? "N/D" : (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
+  const np = data.map(d => gOf(d, "np", 0)), sa = data.map(d => gOf(d, "sales", 0));
+  const npKnown = np.filter(g => g.kind !== "na"), npUp = npKnown.filter(g => g.kind === "pos" || (g.kind === "num" && g.val > 0)).length;
+  const om = data.filter(d => !d.bank).map(d => gOf(d, "opm", 0)).filter(g => g.kind === "num");
+  const nRec = data.filter(d => extras(d).rec.length).length, nQual = data.filter(d => extras(d).qual).length;
+  return `<span><b>${esc(quarter)} season${minSales ? " (Sales ≥ ₹" + minSales + " Cr)" : ""}</b></span><span>${data.length} companies</span>
+    <span>NP up YoY: <b>${npUp}</b> of ${npKnown.length} (${pct(npUp, npKnown.length)})</span>
+    <span>Median Sales YoY: <b>${sg(med(sa.filter(g => g.kind === "num").map(g => g.val)))}</b></span>
+    <span>Median NP YoY: <b>${sg(med(np.filter(g => g.kind === "num").map(g => g.val)))}</b></span>
+    <span>OPM up / down: <b>${om.filter(g => g.val > 0).length}</b> / ${om.filter(g => g.val < 0).length}</span>
+    <span>L→P / P→L: <b>${np.filter(g => g.kind === "pos").length}</b> / ${np.filter(g => g.kind === "neg").length}</span>
+    <span>Record quarters: <b>${nRec}</b></span><span>Profit-quality flags: <b>${nQual}</b></span>${allPrices() ? `<span>Prices as of: <b>${esc(allPrices().asOf)}</b></span>` : ""}`;
 }
 const METRIC_SORTS = { opm: "OPM Change", accel: "Acceleration", streak: "Growth Streak" };
 function metricChip(d) {
+  if (sortBy === "ttm") { const g = extras(d).ttm[gKey]; return `<span class="badge ${gcls(g)}" title="Last 4 quarters vs the 4 before"><small>${gKey === "eps" ? "EPS" : "NP"} TTM YoY</small>${esc(g.text)}</span>`; }
   if (!METRIC_SORTS[sortBy]) return "";
   const v = metrics(d)[sortBy];
-  const t = v == null ? "N/D" : sortBy === "streak" ? v + "Q" : sortBy === "opm" ? (v > 0 ? "+" : "") + v + " bps" : (v > 0 ? "+" : "") + v.toFixed(1) + " pts";
+  const t = v == null ? "N/D" : sortBy === "streak" ? v + "Q" : sortBy === "opm" ? (v > 0 ? "+" : "") + v.toFixed(1) + " pp" : (v > 0 ? "+" : "") + v.toFixed(1) + " pts";
   const cls = v == null ? "flat" : sortBy === "streak" ? (v > 0 ? "up" : "flat") : v > 0 ? "up" : v < 0 ? "down" : "flat";
-  return `<span class="badge ${cls}" title="${METRIC_SORTS[sortBy]}"><small>${sortBy === "opm" ? "OPM YoY" : METRIC_SORTS[sortBy]}</small>${esc(t)}</span>`;
+  return `<span class="badge ${cls}" title="${METRIC_SORTS[sortBy]}"><small>${sortBy === "opm" ? "OPM YoY" : (gKey === "eps" ? "EPS " : "NP ") + METRIC_SORTS[sortBy]}</small>${esc(t)}</span>`;
 }
 function card(d) {
   // All five columns: three quarters, then YoY and QoQ
@@ -408,21 +1122,24 @@ function card(d) {
     const s = abbr(g.text);
     return `<td class="${gcls(g)}"><span class="chip"${s !== g.text ? ` title="${esc(g.text)}"` : ""}>${esc(s)}</span></td>`;
   };
-  const rows = ROWS.map(([label,key]) =>
-    `<tr><td>${label}</td><td>${fmtK(key, (d[key] || [])[0])}</td><td>${fmtK(key, (d[key] || [])[1])}</td><td>${fmtK(key, (d[key] || [])[2])}</td>${cell(gOf(d, key, 0))}${cell(gOf(d, key, 1))}</tr>`).join("");
+  // Card layout: current quarter, previous quarter (QoQ base), same quarter last year (YoY base), then QoQ and YoY. PBT is not shown on the card.
+  const rows = ROWS.filter(([, key]) => key !== "pbt").map(([label,key]) =>
+    `<tr><td>${label}</td><td>${fmtK(key, (d[key] || [])[2])}</td><td>${fmtK(key, (d[key] || [])[1])}</td><td>${fmtK(key, (d[key] || [])[0])}</td>${cell(gOf(d, key, 1))}${cell(gOf(d, key, 0))}</tr>`).join("");
   const ng = gOf(d, "np", 0);
   const tone = gcls(ng) === "up" ? "c-up" : gcls(ng) === "down" ? "c-down" : "c-flat";
   const ck = companyKey(d), open = openKeys.has(ck);
   return `<div class="card ${tone}${open ? " open" : ""}" id="c-${esc(slug(d))}">
     <div class="chead">
-      <div class="meta"><span>${esc(d.date)}</span><span class="basis ${esc(String(d.basis).toLowerCase())}">${esc(d.basis)}</span>${metricChip(d)}</div>
+      <div class="meta"><span>${esc(d.date)}</span><span class="basis ${esc(String(d.basis).toLowerCase())}">${esc(d.basis)}</span>${d.derived ? `<span class="rs" title="${esc(d.derived)}">derived</span>` : ""}${extras(d).rec.length ? `<span class="rec" title="Highest in all stored quarters">Record ${esc(extras(d).rec.join(" · "))}</span>` : ""}${extras(d).qual ? `<span class="rs" title="${esc(extras(d).qual)}">Check NP</span>` : ""}${fosLabel(d)}${accelLabel(d)}${valLabel(d)}${stressLabel(d)}${(st => st.grp ? `<span class="grp ${st.grp}" title="${esc(grpTitle(st))}">${STR[st.grp]}</span>` : "")(strength(d))}${STR[flt] ? (st => `<span class="rec" title="Previous quarter vs the same quarter a year earlier">${esc(st.pq)} YoY: Sales ${esc(st.ps.text || "N/D")} · ${gKey === "eps" ? "EPS" : "NP"} ${esc(st.pp.text || "N/D")}</span>`)(strength(d)) : ""}${metricChip(d)}</div>
       <span class="badge ${gcls(ng)}" title="Net Profit growth (YoY)"><small>NP YoY</small>${abbr(ng.text) !== ng.text ? `<span class="lg">${esc(ng.text)}</span><span class="sh">${esc(abbr(ng.text))}</span>` : esc(ng.text)}</span>
     </div>
-    <div class="name">${esc(d.name)}</div>
-    <div class="tbox"><div class="tlabel">FINANCIALS (₹ CRORE)</div>
-    <table><tr><th></th><th>${esc(d.periods[0])}</th><th>${esc(d.periods[1])}</th><th>${esc(d.periods[2])}</th><th>YoY</th><th>QoQ</th></tr>${rows}</table></div>
+    <div class="name"><span>${esc(d.name)}${d.symbol ? `<span class="sym">${esc(String(d.symbol).toUpperCase())}</span>` : ""}</span><img class="nlogo" src="logo.png" alt="price rythm"></div>${((sc, ic) => sc || ic ? `<div class="sitags">${sc ? `<span class="stag" title="Sector">${ICO_SEC}${esc(sc)}</span>` : ""}${sc && ic && ic !== sc ? `<span class="chev">›</span>` : ""}${ic && ic !== sc ? `<span class="stag" title="Industry">${ICO_IND}${esc(ic)}</span>` : ""}</div>` : "")(secOf(d), indOf(d))}
+    <div class="tbox"><div class="tlabel">FINANCIALS (₹ CRORE)${historyOf(d).some(r => r.epsAdj && d.periods.includes(r.p)) ? ` <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">· older EPS adjusted for a share split / bonus</span>` : ""}</div>
+    <table><tr><th></th><th>${esc(d.periods[2])}</th><th>${esc(d.periods[1])}</th><th>${esc(d.periods[0])}</th><th>QoQ</th><th>YoY</th></tr>${rows}</table></div>
     <div class="cbar"><button class="histbtn" data-h="${esc(ck)}">${open ? "Hide history ▴" : "History ▾"}</button>
-      <div class="cfoot admin-only" style="margin:0${d.view ? ";visibility:hidden" : ""}"><button class="edit" data-e="${esc(keyOf(d))}" title="Edit">✎</button><button class="del" data-k="${esc(keyOf(d))}" title="Remove">×</button></div></div>
+      ${!d.view ? `<div class="cfoot admin-only" style="margin:0"><button class="edit" data-e="${esc(keyOf(d))}" title="Edit">✎</button><button class="del" data-k="${esc(keyOf(d))}" title="Remove">×</button></div>`
+        : !allData().some(x => companyKey(x) === ck) ? `<div class="cfoot admin-only" style="margin:0"><button class="del" data-hk="${esc(ck)}" data-hn="${esc(d.name)}" title="Delete this company's history">×</button></div>`
+        : ""}</div>
     ${open ? historyHtml(d) : ""}
   </div>`;
 }
@@ -432,44 +1149,113 @@ function card(d) {
 const companyKey = d => `${d.symbol || d.name}|${d.basis}`.toLowerCase().replace(/\s+/g, " ").trim();
 const slug = d => d.name.toLowerCase().replace(/\b(limited|ltd)\b\.?/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 let openKeys = new Set();
+let hCache = new Map();   // history per company; cleared whenever data changes and on every render
 function historyOf(d) {
+  const hk = companyKey(d); if (hCache.has(hk)) return hCache.get(hk);
+  const out = historyRaw(d); hCache.set(hk, out); return out;
+}
+function historyRaw(d) {
   // Priority for each quarter: that quarter's own card (its XBRL filing) > Screener backfill > a comparison column
   // copied into a later card (used only to fill a gap). A comparison column never overwrites the quarter's own figures.
   const ck = companyKey(d), q = {};
   const bf = allBackfill()[ck] || {};
   Object.keys(bf).forEach(p => { q[p] = Object.assign({ bf: true }, bf[p]); });
-  const entries = allData().filter(x => companyKey(x) === ck).sort((a, z) => qRank(a.periods[2]) - qRank(z.periods[2]));
+  const entries = cardsOfCompany(ck);
   const rowOf = (e, i) => { const r = {}; ROWS.forEach(([, k]) => r[k] = e[k] ? e[k][i] : null); return r; };
   entries.forEach(e => [0, 1].forEach(i => {
     const p = e.periods[i], row = rowOf(e, i);
     if (p && !q[p] && ROWS.some(([, k]) => row[k] != null)) q[p] = row;
   }));
-  entries.forEach(e => { const p = e.periods[2]; if (p) q[p] = rowOf(e, 2); });
-  return Object.keys(q).sort((a, z) => qRank(z) - qRank(a)).map(p => ({ p, ...q[p] }));
+  // A quarter's own card wins field by field: where it has no figure (e.g. no Net Profit read), the Screener / earlier value stays.
+  entries.forEach(e => { const p = e.periods[2]; if (!p) return; const own = rowOf(e, 2), old = q[p] || {};
+    ROWS.forEach(([, k]) => { if (own[k] == null && old[k] != null) own[k] = old[k]; }); q[p] = own; });
+  return splitAdjust(Object.keys(q).sort((a, z) => qRank(z) - qRank(a)).map(p => ({ p, ...q[p] })));
 }
-function histChart(rows) {
-  const r = rows.slice().reverse().filter(x => x.np != null);
-  if (r.length < 2) return "";
-  const W = Math.max(700, r.length * 64), H = 124, labTop = 16, bot = 18, n = r.length, gap = 10;
+// Share splits and bonus issues: EPS falls overnight while the business is unchanged, and older quarters (Screener, old filings)
+// are not restated. Implied share count = Net Profit ÷ EPS; when it jumps 1.5× or more (or falls to 2/3 or less) between two
+// quarters, every older EPS is rescaled to today's share count. Smaller changes (IPO, QIP, ESOPs) stay as real dilution.
+// Only quarters with Net Profit of at least ₹1 Cr and EPS of at least ₹0.05, same sign, are used to read the share count.
+function splitAdjust(rows) {   // rows: newest first
+  const sh = r => r.np != null && r.eps != null && Math.abs(r.np) >= 5 && Math.abs(r.eps) >= 0.05 && Math.sign(r.np) === Math.sign(r.eps) ? r.np / r.eps : null;
+  const raw = rows.map(sh), valid = raw.map((v, i) => v == null ? -1 : i).filter(i => i >= 0);
+  // factor per row: a jump between two neighbouring valid quarters counts only if the quarter beyond confirms the new level (within 25%)
+  const fac = rows.map(() => 1); let f = 1, vi = 0;
+  for (let i = 0; i < rows.length; i++) {
+    if (raw.at(i) != null) {
+      const pos = valid.indexOf(i), prev = pos > 0 ? valid.at(pos - 1) : -1, next = pos + 1 < valid.length ? valid.at(pos + 1) : -1;
+      if (prev >= 0) {
+        const k = raw.at(prev) / raw.at(i), confirmed = next < 0 || Math.abs(raw.at(next) / raw.at(i) - 1) < 0.25;
+        if ((k >= 1.5 || k <= 1 / 1.5) && confirmed) f *= k;
+      }
+    }
+    fac[i] = f;
+  }
+  return rows.map((r, i) => fac.at(i) !== 1 && r.eps != null ? Object.assign({}, r, { eps: Math.round(r.eps / fac.at(i) * 100) / 100, epsRaw: r.eps, epsAdj: true }) : r);
+}
+// Trend bars for one measure. Both charts use the same quarters (r), so their bars line up;
+// each has its own scale. Quarter labels are drawn under the bottom chart only.
+function barChart(r, key, title, pos, showQ, tag = "") {
+  const vals = r.map(x => x[key]);
+  if (vals.filter(v => v != null).length < 2) return "";
+  const W = Math.max(700, r.length * 64), labTop = 16, bot = showQ ? 18 : 2, n = r.length, gap = 10;
+  const posMax = vals.reduce((m, v) => v > 0 ? Math.max(m, v) : m, 0), negMax = vals.reduce((m, v) => v < 0 ? Math.max(m, -v) : m, 0);
+  const hasPos = posMax > 0, hasNeg = negMax > 0;
+  const H = (showQ ? 124 : 108) + (hasNeg ? 12 : 0) - 12;
   const bw = Math.min(46, (W - gap * (n + 1)) / n);
-  const max = Math.max(...r.map(x => Math.abs(x.np)), 1);
-  const hasPos = r.some(x => x.np > 0), hasNeg = r.some(x => x.np < 0);
   // Value labels always sit above the zero line (positive bars) or just above it (negative bars), never on the quarter labels.
   const area = H - labTop - bot - (hasNeg ? 12 : 0);
-  const posShare = hasPos && hasNeg ? r.filter(x => x.np > 0).reduce((m, x) => Math.max(m, x.np), 0) / (r.filter(x => x.np > 0).reduce((m, x) => Math.max(m, x.np), 0) + r.filter(x => x.np < 0).reduce((m, x) => Math.max(m, -x.np), 0)) : hasPos ? 1 : 0;
-  const zero = labTop + (hasNeg ? 12 : 0) + area * posShare;
-  const scale = area / (hasPos && hasNeg ? (r.filter(x => x.np > 0).reduce((m, x) => Math.max(m, x.np), 0) + r.filter(x => x.np < 0).reduce((m, x) => Math.max(m, -x.np), 0)) : max);
+  const zero = labTop + (hasNeg ? 12 : 0) + area * (hasPos && hasNeg ? posMax / (posMax + negMax) : hasPos ? 1 : 0);
+  const scale = area / ((posMax + negMax) || 1);
   const x0 = (W - (n * bw + (n - 1) * gap)) / 2;
   const bars = r.map((x, i) => {
-    const h = Math.max(1, Math.abs(x.np) * scale), X = x0 + i * (bw + gap), Y = x.np >= 0 ? zero - h : zero;
-    const col = x.np >= 0 ? "#009245" : "#c62828";
-    const lab = Math.abs(x.np) >= 1000 ? (x.np / 1000).toFixed(1) + "k" : x.np.toFixed(x.np % 1 ? 1 : 0);
-    return `<rect x="${X}" y="${Y}" width="${bw}" height="${h}" rx="4" fill="${col}" opacity="${i === n - 1 ? 1 : .55}"/>
-      <text class="v" x="${X + bw / 2}" y="${x.np >= 0 ? Y - 4 : zero - 4}" text-anchor="middle">${lab}</text>
-      <text x="${X + bw / 2}" y="${H - 4}" text-anchor="middle">${x.p.replace(" ", "\u00a0")}</text>`;
+    const v = x[key], X = x0 + i * (bw + gap);
+    const q = showQ ? `<text x="${X + bw / 2}" y="${H - 4}" text-anchor="middle">${x.p.replace(" ", "\u00a0")}</text>` : "";
+    if (v == null) return q;
+    const h = Math.max(1, Math.abs(v) * scale), Y = v >= 0 ? zero - h : zero;
+    const lab = Math.abs(v) >= 1000 ? (v / 1000).toFixed(1) + "k" : v.toFixed(v % 1 ? 1 : 0);
+    return `<rect x="${X}" y="${Y}" width="${bw}" height="${h}" rx="4" fill="${v >= 0 ? pos : "#c62828"}" opacity="${i === n - 1 ? 1 : .55}"/>
+      <text class="v" x="${X + bw / 2}" y="${v >= 0 ? Y - 4 : zero - 4}" text-anchor="middle">${lab}</text>${q}`;
   }).join("");
-  return `<div class="hlabel">NET PROFIT TREND (₹ CR)</div><svg class="hchart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Net profit by quarter">
+  return `<div class="hlabel">${tag}<span>${title}</span></div><svg class="hchart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}">
     <line x1="0" x2="${W}" y1="${zero}" y2="${zero}" stroke="#d6e2ee"/>${bars}</svg>`;
+}
+// YoY growth trend: three small cards — Sales, Net Profit and EPS growth vs the same quarter a year earlier — for the
+// last 5 quarters, each on its own scale. Rising bars = accelerating growth; red bars below the line = a fall.
+// Bars beyond 200% are cut at the edge with the real figure printed; dashed bars = loss → profit (L→P) / profit → loss (P→L).
+function growthCard(rows, key, title, col) {
+  const byP = Object.fromEntries(rows.map(r => [r.p, r]));
+  const pts = rows.slice().reverse().map(r => { const b = byP[prevQ(r.p, 4)]; return { p: r.p, g: b ? growthK(key, b[key], r[key]) : { kind: "na" } }; })
+    .filter(x => x.g.kind !== "na").slice(-5);
+  if (pts.length < 2) return "";
+  const CAP = 200, cv = g => g.kind === "num" ? Math.max(-CAP, Math.min(CAP, g.val)) : null;
+  let posMax = Math.max(0, ...pts.map(x => cv(x.g) ?? 0)), negMax = Math.max(0, ...pts.map(x => -(cv(x.g) ?? 0)));
+  if (pts.some(x => x.g.kind === "pos")) posMax = Math.max(posMax, 50); if (pts.some(x => x.g.kind === "neg")) negMax = Math.max(negMax, 50);
+  posMax = posMax || 10;
+  const W = 300, top = 20, area = 110, bot = 22, H = top + area + bot + (negMax ? 12 : 0), n = pts.length, gap = 14;
+  const bw = Math.min(38, (W - 20 - gap * (n - 1)) / n), x0 = (W - (n * bw + (n - 1) * gap)) / 2;
+  const zero = top + area * (posMax / (posMax + negMax)), sc = area / (posMax + negMax);
+  const lab = g => g.kind === "pos" ? "L→P" : g.kind === "neg" ? "P→L" : Math.abs(g.val) >= 1000 ? (Math.abs(g.val) / 1000).toFixed(1) + "k%" : Math.round(Math.abs(g.val)) + "%";
+  const bars = pts.map((x, i) => {
+    const g = x.g, X = x0 + i * (bw + gap), last = i === n - 1;
+    const v = g.kind === "pos" ? posMax : g.kind === "neg" ? -negMax : cv(g), h = Math.max(1, Math.abs(v) * sc), Y = v >= 0 ? zero - h : zero, c = v >= 0 ? col : "#c62828";
+    return `<rect x="${X}" y="${Y}" width="${bw}" height="${h}" rx="3" fill="${c}" opacity="${last ? 1 : .5}"${g.kind !== "num" ? ` stroke-dasharray="3 2" stroke="${c}" fill-opacity=".35"` : ""}/>
+      <text class="v" x="${X + bw / 2}" y="${v >= 0 ? Y - 4 : Y + h + 11}" text-anchor="middle" style="font-size:11px${last ? ";fill:" + c : ""}">${lab(g)}</text>
+      <text x="${X + bw / 2}" y="${H - 5}" text-anchor="middle" style="font-size:10.5px">${x.p.replace(" FY", "'")}</text>`;
+  }).join("");
+  return `<div class="gcard"><div class="gct" style="color:${col}">${title}</div>
+    <svg class="hchart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}"><line x1="8" x2="${W - 8}" y1="${zero}" y2="${zero}" stroke="#d6e2ee"/>${bars}</svg></div>`;
+}
+function growthChart(d, rows) {
+  const cards = [growthCard(rows, "sales", "SALES YoY", "#0071bc"), growthCard(rows, "np", "NET PROFIT YoY", "#009245"), growthCard(rows, "eps", "EPS YoY", "#7c3aed")].filter(Boolean);
+  if (!cards.length) return "";
+  return `<div class="hlabel" style="margin-top:14px">${idTag(d)}<span>YoY GROWTH TREND (%) · LAST 5 QUARTERS</span></div>
+    <div class="gcards">${cards.join("")}</div>
+    <div class="hnote" style="margin-top:2px">Each quarter vs the same quarter a year earlier. Red bars = a fall. Bars past 200% are cut at the edge, with the real figure printed; dashed bars = loss → profit (L→P) or profit → loss (P→L).</div>`;
+}
+function histChart(rows, tag = "") {
+  const r = rows.slice().reverse().filter(x => x.np != null || x.sales != null);
+  if (r.length < 2) return "";
+  return barChart(r, "sales", "SALES TREND (₹ CR)", "#0071bc", false, tag) + barChart(r, "np", "NET PROFIT TREND (₹ CR)", "#009245", true, tag);
 }
 function historyHtml(d) {
   const rows = historyOf(d);
@@ -491,9 +1277,10 @@ function historyHtml(d) {
   const fy = Object.keys(fys).sort().reverse().filter(y => [1,2,3,4].every(n => fys[y][n] && ["sales", "np"].every(k => fys[y][n][k] != null)))
     .map(y => { const t = k => [1,2,3,4].reduce((s, n) => s + fys[y][n][k], 0);
       return `<span><b>FY20${y}</b>Sales ₹${fmt(t("sales"))} Cr · Net Profit ₹${fmt(t("np"))} Cr</span>`; }).join("");
-  return `<div class="hist">${histChart(rows)}
-    <div class="hlabel">QUARTER BY QUARTER (₹ CRORE)</div>
+  return `<div class="hist">${fosPanel(d)}${stressTimeline(d)}${histChart(rows, idTag(d))}
+    <div class="hlabel">${idTag(d)}<span>QUARTER BY QUARTER (₹ CRORE)</span></div>
     <div style="overflow-x:auto"><table class="htable" style="min-width:640px;table-layout:fixed"><tr><th>Quarter</th><th>Sales</th><th>Sales YoY (%)</th><th>Operating Profit</th><th>Operating Profit YoY (%)</th><th>OPM (%)</th><th>Net Profit</th><th>NP YoY</th></tr>${tr}</table></div>
+    ${growthChart(d, rows)}
     ${fy ? `<div class="fy">${fy}</div>` : ""}
     <div class="hnote">${rows.length} quarters stored. Full-year totals appear once all four quarters of a year are in.</div></div>`;
 }
@@ -522,7 +1309,7 @@ function cardsFor(Q) {
   // so a quarter's XBRL added later replaces the copy frozen in this card.
   all.filter(d => d.periods[2] === Q).forEach(d => {
     const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), v = Object.assign({}, d);
-    ROWS.forEach(([, k]) => v[k] = [0, 1].map(i => { const r = byP[d.periods[i]]; return r ? (r[k] ?? null) : (d[k] ? d[k][i] : null); }).concat([d[k] ? d[k][2] : null]));
+    ROWS.forEach(([, k]) => v[k] = [0, 1].map(i => { const r = byP[d.periods[i]]; return r ? (r[k] ?? null) : (d[k] ? d[k][i] : null); }).concat([d[k] && d[k][2] != null ? d[k][2] : (byP[d.periods[2]] || {})[k] ?? null]));   // blanks filled from Screener
     out.push(v); seen.add(companyKey(d));
   });
   all.slice().sort((a, z) => qRank(a.periods[2]) - qRank(z.periods[2])).forEach(d => meta.set(companyKey(d), d));   // latest card gives name
@@ -542,8 +1329,95 @@ function cardsFor(Q) {
   });
   return out;
 }
+// ---------- earnings screen → AmiBroker watchlist ----------
+// Passes when: EPS YoY ≥ X%, Sales YoY ≥ Y%, (optionally) EPS YoY higher than last quarter's,
+// and EPS growth no more than Z points below Net Profit growth (larger gap = share dilution).
+let screenPass = [];
+function runScreen(data) {
+  const n = id => parseFloat(document.getElementById(id).value);
+  const tE = n("sc-eps"), tS = n("sc-sales"), tD = n("sc-dil"), acc = document.getElementById("sc-acc").checked;
+  screenPass = data.filter(d => {
+    const e = gOf(d, "eps", 0), sa = gOf(d, "sales", 0), np = gOf(d, "np", 0);
+    if (e.kind !== "num" || e.val < tE) return false;
+    if (sa.kind !== "num" || sa.val < tS) return false;
+    if (acc) { const a = metrics(d, "eps").accel; if (a == null || a <= 0) return false; }
+    if (np.kind !== "num" || np.val - e.val > tD) return false;
+    return !!(d.symbol || d.name);
+  });
+  const syms = screenPass.map(d => (d.symbol || d.name).toUpperCase());
+  document.getElementById("sc-out").textContent = `${syms.length} of ${data.length} companies pass for ${quarter || ""}${minSales ? " (Sales ≥ ₹" + minSales + " Cr)" : ""}` + (syms.length ? ": " + syms.join(", ") : ".");
+  const btn = document.getElementById("sc-export");
+  btn.textContent = `Export watchlist (${syms.length})`; btn.disabled = !syms.length;
+}
+function exportWatchlist() {
+  const syms = [...new Set(screenPass.map(d => (d.symbol || d.name).toUpperCase()))];
+  if (!syms.length) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([syms.join("\r\n") + "\r\n"], { type: "text/plain" }));
+  a.download = `EarningsRythm_${(quarter || "").replace(/\s+/g, "")}_screen.tls`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+// ---------- Top 50 list + CSV of the whole sorted list ----------
+let topList = [];
+const gNum = g => g.kind === "num" ? Math.round(g.val * 10) / 10 : g.text;        // numeric % where possible, else the label (L→P etc.)
+function sortValue(d) {
+  if (sortBy === "growth") { const g = gOf(d, gKey, base()); return g.text; }
+  if (sortBy === "ttm") return extras(d).ttm[gKey].text;
+  if (sortBy === "stress") { const r = stressNow(d); return r ? r.score : "N/D"; }
+  if (sortBy === "run") return accelRun(d).n + "Q";
+  if (sortBy === "pe" || sortBy === "peg") { const v = valuation(d), x = v && v[sortBy]; return x == null ? "N/A" : x.toFixed(sortBy === "peg" ? 2 : 1); }
+  if (sortBy === "fos") { const f = fosOf(d); return f && f.score != null ? f.score + (f.prov ? "*" : "") + " (" + f.grade + ")" : "N/D"; }
+  if (METRIC_SORTS[sortBy]) { const v = metrics(d)[sortBy];
+    return v == null ? "N/D" : sortBy === "streak" ? v + "Q" : sortBy === "opm" ? (v > 0 ? "+" : "") + v.toFixed(1) + " pp" : (v > 0 ? "+" : "") + v.toFixed(1) + " pts"; }
+  if (sortBy === "latest") return d.date || "";
+  return "";
+}
+const sortLabel = () => ({ growth: (gKey === "eps" ? "EPS" : "NP") + " YoY", ttm: (gKey === "eps" ? "EPS" : "NP") + " TTM YoY", stress: "Stress", fos: "Earnings Strength", run: (gKey === "eps" ? "EPS" : "NP") + " Acceleration run", pe: "P/E", peg: "PEG", opm: "OPM YoY", accel: (gKey === "eps" ? "EPS" : "NP") + " Acceleration",
+  streak: (gKey === "eps" ? "EPS" : "NP") + " Streak", latest: "Result date", name: "" })[sortBy];
+function renderTop(list, how) {
+  topList = list;
+  const n = Math.min(100, list.length), lab = sortLabel(), gk = gKey === "eps" ? "EPS" : "NP";
+  document.getElementById("topsum").textContent = list.length ? `Top ${n} of ${list.length} — ${how}` : "Top 100 — no companies in this list";
+  const rows = list.slice(0, 100).map((d, i) => {
+    const sg = gOf(d, "sales", 0), og = gOf(d, "op", 0), kg = gOf(d, gKey, 0);
+    return `<tr data-c="${esc(companyKey(d))}"><td>${i + 1}</td><td>${esc(d.name)}</td><td>${fmt(d.sales[2])}</td><td class="${gcls(sg)}">${esc(sg.text)}</td>
+      <td>${fmt(d.op[2])}</td><td class="${gcls(og)}">${esc(og.text)}</td><td>${fmtK("opm", d.opm[2])}</td><td>${fmt(d.np[2])}</td><td>${fmt(d.eps[2])}</td>
+      <td class="${gcls(kg)}">${esc(kg.text)}</td>${lab ? `<td class="m">${esc(sortValue(d))}</td>` : ""}</tr>`;
+  }).join("");
+  document.getElementById("toptable").innerHTML = list.length ? `<table class="ttable"><tr><th>#</th><th>Company</th><th>Sales</th><th>Sales YoY</th><th>Op Profit</th><th>OP YoY</th><th>OPM</th><th>Net Profit</th><th>EPS</th><th>${gk} YoY</th>${lab ? `<th>${esc(lab)}</th>` : ""}</tr>${rows}</table>` : "";
+  const b = document.getElementById("csvbtn"); b.textContent = `Export CSV (${list.length})`; b.disabled = !list.length;
+}
+function exportCsv() {
+  if (!topList.length) return;
+  const q = c => { const t = c == null ? "" : String(c); return /[",\r\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
+  const head = ["Rank", "Symbol", "Company", "Sector", "Industry", "Basis", "Quarter", "Result date", "Source", "Sales (Cr)", "Sales YoY %", "Sales QoQ %",
+    "Operating Profit (Cr)", "OP YoY %", "OPM %", "OPM YoY (pp)", "PBT (Cr)", "Net Profit (Cr)", "NP YoY %", "NP QoQ %", "EPS (Rs)", "EPS YoY %",
+    "NP Acceleration (pts)", "EPS Acceleration (pts)", "NP Growth Streak (Q)", "EPS Growth Streak (Q)",
+    "Sales TTM YoY %", "NP TTM YoY %", "EPS TTM YoY %", "Record quarter", "Profit-quality flag", "Stress score", "Earnings Strength", "Earnings Strength provisional", "Grade", "Risk flags", "Acceleration run (Q)", "Price", "Price date", "EPS 4Q (Rs)", "P/E", "PEG"];
+  const lines = topList.map((d, i) => {
+    const mN = metrics(d, "np"), mE = metrics(d, "eps"), og = gOf(d, "opm", 0), x = extras(d);
+    return [i + 1, d.symbol || "", String(d.name).toUpperCase(), secOf(d), indOf(d), d.basis, d.periods[2], d.src === "screener" || d.src === "history" ? "" : d.date,
+      d.src === "screener" ? "Screener" : d.src === "history" ? "History" : "XBRL",
+      d.sales[2], gNum(gOf(d, "sales", 0)), gNum(gOf(d, "sales", 1)), d.op[2], gNum(gOf(d, "op", 0)), d.opm[2], og.kind === "num" ? og.val : "",
+      d.pbt[2], d.np[2], gNum(gOf(d, "np", 0)), gNum(gOf(d, "np", 1)), d.eps[2], gNum(gOf(d, "eps", 0)),
+      mN.accel == null ? "" : Math.round(mN.accel * 10) / 10, mE.accel == null ? "" : Math.round(mE.accel * 10) / 10, mN.streak, mE.streak,
+      gNum(x.ttm.sales), gNum(x.ttm.np), gNum(x.ttm.eps), x.rec.join(" "), x.qual ? "Yes" : "", (stressNow(d) || {}).score ?? "", (fosOf(d) || {}).score ?? "", fosOf(d) && fosOf(d).prov ? "Yes" : "", (fosOf(d) || {}).grade || "", ((fosOf(d) || {}).flags || []).join("; "), accelRun(d).n,
+      ...(v => v ? [v.price, v.asOf, v.eps ?? "", v.pe == null ? "" : Math.round(v.pe * 10) / 10, v.peg == null ? "" : Math.round(v.peg * 100) / 100] : ["", "", "", "", ""])(valuation(d))].map(q).join(",");
+  });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["\ufeff" + head.join(",") + "\r\n" + lines.join("\r\n") + "\r\n"], { type: "text/csv" }));
+  a.download = `EarningsRythm_${(quarter || "").replace(/\s+/g, "")}_${preset ? preset + "_" : ""}${sortBy}${["growth", "accel", "streak"].includes(sortBy) ? "_" + gKey : ""}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function strText() {
+  const L = stLevels(), pq = prevQ(quarter, 1), g = gKey === "eps" ? "EPS" : "Net Profit";
+  const strong = `Sales YoY ≥ ${L.s}% and ${g} YoY ≥ ${L.g}% or loss → profit`;
+  return `, ${STR[flt]}: ${flt === "fresh" ? `weak in ${pq}, strong in ${quarter}` : flt === "sust" ? `strong in both ${pq} and ${quarter}` : `strong in ${pq}, weak in ${quarter}`} (strong = ${strong})`;
+}
 function render() {
-  mCache = new Map();
+  mCache = new Map(); sCache = new Map(); hCache = new Map(); fCache = new Map();
   // Dropdown: the latest quarter and the three before it (older quarters are rebuilt from history).
   const latestQ = allData().map(d => d.periods[2]).sort((a, z) => qRank(z) - qRank(a))[0];
   const qs = latestQ ? [0, 1, 2, 3].map(i => prevQ(latestQ, i)) : [];
@@ -555,19 +1429,20 @@ function render() {
   // Title shows the quarter on screen, e.g. "EARNINGS RYTHM - Q2 FY2027"
   document.getElementById("qtitle").textContent = quarter ? " - " + quarter.replace(/FY(\d{2})$/, "FY20$1") : "";
   setShareLinks();
+  syncSecSel(data);
 
   document.getElementById("tabs").innerHTML =
     TABS.map((t,i) => {
-      const n = data.filter(d => d.periods[2] === quarter && (i === 0 || bucket(d) === i)).length;
+      const n = data.filter(d => d.periods[2] === quarter && (i === 0 || bucket(d) === i) && passFlt(d)).length;
       return `<div class="tab${i===tab && !search.trim()?" on":""}" data-i="${i}">${t}<span class="n" data-i="${i}">${n}</span></div>`;
     }).join("");
   const b = base();
   const term = search.trim().toLowerCase();
   // While searching, look across every company in the quarter, whatever the tab.
   let list = data.filter(d => d.periods[2] === quarter &&
-    (term ? d.name.toLowerCase().includes(term) : tab === 0 || bucket(d) === tab));
+    (term ? (d.name.toLowerCase().includes(term) || (d.symbol && String(d.symbol).toLowerCase().includes(term))) : tab === 0 || bucket(d) === tab) && passFlt(d));
   // Sort By options for this view (Growth only where every company has a % growth: Best / Worst Performer)
-  const opts = [["growth", "Growth"], ["opm", "OPM Change"], ["accel", "Acceleration"], ["streak", "Growth Streak"], ["latest", "Latest"], ["name", "Name"]];
+  const opts = [["growth", "Growth"], ["fos", "Earnings Strength (highest first)"], ["ttm", "TTM Growth"], ["run", "Acceleration run"], ["pe", "P/E (lowest first)"], ["peg", "PEG (lowest first)"], ["stress", "Stress (lowest first)"], ["opm", "OPM Change"], ["accel", "Acceleration"], ["streak", "Growth Streak"], ["latest", "Latest"], ["name", "Name"]];
   if (!opts.some(o => o[0] === sortBy)) sortBy = defaultSort();
   document.getElementById("sortby").innerHTML = opts.map(([v, l]) => `<option value="${v}"${v === sortBy ? " selected" : ""}>${l}</option>`).join("");
 
@@ -575,9 +1450,31 @@ function render() {
   const byLatest = (x, y) => (dateVal(y.date) - dateVal(x.date)) || (idx.get(y) - idx.get(x));
   if (sortBy === "name") list.sort((x, y) => x.name.localeCompare(y.name, "en", { sensitivity: "base" }));
   else if (sortBy === "growth") list.sort((x, y) => {
-    const gx = gOf(x, "np", b), gy = gOf(y, "np", b);
+    const gx = gOf(x, gKey, b), gy = gOf(y, gKey, b);
     const rk = g => g.kind === "num" ? 0 : g.kind === "pos" || g.kind === "neg" ? 1 : 2;   // % growth first, then turnarounds, then N/D
     return rk(gx) - rk(gy) || (rk(gx) === 0 ? (tab === 2 ? gx.val - gy.val : gy.val - gx.val) : 0) || byLatest(x, y);   // Worst: biggest fall first
+  });
+  else if (sortBy === "fos") list.sort((x, y) => {   // highest score first; no score last
+    const a = fosOf(x), z = fosOf(y), sa = a && a.score != null ? a.score : null, sz = z && z.score != null ? z.score : null;
+    return (sa == null) - (sz == null) || (sz ?? 0) - (sa ?? 0) || byLatest(x, y);
+  });
+  else if (sortBy === "pe" || sortBy === "peg") list.sort((x, y) => {   // lowest first; N/A and no price last
+    const a = (valuation(x) || {})[sortBy], z = (valuation(y) || {})[sortBy];
+    return (a == null) - (z == null) || (a ?? 0) - (z ?? 0) || byLatest(x, y);
+  });
+  else if (sortBy === "run") list.sort((x, y) => {   // longest run first; then the size of this quarter's step up
+    const a = accelRun(x).n, z = accelRun(y).n;
+    const fa = (fosOf(x) || {}).score ?? -1, fz = (fosOf(y) || {}).score ?? -1;   // then Earnings Strength, then this quarter's step up
+    return z - a || fz - fa || ((metrics(y).accel ?? -1e9) - (metrics(x).accel ?? -1e9)) || byLatest(x, y);
+  });
+  else if (sortBy === "stress") list.sort((x, y) => {   // lowest stress first; no score last
+    const a = stressNow(x), z = stressNow(y);
+    return (!a) - (!z) || (a && z ? a.score - z.score : 0) || byLatest(x, y);
+  });
+  else if (sortBy === "ttm") list.sort((x, y) => {   // same order rules as Growth: % first, then turnarounds, then N/D
+    const gx = extras(x).ttm[gKey], gy = extras(y).ttm[gKey];
+    const rk = g => g.kind === "num" ? 0 : g.kind === "pos" || g.kind === "neg" ? 1 : 2;
+    return rk(gx) - rk(gy) || (rk(gx) === 0 ? (tab === 2 ? gx.val - gy.val : gy.val - gx.val) : 0) || byLatest(x, y);
   });
   else if (METRIC_SORTS[sortBy]) list.sort((x, y) => {   // highest first; N/D last
     const a = metrics(x)[sortBy], z = metrics(y)[sortBy];
@@ -593,14 +1490,37 @@ function render() {
        "Companies whose Net Profit fell (" + cmp + ")",
        "Companies whose Net Profit turned from loss to profit (" + cmp + ")",
        "Companies whose Net Profit turned from profit to loss (" + cmp + ")"][tab];
-  const how = sortBy === "growth" ? (tab === 2 ? "ranked by Net Profit growth, biggest fall first" : "ranked by Net Profit growth, highest first")
-    : sortBy === "opm" ? "ranked by OPM change YoY in bps, biggest expansion first (banks excluded)"
-    : sortBy === "accel" ? "ranked by Net Profit growth acceleration (this quarter's YoY minus last quarter's YoY), highest first"
-    : sortBy === "streak" ? "ranked by consecutive quarters of Net Profit growth YoY, longest first"
+  const gName = gKey === "eps" ? "EPS" : "Net Profit";
+  const how = sortBy === "growth" ? (tab === 2 ? `ranked by ${gName} growth, biggest fall first` : `ranked by ${gName} growth, highest first`)
+    : sortBy === "fos" ? "ranked by Quarterly Earnings Strength (0–100), highest first; companies without enough history last"
+    : sortBy === "pe" ? `ranked by P/E (price ${esc((allPrices() || {}).asOf || "not loaded")} ÷ EPS of the last 4 quarters), lowest first; loss-makers and stocks without a price last`
+    : sortBy === "peg" ? `ranked by PEG (P/E ÷ 4-quarter EPS growth), lowest first; no growth or no price last`
+    : sortBy === "run" ? `ranked by acceleration run: quarters in a row of rising ${gName} growth backed by rising operating profit growth, longest first, then Earnings Strength`
+    : sortBy === "stress" ? "ranked by stress score, lowest first (companies without XBRL stress data last)"
+    : sortBy === "ttm" ? `ranked by ${gName} TTM growth (last 4 quarters vs the 4 before), ${tab === 2 ? "biggest fall first" : "highest first"}`
+    : sortBy === "opm" ? "ranked by OPM change YoY in percentage points, biggest expansion first (banks excluded)"
+    : sortBy === "accel" ? `ranked by ${gName} growth acceleration (this quarter's YoY minus last quarter's YoY), highest first`
+    : sortBy === "streak" ? `ranked by consecutive quarters of ${gName} growth YoY, longest first`
     : sortBy === "name" ? "sorted by name (A–Z)" : "sorted by latest result date";
-  document.getElementById("basisline").textContent = quarter ? `${what}${minSales ? ", Sales ≥ ₹" + minSales + " Cr" : ""}, ${how}.` : "";
-  if (term && list.length === 1) openKeys.add(companyKey(list[0]));
-  document.getElementById("grid").innerHTML = list.length ? list.map(card).join("")
+  document.getElementById("basisline").textContent = quarter ? `${what}${minSales ? ", Sales ≥ ₹" + minSales + " Cr" : ""}${fSec ? ", sector " + fSec : ""}${fInd ? ", industry " + fInd : ""}${preset ? ` — ${PRESET[preset].name}: Grade ${preset === "gradeA" ? "A" : "A/B"} only, ${preset === "accel" ? "net profit ₹10 Cr+, " : ""}${preset === "gems" ? `sales ₹1,000 Cr or less, accelerating 2Q+ or Fresh strength, PEG below 1 (year-earlier 4Q EPS positive, 4Q EPS growth 200% or less), final score only, ${hasSec() ? "cyclical industries left out" : "no industry data so cyclicals not left out"}, ` : ""}no Check NP, stress 40 or less` : ""}${flt === "acc3" ? ", accelerating 3 quarters or more only" : flt === "sbrk" ? ", stress break this quarter only" : flt === "rec" ? ", record quarters only" : flt === "qual" ? ", profit-quality flags only" : STR[flt] ? strText() : ""}, ${how}.` : "";
+  // A search that finds exactly one company opens its history once; after that Hide/Show history is the user's choice.
+  if (term && list.length === 1 && autoOpened !== companyKey(list[0])) { openKeys.add(companyKey(list[0])); autoOpened = companyKey(list[0]); }
+  if (!term) autoOpened = "";
+  shownList = list;
+  const ss = document.getElementById("strset"); ss.hidden = !STR[flt];
+  document.getElementById("st-glab").textContent = gKey === "eps" ? "EPS" : "NP";
+  const pb = document.getElementById("pr-tls"); pb.hidden = !preset; pb.textContent = `Watchlist (.tls) (${list.length})`; pb.disabled = !list.length;
+  const pc = document.getElementById("pr-csv"); pc.hidden = !preset; pc.textContent = `List (.csv) (${list.length})`; pc.disabled = !list.length;
+  const tb = document.getElementById("st-tls"); tb.textContent = `Watchlist (.tls) (${list.length})`; tb.disabled = !list.length;
+  const bEl = document.getElementById("breadth"); bEl.innerHTML = quarter ? breadthHtml(data) : ""; bEl.hidden = !bEl.innerHTML;
+  const prevData = quarter && hasSec() ? cardsFor(prevQ(quarter, 1)).filter(d => d.periods[2] === prevQ(quarter, 1) && (!minSales || (d.sales && d.sales[2] != null && d.sales[2] >= minSales))) : [];
+  const qd = data.filter(d => d.periods[2] === quarter);
+  const sp = quarter ? groupHtml(qd, prevData, secOf, secSort, "sec") : ""; document.getElementById("secpanel").innerHTML = sp; document.getElementById("secwrap").hidden = !sp;
+  const ip = quarter ? groupHtml(qd, prevData, indOf, indSort, "ind", 7) : ""; document.getElementById("indpanel").innerHTML = ip; document.getElementById("indwrap").hidden = !ip;
+  if (ADMIN) runScreen(data);
+  renderTop(list, how);
+  document.getElementById("tblbtn").textContent = tableMode ? "Card view" : "Table view";
+  document.getElementById("grid").innerHTML = tableMode && list.length ? renderTable(list) : list.length ? list.map(card).join("")
     : `<div class="empty">${term ? "No company matches “" + esc(search.trim()) + "”." : "No companies in this list."}</div>`;
 }
 
@@ -611,9 +1531,9 @@ const XB = {
     sales: ["RevenueFromOperations"],
     exp:   ["Expenses"],
     fin:   ["FinanceCosts"],
-    dep:   ["DepreciationDepletionAndAmortisationExpense"],
+    dep:   ["DepreciationDepletionAndAmortisationExpense", "DepreciationAndAmortisationExpense"],   // older / SME (IFFNonBanking) filings use the second
     pbt:   ["ProfitBeforeTax"],
-    np:    ["ProfitLossForPeriod"],
+    np:    ["ProfitLossForPeriod", "ProfitLossForThePeriod"],   // older / SME (IFFNonBanking) filings use the second
     eps:   ["BasicEarningsLossPerShareFromContinuingAndDiscontinuedOperations", "BasicEarningsLossPerShareFromContinuingOperations"],
   },
   bank: {
@@ -661,8 +1581,19 @@ function xbrlEntry(text) {
   // The quarter: company-wide (no dimension) context of about three months ending on the reporting-period end.
   const endTag = str(["DateOfEndOfReportingPeriod"]);
   const quarters = Object.values(ctx).filter(c => !c.dim && c.s && c.e && isoDay(c.e) - isoDay(c.s) >= 80 && isoDay(c.e) - isoDay(c.s) <= 100);
-  const qc = quarters.find(c => c.e === endTag) || quarters.sort((a, z) => isoDay(z.e) - isoDay(a.e))[0];
-  if (!qc) throw Error("No quarter-length period found in this file");
+  let qc = quarters.find(c => c.e === endTag) || quarters.sort((a, z) => isoDay(z.e) - isoDay(a.e))[0], half = null;
+  if (!qc) {
+    // Half-yearly filers (e.g. SME): read the six-month figures; the quarter is worked out later as half-year − the other quarter.
+    const halves = Object.values(ctx).filter(c => !c.dim && c.s && c.e && isoDay(c.e) - isoDay(c.s) >= 170 && isoDay(c.e) - isoDay(c.s) <= 190);
+    const hc = halves.find(c => c.e === endTag) || halves.sort((a, z) => isoDay(z.e) - isoDay(a.e))[0];
+    if (hc) { qc = hc; half = { s: hc.s, e: hc.e }; }
+    else {
+      const typ = str(["TypeOfReportingPeriod"]), st = str(["DateOfStartOfReportingPeriod"]), en = str(["DateOfEndOfReportingPeriod"]);
+      throw Error(/year/i.test(typ)
+        ? `This company files ${typ.toLowerCase()} results (${st} to ${en}), not quarterly or half-yearly ones, so there is no quarter to show. Skip it.`
+        : "No quarter-length period found in this file");
+    }
+  }
   const inQ = f => !f.c.dim && f.c.s === qc.s && f.c.e === qc.e;
   const val = (names, label) => {
     for (const n of names) {
@@ -673,27 +1604,53 @@ function xbrlEntry(text) {
     return null;
   };
 
-  const bank = (F.InterestEarned || []).some(inQ);
+  // Banking format = it carries bank-only lines (Interest expended, PBT "from ordinary activities").
+  // NBFCs (e.g. 360 ONE) also tag Interest earned, but file the normal Ind-AS layout and are read as normal companies.
+  const bank = ["InterestExpended", "ProfitLossFromOrdinaryActivitiesBeforeTax"].some(n => (F[n] || []).some(inQ));
+  const nbfc = !bank && (F.InterestEarned || []).some(inQ);
   const T = bank ? XB.bank : XB.indas, cr = v => v == null ? null : Math.round(v / 1e5) / 100;   // rupees → ₹ crore, 2 decimals
   const sales = val(T.sales, "Sales"), pbt = val(T.pbt, "PBT"), np = val(T.np, "Net Profit"), eps = val(T.eps, "EPS");
-  let op = null;
+  const opt = names => { for (const n of names) { const f = (F[n] || []).find(inQ); if (f) { const v = parseFloat(f.t.replace(/,/g, "")); if (isFinite(v)) return v; } } return 0; };
+  const oi = opt(["OtherIncome"]), exc = opt(bank ? ["ExceptionalItems"] : ["ExceptionalItemsBeforeTax"]);
+  let op = null, rebuilt = null, how = "";
   if (bank) {
     const ix = val(T.intx, "Interest expended"), ox = val(T.opex, "Operating expenses"), pv = val(T.prov, "Provisions");
-    if ([sales, ix, ox, pv].every(v => v != null)) op = sales - ix - ox - pv;
+    if ([sales, ix, ox, pv].every(v => v != null)) { op = sales - ix - ox - pv; rebuilt = op + oi + exc; how = "Operating Profit + Other Income + Exceptional"; }
   } else {
     const ex = val(T.exp, "Expenses"), fi = val(T.fin, "Finance costs"), dp = val(T.dep, "Depreciation");
-    if ([sales, ex, fi, dp].every(v => v != null)) op = sales - (ex - fi - dp);
+    if ([sales, ex, fi, dp].every(v => v != null)) { op = sales - (ex - fi - dp); rebuilt = op + oi - fi - dp + exc; how = "Operating Profit + Other Income − Interest − Depreciation + Exceptional"; }
+  }
+  let check = "not possible (figures missing)";
+  if (rebuilt != null && pbt != null) {
+    const diff = rebuilt - pbt, tol = Math.max(1e5, Math.abs(pbt) * 0.001);   // ₹1 lakh or 0.1%, for rounding
+    if (Math.abs(diff) <= tol) check = `✓ ${how} = reported PBT`;
+    else { check = `✗ does not add up`; problems.push(`Check failed: ${how} = ₹${cr(rebuilt)} Cr, but reported PBT = ₹${cr(pbt)} Cr (difference ₹${cr(diff)} Cr). Check the file before adding.`); }
   }
   const opm = op != null && sales ? Math.round(op / sales * 10000) / 100 : null;   // from raw rupees, not rounded crore
   const basisTxt = str(["NatureOfReportStandaloneConsolidated"]);
   const cur = { sales: cr(sales), op: cr(op), opm, pbt: cr(pbt), np: cr(np), eps: eps == null ? null : Math.round(eps * 100) / 100 };
-  return {
+  // Stress-score inputs (₹ crore). Quarter lines from the quarter; balance sheet at the period end; cash flow for the
+  // longest period ending on it (half-year in Sep, full year in Mar). Lines a filing does not carry stay out.
+  const num = f => { const v = parseFloat(String(f.t).replace(/,/g, "")); return isFinite(v) ? v : null; };
+  const qv = n => { const f = (F[n] || []).find(inQ); return f ? num(f) : null; };
+  const atEnd = n => { const f = (F[n] || []).find(f => !f.c.dim && !f.c.s && f.c.e === qc.e); return f ? num(f) : null; };
+  const longC = Object.values(ctx).filter(c => !c.dim && c.s && c.e === qc.e).sort((a, z) => isoDay(a.s) - isoDay(z.s))[0];
+  const lv = n => { const f = longC && (F[n] || []).find(f => !f.c.dim && f.c.s === longC.s && f.c.e === longC.e); return f ? num(f) : null; };
+  const st = { fmt: bank ? "bank" : nbfc ? "nbfc" : "" };
+  if (!half) Object.assign(st, { oi: cr(oi), exc: cr(exc), tax: cr(qv("TaxExpense")), fin: bank ? null : cr(qv("FinanceCosts")) });
+  const cfo = lv("CashFlowsFromUsedInOperatingActivities");
+  if (cfo != null) { st.cfo = cr(cfo); st.cfNp = cr(lv(T.np[0])); }
+  const aud = [...new Map((F.AuditorsFirmName || []).map(f => f.t.replace(/\s+/g, " ").trim()).filter(Boolean).map(t => [audKey(t), t])).values()];
+  if (aud.length) st.aud = aud;
+  const eqv = atEnd("Equity");
+  if (eqv != null && !bank && !nbfc) { const b = [atEnd("BorrowingsNoncurrent"), atEnd("BorrowingsCurrent")]; st.eq = cr(eqv); st.debt = cr(b.reduce((t, v) => t + (v || 0), 0)); }
+  return { st,
     name: str(["NameOfTheCompany", "NameOfBank"]),
     symbol: str(["Symbol"]).toUpperCase(),
     basis: /consol/i.test(basisTxt) ? "Consolidated" : /standalone/i.test(basisTxt) ? "Standalone" : "",
     date: longDate(str(["DateOfBoardMeetingWhenFinancialResultsWereApproved"])),
-    q: quarterOf(qc.e), cur, problems, bank,
-    audit: [["Format", bank ? "Banking" : "Ind-AS"], ["Quarter", `${qc.s} to ${qc.e}`], ["Rounding in filing", str(["LevelOfRounding"]) || "not stated"], ["Tags", tags.join("; ")]],
+    q: quarterOf(qc.e), cur, problems, bank, half,
+    audit: [["PBT check", check], ["Format", bank ? "Banking" : nbfc ? "NBFC (read as Ind-AS)" : "Ind-AS"], [half ? "Half-year" : "Quarter", `${qc.s} to ${qc.e}`], ["Rounding in filing", str(["LevelOfRounding"]) || "not stated"], ["Tags", tags.join("; ")]],
   };
 }
 
@@ -706,23 +1663,51 @@ function fillComparisons(it) {
   [0, 1].forEach(i => {
     const p = d.periods[i];
     const e = stored.find(x => companyKey(x) === ck && x.periods[2] === p);
-    const row = e ? Object.fromEntries(ROWS.map(([, k]) => [k, e[k] ? e[k][2] : null])) : bf[p] || null;
+    // another XBRL file for that quarter still waiting in this review queue counts too
+    const qd = !e && queue.find(x => x !== it && x.kind === "xbrl" && x.status === "ready" && x.data.q === p && companyKey({ symbol: x.symbol, name: x.data.name, basis: x.data.basis }) === ck);
+    const row = e ? Object.fromEntries(ROWS.map(([, k]) => [k, e[k] ? e[k][2] : null])) : qd ? qd.cur : bf[p] || null;
     ROWS.forEach(([, k]) => { d[k] = d[k] || [null, null, null]; d[k][i] = row ? (row[k] ?? null) : null; });
-    src.push([p, e ? "XBRL entry" : row ? "Screener backfill" : "NOT FOUND — add the Screener CSV or that quarter's XBRL"]);
+    src.push([p, e ? "XBRL entry" : qd ? "XBRL file in this review" : row ? "Screener backfill" : "NOT FOUND — add the Screener CSV or that quarter's XBRL"]);
   });
   ROWS.forEach(([, k]) => d[k][2] = it.cur[k]);
   it.audit = it.baseAudit.concat([["Columns", src.map(([p, s]) => `${p}: ${s}`).join("; ") + `; ${d.q}: this XBRL file`]]);
+  if (it.half) it.audit.push(["Derived", it.derivedOk ? it.derivedNote : "waiting for the other quarter of the half-year"]);
 }
 
+// Half-year file: the quarter = half-year − the half's other quarter (an XBRL quarter already stored, or in this review).
+function deriveHalf(it) {
+  const d = it.data, ck = companyKey({ symbol: it.symbol, name: d.name, basis: d.basis }), p = prevQ(d.q, 1);
+  const e = allData().find(x => companyKey(x) === ck && x.periods[2] === p && x.src !== "screener");
+  const qd = !e && queue.find(x => x !== it && x.kind === "xbrl" && x.status === "ready" && !x.half && x.data.q === p && companyKey({ symbol: x.symbol, name: x.data.name, basis: x.data.basis }) === ck);
+  const other = e ? Object.fromEntries(ROWS.map(([, k]) => [k, e[k] ? e[k][2] : null])) : qd ? qd.cur : null;
+  d.problems = d.problems.filter(t => !/^Half-year file/.test(t));
+  if (!other) {
+    it.derivedOk = false; it.derivedNote = "";
+    it.cur = Object.fromEntries(ROWS.map(([, k]) => [k, null]));
+    d.problems.push(`Half-year file: add the ${p} XBRL (stored, or in this review) so ${d.q} can be worked out as half-year − ${p}.`);
+    return;
+  }
+  const sub = k => it.halfCur[k] == null || other[k] == null ? null : Math.round((it.halfCur[k] - other[k]) * 100) / 100;
+  const cur = { sales: sub("sales"), op: sub("op"), pbt: sub("pbt"), np: sub("np"), eps: sub("eps") };
+  cur.opm = cur.op != null && cur.sales ? Math.round(cur.op / cur.sales * 10000) / 100 : null;
+  it.cur = cur; it.derivedOk = true;
+  it.derivedNote = `${d.q} = half-year (${it.half.s} to ${it.half.e}) − ${p} (${e ? "stored XBRL" : "XBRL file in this review"}); EPS approximate`;
+}
+function refreshQueue() {
+  const rdy = queue.filter(x => x.kind === "xbrl" && x.status === "ready");
+  rdy.filter(x => x.half).forEach(deriveHalf);
+  rdy.forEach(fillComparisons);
+}
 function addXbrl(text, fileName) {
   try {
     const x = xbrlEntry(text);
     const d = { name: x.name, date: x.date, basis: x.basis, q: x.q, problems: x.problems.slice() };
     if (!d.basis) d.problems.push("Basis not found");
     if (!x.symbol) d.problems.push("NSE symbol not found: history cannot be matched");
-    const it = { id: Math.random().toString(36).slice(2), kind: "xbrl", status: "ready", file: fileName, symbol: x.symbol, bank: x.bank, cur: x.cur, baseAudit: [["File", fileName]].concat(x.audit), data: d };
-    fillComparisons(it);
+    const it = { id: Math.random().toString(36).slice(2), kind: "xbrl", status: "ready", file: fileName, symbol: x.symbol, bank: x.bank, st: x.st, cur: x.cur, baseAudit: [["File", fileName]].concat(x.audit), data: d };
+    if (x.half) { it.half = x.half; it.halfCur = x.cur; }
     queue.push(it);
+    refreshQueue();   // every queued file sees the others
   } catch (e) {
     queue.push({ id: Math.random().toString(36).slice(2), kind: "xbrl", status: "error", error: fileName + ": " + e.message, audit: [] });
   }
@@ -732,6 +1717,7 @@ function addXbrl(text, fileName) {
 // ---------- reading Screener CSV (one-time history) ----------
 const CSV_ROWS = { "Sales":"sales", "Operating Profit":"op", "OPM %":"opm", "Profit before tax":"pbt", "Net Profit":"np", "EPS in Rs":"eps" };
 function addCsv(text, fileName) {
+  if (/_annual\.csv$/i.test(fileName)) return addAnnualCsv(text, fileName);
   const m = /^(.+?)_(consolidated|standalone)_quarters/i.exec(fileName.replace(/^.*[\\/]/, ""));
   if (!m) { alert(fileName + ": name should look like APOLLO_consolidated_quarters.csv"); return; }
   const symbol = m[1].toUpperCase(), basis = m[2][0].toUpperCase() + m[2].slice(1).toLowerCase();
@@ -745,19 +1731,41 @@ function addCsv(text, fileName) {
     qs.forEach((q, i) => { if (q) { const v = parseFloat(r[i + 1]); out[q][k] = isFinite(v) ? v : null; } });
   });
   const ck = companyKey({ symbol, basis });
+  // Quarters that already have an XBRL card are skipped: Screener never overwrites or shadows XBRL data.
+  const xq = new Set(allData().filter(x => companyKey(x) === ck && x.src !== "screener").map(x => x.periods[2]));
+  const last = Object.keys(out).sort((a, z) => qRank(a) - qRank(z)).pop();   // the CSV's latest quarter, before skipping
+  Object.keys(out).forEach(q => { if (xq.has(q)) delete out[q]; });
   addBackfill(ck, out);
-  // Card for the latest quarter in the CSV, unless an XBRL card for that quarter already exists.
-  const last = Object.keys(out).sort((a, z) => qRank(a) - qRank(z)).pop();
-  if (last && !allData().some(x => companyKey(x) === ck && x.periods[2] === last && x.src !== "screener")) {
+  // Card for the CSV's latest quarter, unless an XBRL card for that quarter already exists.
+  if (last && !xq.has(last)) {
     const periods = [prevQ(last, 4), prevQ(last, 1), last];
     const d = { name: symbol, symbol, date: "Screener", basis, periods, src: "screener" };
     ROWS.forEach(([, k]) => d[k] = periods.map(p => out[p] ? (out[p][k] ?? null) : null));
     addEntry(d);
-    quarter = last;
+    quarter = null;   // stay on the latest quarter after loading a CSV (a CSV can end on an older quarter, e.g. results not yet out)
   }
-  queue.filter(x => x.kind === "xbrl" && x.status === "ready").forEach(fillComparisons);   // refresh any XBRL waiting for review
+  refreshQueue();   // refresh any XBRL waiting for review
   renderReview(); render();
   backfillNotice(symbol, basis, out);
+}
+// <SYMBOL>_<basis>_annual.csv (from screener_quarters.py): yearly Sales and Net Profit, for 3/5/10-year compounded growth.
+function addAnnualCsv(text, fileName) {
+  const m = /^(.+?)_(consolidated|standalone)_annual/i.exec(fileName.replace(/^.*[\\/]/, ""));
+  if (!m) { alert(fileName + ": name should look like APOLLO_consolidated_annual.csv"); return; }
+  const symbol = m[1].toUpperCase(), basis = m[2][0].toUpperCase() + m[2].slice(1).toLowerCase(), ck = companyKey({ symbol, basis });
+  const rows = text.replace(/^\ufeff/, "").split(/\r?\n/).filter(l => l.trim()).map(l => l.split(",").map(c => c.trim()));
+  const head = rows.find(r => r[0] === "Parameter");
+  if (!head) { alert(fileName + ": not a screener_quarters.py annual CSV"); return; }
+  const out = {}, key = { "Sales": "sales", "Net Profit": "np" };
+  head.slice(1).forEach((y, i) => { if (!/^FY\d{2}$/.test(y)) return;   // years only; the TTM column is worked out from quarters
+    rows.forEach(r => { const k = key[r[0]]; if (!k) return; const v = parseFloat(r[i + 1]); (out[y] = out[y] || {})[k] = isFinite(v) ? v : null; }); });
+  if (bfRemoved.includes(ck)) { bfRemoved = bfRemoved.filter(k => k !== ck); saveBfRemoved(); }
+  anLocal[ck] = Object.assign(anLocal[ck] || {}, out);
+  try { localStorage.setItem(AN_STORE, JSON.stringify(anLocal)); } catch (e) {}
+  const ys = Object.keys(out).sort(), el = document.getElementById("bfline");
+  el.innerHTML = `<b>Annual history loaded:</b> ${esc(symbol)} (${esc(basis)}) ${ys.length} years, ${esc(ys[0] || "")} → ${esc(ys[ys.length - 1] || "")}`;
+  el.hidden = false; clearTimeout(bfTimer); bfTimer = setTimeout(() => { el.hidden = true; }, 5000);
+  render();
 }
 // Brief notice after a CSV loads; hides itself after a few seconds.
 let bfTimer = null;
@@ -768,6 +1776,61 @@ function backfillNotice(symbol, basis, out) {
   clearTimeout(bfTimer); bfTimer = setTimeout(() => { el.hidden = true; }, 5000);
 }
 
+// ---------- whole XBRL folder (NSE XBRL FETCHER: <folder>\nse_xbrl_<SYMBOL>_…\xml\*.xml) ----------
+// Every .xml is read; one file per company + basis + quarter (a Revision beats an Original). Files with no problems are added
+// straight away; files with problems, half-year files that cannot be worked out, and unreadable files wait in the review box.
+async function addFolder(files) {
+  const xs = [...files].filter(f => /\.(xml|xbrl)$/i.test(f.name)), note = document.getElementById("bfline");
+  clearTimeout(bfTimer); note.hidden = false;
+  const best = new Map(), errs = []; let dup = 0, n = 0;
+  for (const f of xs) {
+    if (++n % 25 === 0) { note.innerHTML = `<b>Reading XBRL folder…</b> ${n} of ${xs.length} files`; await new Promise(r => setTimeout(r)); }
+    let x; try { x = xbrlEntry(await f.text()); } catch (e) { errs.push({ id: Math.random().toString(36).slice(2), kind: "xbrl", status: "error", error: (f.webkitRelativePath || f.name) + ": " + e.message, audit: [] }); continue; }
+    const k = `${x.symbol}|${x.basis}|${x.q}`.toLowerCase(), rev = /revision/i.test(f.name), o = best.get(k);
+    if (o) { dup++; if (o.rev && !rev) continue; }
+    best.set(k, { x, f, rev });
+  }
+  // One basis per company: the basis already stored for that symbol; for a new company, Consolidated when both are in the folder.
+  const storedBasis = new Map();
+  allData().forEach(d => { if (d.symbol) storedBasis.set(String(d.symbol).toUpperCase(), d.basis); });
+  Object.keys(allBackfill()).forEach(k => { const [sy, b] = k.split("|"); if (!storedBasis.has(sy.toUpperCase())) storedBasis.set(sy.toUpperCase(), b.charAt(0).toUpperCase() + b.slice(1)); });
+  const inFolder = new Map();
+  best.forEach(({ x }) => { const sy = x.symbol; (inFolder.get(sy) || inFolder.set(sy, new Set()).get(sy)).add(x.basis); });
+  let other = 0;
+  best.forEach((v, k) => {
+    const sy = v.x.symbol, want = storedBasis.get(sy) || (inFolder.get(sy).has("Consolidated") ? "Consolidated" : v.x.basis);
+    if (sy && v.x.basis && v.x.basis !== want) { best.delete(k); other++; }
+  });
+  const items = [...best.values()].map(({ x, f }) => {
+    const d = { name: x.name, date: x.date, basis: x.basis, q: x.q, problems: x.problems.slice() };
+    if (!d.basis) d.problems.push("Basis not found");
+    if (!x.symbol) d.problems.push("NSE symbol not found: history cannot be matched");
+    const it = { id: Math.random().toString(36).slice(2), kind: "xbrl", status: "ready", file: f.name, symbol: x.symbol, bank: x.bank, st: x.st, cur: x.cur,
+      baseAudit: [["File", f.webkitRelativePath || f.name]].concat(x.audit), data: d };
+    if (x.half) { it.half = x.half; it.halfCur = x.cur; }
+    return it;
+  });
+  const before = queue; queue = before.concat(items);
+  items.filter(it => it.half).forEach(deriveHalf);   // a half-year file needs the other quarter (stored, or in this folder)
+  const ok = it => !it.data.problems.length && (!it.half || it.derivedOk);
+  const adds = items.filter(ok).map(it => {
+    const q = it.data.q, d = { name: it.data.name, symbol: it.symbol, date: it.data.date, basis: it.data.basis, periods: [prevQ(q, 4), prevQ(q, 1), q], st: it.st };
+    ROWS.forEach(([, k]) => d[k] = [null, null, it.cur[k] ?? null]);   // comparison columns are read from history
+    if (it.half) d.derived = it.derivedNote;
+    if (it.bank) d.bank = true;
+    return d;
+  });
+  const kq = new Set(adds.map(d => companyKey(d) + "#" + d.periods[2]));
+  const rmKeys = allData().filter(x => x.src === "screener" && kq.has(companyKey(x) + "#" + x.periods[2])).map(keyOf);   // XBRL replaces Screener cards
+  const saved = addEntries(adds, rmKeys);
+  queue = before.concat(items.filter(it => !ok(it)), errs);
+  refreshQueue();
+  const review = queue.length - before.length;
+  note.innerHTML = `<b>XBRL folder:</b> ${xs.length} files read · <b>${adds.length}</b> added · ${review} need review below · ${dup} duplicate${dup === 1 ? "" : "s"} skipped (Revision kept over Original)` +
+    (other ? ` · ${other} skipped as the other basis (one basis per company: the one already stored, or Consolidated)` : "") + ". " +
+    (saved ? "Click <b>Save data file</b> to keep them." : "<b>Browser storage is full: click Save data file now</b>, before closing this page.");
+  quarter = null; renderReview(); render();
+}
 function addFiles(files) {
   [...files].forEach(f => f.text().then(t => /\.csv$/i.test(f.name) ? addCsv(t, f.name) : addXbrl(t, f.name)));
 }
@@ -843,6 +1906,8 @@ function updateItemGrowth(el) {
 }
 
 function addFromReview(id) {
+  const hq = queue.find(x => x.id === id);
+  if (hq && hq.half && !hq.derivedOk) { alert(hq.data.problems.find(t => /^Half-year file/.test(t)) || "Half-year file: the other quarter is missing."); return; }
   const el = document.querySelector(`.item[data-id="${id}"]`);
   const d = readItem(el);
   const bad = [];
@@ -852,20 +1917,23 @@ function addFromReview(id) {
   if (bad.length) { alert(bad.join("\n")); return; }
   const it = queue.find(x => x.id === id);
   if (it && it.symbol) d.symbol = it.symbol;
+  if (it && it.half) d.derived = it.derivedNote;
   if (it && it.src) d.src = it.src;
   if (it && it.bank) d.bank = true;
+  if (it && it.st) d.st = it.st;
   // An XBRL card replaces the Screener card for the same company and quarter.
   allData().filter(x => x.src === "screener" && companyKey(x) === companyKey(d) && x.periods[2] === d.periods[2]).forEach(x => removeEntry(keyOf(x)));
   if (it && it.kind === "edit" && it.oldKey !== keyOf(d)) removeEntry(it.oldKey);
   addEntry(d);
   dropFromQueue(id);
-  quarter = d.periods[2];
+  quarter = null;   // after adding, show the latest quarter (and its card with the latest result date), whatever order files were added in
   render();
 }
 function dropFromQueue(id) {
   const q = queue.find(x => x.id === id);
   if (q && q.url) URL.revokeObjectURL(q.url);
   queue = queue.filter(x => x.id !== id);
+  refreshQueue();   // a quarter just added may complete a half-year file still waiting
   renderReview();
 }
 
@@ -888,10 +1956,10 @@ function saveFile() {
   // Comparison columns are written from history, so a replaced Screener figure is not kept as a copy inside a card.
   const data = allData().sort((a, z) => qRank(z.periods[2]) - qRank(a.periods[2])).map(d => {
     const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), v = Object.assign({}, d);
-    ROWS.forEach(([, k]) => v[k] = [0, 1].map(i => { const r = byP[d.periods[i]]; return r ? (r[k] ?? null) : (d[k] ? d[k][i] : null); }).concat([d[k] ? d[k][2] : null]));
+    ROWS.forEach(([, k]) => v[k] = [0, 1].map(i => { const r = byP[d.periods[i]]; return r ? (r[k] ?? null) : (d[k] ? d[k][i] : null); }).concat([d[k] && d[k][2] != null ? d[k][2] : (byP[d.periods[2]] || {})[k] ?? null]));   // blanks filled from Screener
     return v;
   });
-  window.BACKFILL_DATA = bfOut; bfCache = null;
+  window.BACKFILL_DATA = bfOut; bfCache = null; hCache = new Map();
   const note = document.getElementById("bfline");
   note.innerHTML = `<b>Saved.</b> ${dropped} Screener quarter${dropped === 1 ? "" : "s"} replaced by XBRL ${dropped === 1 ? "was" : "were"} dropped.`;
   note.hidden = false; clearTimeout(bfTimer); bfTimer = setTimeout(() => { note.hidden = true; }, 5000);
@@ -901,11 +1969,17 @@ function saveFile() {
       const o = { name: d.name, symbol: d.symbol || "", date: d.date, basis: d.basis, periods: d.periods };
       if (d.src) o.src = d.src;
       if (d.bank) o.bank = true;
+      if (d.derived) o.derived = d.derived;
       ROWS.forEach(([, k]) => o[k] = d[k]);
+      if (d.st) o.st = d.st;
       return "  " + JSON.stringify(o);
     }).join(",\n") + "\n];\n" +
     "// Screener backfill (one-time history), by symbol|basis and quarter.\n" +
-    "window.BACKFILL_DATA = " + JSON.stringify(bfOut) + ";\n";
+    "window.BACKFILL_DATA = " + JSON.stringify(bfOut) + ";\n" +
+    "// Yearly Sales / Net Profit (Screener annual CSVs), by symbol|basis and financial year.\n" +
+    "window.ANNUAL_DATA = " + JSON.stringify(allAnnual()) + ";\n" +
+    "// Prices from the AmiBroker export, for P/E and PEG.\n" +
+    "window.PRICE_DATA = " + JSON.stringify(allPrices()) + ";\n";
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([text], { type: "text/javascript" }));
   a.download = "results_data.js";
@@ -915,17 +1989,47 @@ function saveFile() {
 
 // ---------- events ----------
 document.getElementById("tabs").addEventListener("click", e => {
-  if (e.target.dataset.i) { tab = +e.target.dataset.i; search = ""; document.getElementById("search").value = ""; sortBy = defaultSort(); render(); }
+  if (e.target.dataset.i) { clearPreset(); tab = +e.target.dataset.i; search = ""; document.getElementById("search").value = ""; sortBy = defaultSort(); render(); }
 });
 document.querySelectorAll("input[name=mode]").forEach(r =>
   r.addEventListener("change", e => { mode = e.target.value; render(); }));
-document.getElementById("sortby").addEventListener("change", e => { sortBy = e.target.value; render(); });
-document.getElementById("minsales").addEventListener("change", e => { minSales = +e.target.value; render(); });
+document.getElementById("sortby").addEventListener("change", e => { sortBy = e.target.value; render(); });   // re-sorting keeps the quick list
+document.getElementById("fsec").addEventListener("change", e => { fSec = e.target.value; fInd = ""; render(); });   // filters compose with quick lists
+document.getElementById("find").addEventListener("change", e => { fInd = e.target.value; render(); });
+document.getElementById("secpanel").addEventListener("click", e => {
+  const h = e.target.closest("th[data-k]");
+  if (h) { const k = h.dataset.k; secSort = secSort.k === k ? { k, dir: -secSort.dir } : { k, dir: k === "name" ? 1 : -1 }; render(); return; }
+  const tr = e.target.closest("tr[data-sec]"); if (!tr) return;
+  fSec = fSec === tr.dataset.sec ? "" : tr.dataset.sec; fInd = ""; render(); });
+document.getElementById("indpanel").addEventListener("click", e => {
+  const h = e.target.closest("th[data-k]");
+  if (h) { const k = h.dataset.k; indSort = indSort.k === k ? { k, dir: -indSort.dir } : { k, dir: k === "name" ? 1 : -1 }; render(); return; }
+  const tr = e.target.closest("tr[data-ind]"); if (!tr) return;
+  fInd = fInd === tr.dataset.ind ? "" : tr.dataset.ind; fSec = ""; render(); });
+document.getElementById("minsales").addEventListener("change", e => { clearPreset(); minSales = +e.target.value; render(); });
+document.getElementById("gbasis").addEventListener("change", e => { clearPreset(); gKey = e.target.value; render(); });
+document.getElementById("flt").addEventListener("change", e => { clearPreset(); flt = e.target.value; render(); });
+document.getElementById("presets").addEventListener("change", e => { if (e.target.name === "preset") setPreset(e.target.value); });
+["st-s", "st-g"].forEach(id => document.getElementById(id).addEventListener("change", render));
+document.getElementById("st-tls").addEventListener("click", exportStrength);
+document.getElementById("pr-tls").addEventListener("click", exportStrength);
+document.getElementById("pr-csv").addEventListener("click", exportCsv);   // same columns as Export CSV, for the quick list shown
+document.getElementById("screen").addEventListener("input", () => render());
+document.getElementById("sc-export").addEventListener("click", exportWatchlist);
+document.getElementById("csvbtn").addEventListener("click", exportCsv);
+document.getElementById("toptable").addEventListener("click", e => {   // a row opens that company's card with its history
+  const tr = e.target.closest("tr[data-c]"); if (!tr) return;
+  openKeys.add(tr.dataset.c); render();
+  const el = [...document.querySelectorAll("#grid .card")].find(c => c.querySelector(".histbtn") && c.querySelector(".histbtn").dataset.h === tr.dataset.c);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 document.getElementById("search").addEventListener("input", e => { search = e.target.value; render(); });
 document.getElementById("quarter").addEventListener("change", e => { quarter = e.target.value; render(); });
 document.getElementById("files").addEventListener("change", e => { addFiles(e.target.files); e.target.value = ""; });
+document.getElementById("xfolder").addEventListener("change", e => { const f = [...e.target.files]; e.target.value = ""; addFolder(f); });
 document.getElementById("save").addEventListener("click", saveFile);
 document.getElementById("csvfiles").addEventListener("change", e => { addFiles(e.target.files); e.target.value = ""; });
+document.getElementById("pricefile").addEventListener("change", e => { const f = e.target.files[0]; e.target.value = ""; if (f) f.text().then(t => addPriceCsv(t, f.name)); });
 function startEdit(k) {
   const d = allData().find(x => keyOf(x) === k);
   if (!d) return;
@@ -933,13 +2037,28 @@ function startEdit(k) {
   const copy = v => v ? v.slice() : [null, null, null];
   const data = { name: d.name, date: d.date, basis: d.basis, q: d.periods[2], periods: d.periods.slice(), problems: [] };
   ROWS.forEach(([, kk]) => data[kk] = copy(d[kk]));
-  queue.unshift({ id: Math.random().toString(36).slice(2), kind: "edit", status: "ready", oldKey: k, symbol: d.symbol, src: d.src, data });
+  queue.unshift({ id: Math.random().toString(36).slice(2), kind: "edit", status: "ready", oldKey: k, symbol: d.symbol, src: d.src, bank: d.bank, st: d.st, data });
   renderReview();
   document.getElementById("review").scrollIntoView({ behavior: "smooth" });
 }
+document.getElementById("tblbtn").addEventListener("click", () => { tableMode = !tableMode; render(); });
 document.getElementById("grid").addEventListener("click", e => {
+  const sn = e.target.closest(".sn[data-sq]");
+  if (sn) {   // stress timeline: show that quarter's breakdown
+    const w = sn.closest(".stwrap");
+    w.querySelectorAll(".sn").forEach(x => x.classList.toggle("on", x === sn));
+    w.querySelectorAll(".sd").forEach(x => x.hidden = x.dataset.sd !== sn.dataset.sq);
+    return;
+  }
+  const th = e.target.closest("th[data-sk]");
+  if (th) { const k = th.dataset.sk; if (k === tKey) tDir = -tDir; else { tKey = k; tDir = ["name", "q"].includes(k) ? 1 : -1; } render(); return; }
+  if (e.target.id === "rcsv") { exportTable(); return; }
   if (e.target.dataset.h) { const k = e.target.dataset.h; openKeys.has(k) ? openKeys.delete(k) : openKeys.add(k); render(); return; }
   if (e.target.dataset.e) { startEdit(e.target.dataset.e); return; }
+  if (e.target.dataset.hk) {   // "From history" card of a company with no stored cards: delete its stored history
+    if (confirm(`Delete all stored history for ${e.target.dataset.hn}?\n\nIts Screener quarters are removed. Loading its CSV again brings them back.`)) { removeBackfill(e.target.dataset.hk); render(); }
+    return;
+  }
   const k = e.target.dataset.k;
   if (k && confirm("Remove this company from the results?")) { removeEntry(k); render(); }
 });
