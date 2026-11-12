@@ -214,6 +214,9 @@
   .sectable th { background:#f7f9fb; font-weight:600; cursor:pointer; user-select:none; } .sectable th:hover { color:var(--green-ink); }
   .sectable tr[data-sec] { cursor:pointer; } .sectable tr[data-sec]:hover td { background:#f3f8f5; } .sectable tr.on td { background:#e8f3ec; font-weight:600; }
   /* Tags in the card's top row: same size and font as the Consolidated / Standalone box (colours unchanged) */
+  .grp.dfree { color:var(--green-ink); background:#e3f5ea; } .grp.ddn { color:var(--green-ink); background:#eef8f1; } .grp.dup { color:var(--down); background:#fde8e8; }
+  .htable td .dq { color:var(--muted); font-size:10.5px; } .htable td.g.up { color:var(--up); } .htable td.g.dn { color:var(--down); }
+  .grp.brk { color:#b45309; background:#fef3c7; } .grp.brk.last { color:#92400e; background:#fdf6e3; }
   .grp.fresh { color:var(--blue); background:#e6f0fa; } .grp.sust { color:var(--green-ink); background:#e3f5ea; } .grp.fade { color:var(--down); background:#fde8e8; }
   .stx.lo { color:var(--green-ink); background:#e3f5ea; } .stx.mid { color:#b45309; background:#fef3c7; } .stx.hi { color:var(--down); background:#fde8e8; }
   .fos.na { color:#4b5563; background:#eef1f5; } .grp.pe { color:#374151; background:#eef1f5; }
@@ -353,6 +356,8 @@
     <label title="Min Sales ≥ ₹100 Cr · all companies · EPS · sorted by Earnings Strength · Grade A only · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="gradeA"> Grade A</label>
     <label title="Min Sales ≥ ₹100 Cr · EPS growth rising 3+ quarters in a row, backed by operating profit · sorted by acceleration run, then Earnings Strength · Grade A/B only · net profit ₹10 Cr+ · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="accel"> Accelerators</label>
     <label title="Min Sales ≥ ₹100 Cr · sales ₹1,000 Cr or less this quarter · EPS · accelerating 2Q+ or Fresh strength · PEG below 1, not a turnaround (year-earlier 4Q EPS positive, 4Q EPS growth 200% or less) · final score only (no *) · cyclical industries left out · sorted by PEG, lowest first · Grade A/B only · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="gems"> Hidden gems</label>
+    <label title="Min Sales ≥ ₹100 Cr · EPS · record sales after a flat 8-quarter base, net profit 1.25× its old high, OPM at an 8-quarter high · also last quarter's breakouts still growing YoY · banks and cyclical industries left out · sorted by how far net profit cleared its old high · Grade A/B only · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="breakout"> Breakouts</label>
+    <label title="Min Sales ≥ ₹100 Cr · EPS · debt down 20%+ from the same half a year earlier (from at least 5% of equity) · sales and EPS up YoY · sorted by Earnings Strength · Grade A/B only · no Check NP · stress 40 or less, no BREAK"><input type="radio" name="preset" value="delev"> Deleveraging</label>
     <button id="pr-tls" hidden title="This quick list's NSE symbols, for an AmiBroker watchlist">Watchlist (.tls)</button>
     <button id="pr-csv" hidden title="This quick list as a CSV, with Sector and Industry after the company name">List (.csv)</button>
   </div>
@@ -374,6 +379,9 @@
       </label>
       <label class="sortby" id="findl" hidden>Industry
         <select id="find"></select>
+      </label>
+      <label class="sortby">Debt
+        <select id="fdebt"><option value="">All</option><option value="free">Debt-free</option><option value="down">Debt ↓</option><option value="up">Debt ↑</option></select>
       </label>
       <label class="sortby">Growth On
         <select id="gbasis"><option value="np">Net Profit</option><option value="eps">EPS</option></select>
@@ -421,7 +429,7 @@ const STORE = "priceRythm.xbrlTest.v1", BF_STORE = "priceRythm.xbrlTest.backfill
 // Without it, everyone (including you) sees exactly what is in results_data.js.
 const ADMIN = /[?&]admin\b/i.test(location.search);
 if (ADMIN) document.body.classList.add("admin");
-let fSec = "", fInd = "";   // Sector / Industry filters (from the AmiBroker price file)
+let fSec = "", fInd = "", fDebt = "";   // fDebt: "free" | "down" | "up" (works with any quick list)   // Sector / Industry filters (from the AmiBroker price file)
 let preset = "";   // quick list: "core" | "early" | "" (off)
 let tab = 0, mode = "yoy", quarter = null, search = "", sortBy = "latest", minSales = 0, gKey = "np", flt = "";   // gKey: growth sorts on Net Profit or EPS
 // Best / Worst Performer rank by Net Profit growth by default; the other views by latest result date.
@@ -435,7 +443,7 @@ let local = (() => {
   catch (e) { return { items:[], removed:[] }; }
 })();
 const loadLocal = () => local;
-function saveLocal(s) { local = s; adCache = adByCk = null; hCache = new Map(); try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {} }
+function saveLocal(s) { local = s; adCache = adByCk = null; hCache = new Map(); brkCache.clear(); try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {} }
 // The combined list is built once and reused until the stored data changes (saveLocal clears it).
 let adCache = null, adByCk = null;
 function allData() { if (!adCache) adCache = buildAllData(); return adCache.slice(); }
@@ -483,14 +491,14 @@ function allBackfill() {
   return (bfCache = out);
 }
 function removeBackfill(ck) {
-  bfCache = null; hCache = new Map();
+  bfCache = null; hCache = new Map(); brkCache.clear();
   if (anLocal[ck]) { delete anLocal[ck]; try { localStorage.setItem(AN_STORE, JSON.stringify(anLocal)); } catch (e) {} }
   delete bfLocal[ck];
   try { localStorage.setItem(BF_STORE, JSON.stringify(bfLocal)); } catch (e) {}
   if (!bfRemoved.includes(ck)) { bfRemoved.push(ck); saveBfRemoved(); }
 }
 function addBackfill(ck, quarters) {
-  bfCache = null; hCache = new Map();
+  bfCache = null; hCache = new Map(); brkCache.clear();
   if (bfRemoved.includes(ck)) { bfRemoved = bfRemoved.filter(k => k !== ck); saveBfRemoved(); }   // loading its CSV again brings it back
   bfLocal[ck] = Object.assign(bfLocal[ck] || {}, quarters);
   try { localStorage.setItem(BF_STORE, JSON.stringify(bfLocal)); } catch (e) {}
@@ -506,7 +514,7 @@ function addEntries(list, removeKeys) {
   const s = loadLocal(), add = new Map(list.map(d => [keyOf(d), d])), rm = new Set(removeKeys);
   s.items = s.items.filter(x => !add.has(keyOf(x)) && !rm.has(keyOf(x))).concat([...add.values()]);
   const removed = new Set(s.removed.filter(k => !add.has(k))); rm.forEach(k => removed.add(k)); s.removed = [...removed];
-  local = s; adCache = adByCk = null; hCache = new Map();
+  local = s; adCache = adByCk = null; hCache = new Map(); brkCache.clear();
   try { localStorage.setItem(STORE, JSON.stringify(s)); return true; } catch (e) { return false; }
 }
 function removeEntry(k) {
@@ -934,10 +942,11 @@ let prLocal = (() => { try { return JSON.parse(localStorage.getItem(PR_STORE)) |
 const allPrices = () => (ADMIN && prLocal) || window.PRICE_DATA || null;
 function valuation(d) {
   const P = allPrices(), sym = d.symbol ? String(d.symbol).toUpperCase() : ""; if (!P || !sym || P.prices[sym] == null) return null;
-  const price = P.prices[sym], byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), Q = d.periods[2];
+  const Q = d.periods[2], snap = P.byQ && P.byQ[Q] && P.byQ[Q].prices[sym] != null ? P.byQ[Q] : null;   // that quarter's price if stored, else today's
+  const price = snap ? snap.prices[sym] : P.prices[sym], byP = Object.fromEntries(historyOf(d).map(r => [r.p, r]));
   let eps = 0; for (let i = 0; i < 4; i++) { const r = byP[prevQ(Q, i)]; if (!r || r.eps == null) { eps = null; break; } eps += r.eps; }
   const pe = eps > 0 ? price / eps : null, g = extras(d).ttm.eps, peg = pe != null && g.kind === "num" && g.val > 0 ? pe / g.val : null;
-  return { price, eps: eps == null ? null : Math.round(eps * 100) / 100, pe, peg, g, asOf: P.asOf };
+  return { price, eps: eps == null ? null : Math.round(eps * 100) / 100, pe, peg, g, asOf: snap ? snap.asOf : P.asOf };
 }
 function valLabel(d) {
   const v = valuation(d); if (!v) return "";
@@ -952,6 +961,35 @@ const hasSec = () => { const P = allPrices(); return !!(P && ((P.sector && Objec
 // Hidden gems leaves out commodity / cyclical industries (AmiBroker industry names; matched ignoring case).
 const CYCLICAL = ["Iron & Steel", "Iron & Steel Products", "Pig Iron", "Sponge Iron", "Ferro & Silica Manganese", "Refineries & Marketing", "Oil Exploration & Production", "Oil Equipment & Services",
   "Sugar", "Zinc", "Aluminium", "Copper", "Coal"];
+// ---------- Breakout: the first quarter out of a long flat base ----------
+// Record sales after 8 flat quarters (range within 35%), net profit at least 1.25× the best of those 8 (and ₹5 Cr+),
+// OPM above every one of those 8 quarters. Banks and cyclical industries are left out.
+const brkCache = new Map();
+function brkAt(byP, Q) {
+  const cur = byP[Q]; if (!cur || cur.sales == null || cur.np == null || cur.np < 5) return 0;
+  const prev = []; for (let i = 1; i <= 8; i++) { const r = byP[prevQ(Q, i)]; if (!r || r.sales == null || r.np == null) return 0; prev.push(r); }
+  const opm = r => r.opm != null ? r.opm : (r.op != null && r.sales ? r.op / r.sales * 100 : null);
+  const mx = k => Math.max(...prev.map(r => r[k])), mn = k => Math.min(...prev.map(r => r[k]));
+  const po = prev.map(opm).filter(v => v != null), oc = opm(cur); if (po.length < 6 || oc == null) return 0;
+  const npHi = mx("np"); if (!(npHi > 0)) return 0;
+  return cur.sales > mx("sales") && mx("sales") <= 1.35 * mn("sales") && cur.np >= 1.25 * npHi && oc > Math.max(...po) ? cur.np / npHi : 0;
+}
+function breakout(d) {
+  const Q = d.periods[2], key = companyKey(d) + "|" + Q; if (brkCache.has(key)) return brkCache.get(key);
+  let res = { cur: false, last: false, ratio: 0 };
+  if (!d.bank && !isCyclical(d)) {
+    const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), now = brkAt(byP, Q);
+    if (now) res = { cur: true, last: false, ratio: now };
+    else { const was = brkAt(byP, prevQ(Q, 1)), c = byP[Q], y = byP[prevQ(Q, 4)];   // last quarter's breakout, still growing YoY
+      if (was && c && y && c.sales > y.sales && y.np > 0 && c.np > y.np) res = { cur: false, last: true, ratio: was }; }
+  }
+  brkCache.set(key, res); return res;
+}
+function brkLabel(d) {
+  const b = breakout(d); if (!b.cur && !b.last) return "";
+  return b.cur ? `<span class="grp brk" title="Breakout: record sales after a flat 8-quarter base, net profit ${b.ratio.toFixed(2)}× its best of the last 8 quarters, OPM at an 8-quarter high">Breakout</span>`
+    : `<span class="grp brk last" title="Broke out last quarter (net profit ${b.ratio.toFixed(2)}× its old high); sales and net profit still up YoY this quarter">Breakout last Q</span>`;
+}
 const isCyclical = d => { const i = indOf(d).toLowerCase(); return !!i && CYCLICAL.some(c => c.toLowerCase() === i); };
 // AmiBroker exploration export: "Ticker,Date/Time,Close" (any order; Symbol works for Ticker; a "Close" column, else the last number).
 function addPriceCsv(text, fileName) {
@@ -972,7 +1010,12 @@ function addPriceCsv(text, fileName) {
     if (sym && ii >= 0 && okName(r[ii])) industry[sym] = r[ii]; });
   const n = Object.keys(prices).length;
   if (!n) { alert(fileName + ": no prices found."); return; }
-  prLocal = { asOf: asOf || new Date().toISOString().slice(0, 10), prices, sector, industry };
+  // Keep a price snapshot per results quarter: this file's prices are stored for the latest quarter; older quarters keep theirs.
+  const old = allPrices() || {}, byQ = Object.assign({}, old.byQ || {}), AD = allData();
+  const LQ = AD.map(d => d.periods[2]).sort((a, z) => qRank(z) - qRank(a))[0], have = new Set(AD.map(d => String(d.symbol || "").toUpperCase()));
+  const day = asOf || new Date().toISOString().slice(0, 10);
+  if (LQ) { const snap = {}; Object.keys(prices).forEach(k => { if (have.has(k)) snap[k] = prices[k]; }); byQ[LQ] = { asOf: day, prices: snap }; }
+  prLocal = { asOf: day, prices, sector, industry, byQ };
   fSec = ""; fInd = "";
   try { localStorage.setItem(PR_STORE, JSON.stringify(prLocal)); } catch (e) {}
   const el = document.getElementById("bfline"); el.innerHTML = `<b>Prices loaded:</b> ${n} symbols, as of ${esc(prLocal.asOf)}${Object.keys(industry).length ? `, with sector and industry for ${Object.keys(industry).length}` : si < 0 && ii < 0 ? " (no SECTOR / INDUSTRY columns in this file)" : ""}. P/E and PEG now show on the cards. Click <b>Save data file</b> to keep them.`;
@@ -1010,6 +1053,8 @@ function accelLabel(d) {
 // Quick lists keep only Grade A/B, no "Check NP", and stress 40 or less with no BREAK (no stress data = not excluded).
 const presetKeep = d => { const f = fosOf(d), r = stressNow(d);
   if (preset === "accel" && !(d.np && d.np[2] >= 10)) return false;   // Accelerators: a run on a tiny profit is fragile
+  if (preset === "breakout") { const b = breakout(d); if (!b.cur && !b.last) return false; }
+  if (preset === "delev" && !delever(d)) return false;
   if (preset === "gems") {   // small, turning up, still cheap for its growth, not a commodity cycle
     if (!(d.sales && d.sales[2] != null && d.sales[2] <= 1000)) return false;
     if (!(accelRun(d).n >= 2 || strength(d).grp === "fresh")) return false;
@@ -1022,7 +1067,7 @@ const presetKeep = d => { const f = fosOf(d), r = stressNow(d);
     if (isCyclical(d)) return false;
   }
   return !!(f && (f.grade === "A" || (f.grade === "B" && preset !== "gradeA"))) && !extras(d).qual && !(r && (r.brk || r.score > 40)); };
-const PRESET = { core: { flt: "sust", sortBy: "fos", name: "Core watchlist" }, early: { flt: "fresh", sortBy: "accel", name: "Early movers" }, gradeA: { flt: "", sortBy: "fos", name: "Grade A" }, accel: { flt: "acc3", sortBy: "run", name: "Accelerators" }, gems: { flt: "", sortBy: "peg", name: "Hidden gems" } };
+const PRESET = { core: { flt: "sust", sortBy: "fos", name: "Core watchlist" }, early: { flt: "fresh", sortBy: "accel", name: "Early movers" }, gradeA: { flt: "", sortBy: "fos", name: "Grade A" }, accel: { flt: "acc3", sortBy: "run", name: "Accelerators" }, gems: { flt: "", sortBy: "peg", name: "Hidden gems" }, breakout: { flt: "", sortBy: "brk", name: "Breakouts" }, delev: { flt: "", sortBy: "fos", name: "Deleveraging" } };
 function setPreset(v) {
   preset = v; tab = 0; search = ""; document.getElementById("search").value = "";
   if (v) { const P = PRESET[v]; minSales = 100; gKey = "eps"; flt = P.flt; sortBy = P.sortBy; }
@@ -1033,7 +1078,7 @@ function setPreset(v) {
 // A setting changed by hand ends the quick list but keeps the settings; no button stays selected, so "Off" then resets the view.
 const clearPreset = () => { if (!preset) return; preset = ""; document.querySelectorAll('input[name=preset]').forEach(r => r.checked = false); };
 const passFlt = d => (!preset || presetKeep(d)) && passFlt0(d);
-const passSec = d => (!fSec || secOf(d) === fSec) && (!fInd || indOf(d) === fInd);
+const passSec = d => (!fSec || secOf(d) === fSec) && (!fInd || indOf(d) === fInd) && (!fDebt || debtKind(d) === fDebt);
 const passFlt0 = d => passSec(d) && (!flt || (flt === "acc3" ? accelRun(d).n >= 3 : flt === "sbrk" ? !!(stressNow(d) && stressNow(d).brk) : STR[flt] ? strength(d).grp === flt : flt === "rec" ? extras(d).rec.length > 0 : !!extras(d).qual));
 let shownList = [];
 function exportStrength() {
@@ -1130,7 +1175,7 @@ function card(d) {
   const ck = companyKey(d), open = openKeys.has(ck);
   return `<div class="card ${tone}${open ? " open" : ""}" id="c-${esc(slug(d))}">
     <div class="chead">
-      <div class="meta"><span>${esc(d.date)}</span><span class="basis ${esc(String(d.basis).toLowerCase())}">${esc(d.basis)}</span>${d.derived ? `<span class="rs" title="${esc(d.derived)}">derived</span>` : ""}${extras(d).rec.length ? `<span class="rec" title="Highest in all stored quarters">Record ${esc(extras(d).rec.join(" · "))}</span>` : ""}${extras(d).qual ? `<span class="rs" title="${esc(extras(d).qual)}">Check NP</span>` : ""}${fosLabel(d)}${accelLabel(d)}${valLabel(d)}${stressLabel(d)}${(st => st.grp ? `<span class="grp ${st.grp}" title="${esc(grpTitle(st))}">${STR[st.grp]}</span>` : "")(strength(d))}${STR[flt] ? (st => `<span class="rec" title="Previous quarter vs the same quarter a year earlier">${esc(st.pq)} YoY: Sales ${esc(st.ps.text || "N/D")} · ${gKey === "eps" ? "EPS" : "NP"} ${esc(st.pp.text || "N/D")}</span>`)(strength(d)) : ""}${metricChip(d)}</div>
+      <div class="meta"><span>${esc(d.date)}</span><span class="basis ${esc(String(d.basis).toLowerCase())}">${esc(d.basis)}</span>${d.derived ? `<span class="rs" title="${esc(d.derived)}">derived</span>` : ""}${extras(d).rec.length ? `<span class="rec" title="Highest in all stored quarters">Record ${esc(extras(d).rec.join(" · "))}</span>` : ""}${extras(d).qual ? `<span class="rs" title="${esc(extras(d).qual)}">Check NP</span>` : ""}${fosLabel(d)}${accelLabel(d)}${valLabel(d)}${stressLabel(d)}${brkLabel(d)}${debtLabel(d)}${(st => st.grp ? `<span class="grp ${st.grp}" title="${esc(grpTitle(st))}">${STR[st.grp]}</span>` : "")(strength(d))}${STR[flt] ? (st => `<span class="rec" title="Previous quarter vs the same quarter a year earlier">${esc(st.pq)} YoY: Sales ${esc(st.ps.text || "N/D")} · ${gKey === "eps" ? "EPS" : "NP"} ${esc(st.pp.text || "N/D")}</span>`)(strength(d)) : ""}${metricChip(d)}</div>
       <span class="badge ${gcls(ng)}" title="Net Profit growth (YoY)"><small>NP YoY</small>${abbr(ng.text) !== ng.text ? `<span class="lg">${esc(ng.text)}</span><span class="sh">${esc(abbr(ng.text))}</span>` : esc(ng.text)}</span>
     </div>
     <div class="name"><span>${esc(d.name)}${d.symbol ? `<span class="sym">${esc(String(d.symbol).toUpperCase())}</span>` : ""}</span><img class="nlogo" src="logo.png" alt="price rythm"></div>${((sc, ic) => sc || ic ? `<div class="sitags">${sc ? `<span class="stag" title="Sector">${ICO_SEC}${esc(sc)}</span>` : ""}${sc && ic && ic !== sc ? `<span class="chev">›</span>` : ""}${ic && ic !== sc ? `<span class="stag" title="Industry">${ICO_IND}${esc(ic)}</span>` : ""}</div>` : "")(secOf(d), indOf(d))}
@@ -1257,6 +1302,49 @@ function histChart(rows, tag = "") {
   if (r.length < 2) return "";
   return barChart(r, "sales", "SALES TREND (₹ CR)", "#0071bc", false, tag) + barChart(r, "np", "NET PROFIT TREND (₹ CR)", "#009245", true, tag);
 }
+// ---------- Debt: total borrowings and equity from the Mar / Sep (half-year) filings ----------
+const qMonth = q => ({ 1: "Jun", 2: "Sep", 3: "Dec", 4: "Mar" })[(/Q(\d)/.exec(q) || [])[1]] + " " + (m => m ? (m[1] === "4" ? 2000 + +m[2] : 1999 + +m[2]) : "")(/Q(\d) FY(\d{2})/.exec(q));
+function debtSeries(d) {   // newest first, up to this card's quarter; banks and NBFCs have none
+  const Q = qRank(d.periods[2]);
+  return cardsOfCompany(companyKey(d)).filter(c => c.st && c.st.debt != null && c.st.eq != null && qRank(c.periods[2]) <= Q)
+    .map(c => ({ p: c.periods[2], debt: c.st.debt, eq: c.st.eq })).sort((a, z) => qRank(z.p) - qRank(a.p));
+}
+function debtNow(d) {
+  const S = debtSeries(d); if (!S.length) return null;
+  const n = S[0], y = S.find(r => r.p === prevQ(n.p, 4));   // same half a year earlier (Sep vs Sep, Mar vs Mar)
+  const de = n.eq > 0 ? n.debt / n.eq : null, chg = y && y.debt > 0 ? (n.debt / y.debt - 1) * 100 : null;
+  return { ...n, de, chg, prev: y || null };
+}
+function debtKind(d) {   // "free" | "down" | "up" | "" : the same rules as the card label
+  const x = debtNow(d); if (!x || !(x.eq > 0)) return "";
+  if (x.debt < 0.05 * x.eq) return "free";
+  if (x.chg != null && x.chg <= -20) return "down";
+  if (x.chg != null && x.chg >= 20 && x.de > 0.3) return "up";
+  return "";
+}
+// Deleveraging: debt down 20%+ from a year earlier (from a real level: at least 5% of equity then), sales and EPS up YoY.
+function delever(d) {
+  const x = debtNow(d); if (!x || x.chg == null || x.chg > -20 || !x.prev || !(x.prev.eq > 0) || x.prev.debt < 0.05 * x.prev.eq) return false;
+  const up = k => { const g = gOf(d, k, 0); return (g.kind === "num" && g.val > 0) || g.kind === "pos"; };
+  return up("sales") && up("eps");
+}
+function debtLabel(d) {
+  const x = debtNow(d); if (!x || !(x.eq > 0)) return "";
+  const asOf = `as of ${qMonth(x.p)}: debt ₹${fmt(x.debt)} Cr, equity ₹${fmt(x.eq)} Cr, D/E ${x.de.toFixed(2)}` + (x.chg != null ? `; ${x.chg >= 0 ? "+" : ""}${x.chg.toFixed(0)}% vs ${qMonth(x.prev.p)} (₹${fmt(x.prev.debt)} Cr)` : "");
+  if (x.debt < 0.05 * x.eq) return `<span class="grp dfree" title="Debt-free: borrowings under 5% of equity, ${esc(asOf)}">Debt-free</span>`;
+  if (x.chg != null && x.chg <= -20) return `<span class="grp ddn" title="Debt down 20%+ in a year, ${esc(asOf)}">Debt ↓</span>`;
+  if (x.chg != null && x.chg >= 20 && x.de > 0.3) return `<span class="grp dup" title="Debt up 20%+ in a year with D/E above 0.3, ${esc(asOf)}">Debt ↑</span>`;
+  return "";
+}
+function debtHtml(d) {
+  const S = debtSeries(d); if (!S.length) return "";
+  const rows = S.map(r => { const y = S.find(z => z.p === prevQ(r.p, 4)), c = y && y.debt > 0 ? (r.debt / y.debt - 1) * 100 : null;
+    const cls = c == null ? "" : c >= 20 ? "dn" : c <= -20 ? "up" : "";
+    return `<tr${r.p === S[0].p ? ' class="cur"' : ""}><td>${esc(qMonth(r.p))} <span class="dq">${esc(r.p)}</span></td><td>${fmt(r.debt)}</td><td>${fmt(r.eq)}</td><td>${r.eq > 0 ? (r.debt / r.eq).toFixed(2) : "neg. equity"}</td><td class="g ${cls}">${c == null ? "–" : (c >= 0 ? "+" : "") + c.toFixed(1) + "%"}</td></tr>`; }).join("");
+  return `<div class="hlabel">${idTag(d)}<span>DEBT (₹ CRORE) · FROM THE MAR / SEP FILINGS</span></div>
+    <div style="overflow-x:auto"><table class="htable" style="min-width:480px"><tr><th>As of</th><th>Total borrowings</th><th>Equity</th><th>Debt / Equity</th><th>Debt vs a year earlier</th></tr>${rows}</table></div>
+    <div class="hnote">Borrowings = long-term + short-term. Each half is compared with the same half a year earlier (Sep with Sep, Mar with Mar), because short-term borrowing swings within the year.</div>`;
+}
 function historyHtml(d) {
   const rows = historyOf(d);
   const byP = Object.fromEntries(rows.map(r => [r.p, r]));
@@ -1282,6 +1370,7 @@ function historyHtml(d) {
     <div style="overflow-x:auto"><table class="htable" style="min-width:640px;table-layout:fixed"><tr><th>Quarter</th><th>Sales</th><th>Sales YoY (%)</th><th>Operating Profit</th><th>Operating Profit YoY (%)</th><th>OPM (%)</th><th>Net Profit</th><th>NP YoY</th></tr>${tr}</table></div>
     ${growthChart(d, rows)}
     ${fy ? `<div class="fy">${fy}</div>` : ""}
+    ${debtHtml(d)}
     <div class="hnote">${rows.length} quarters stored. Full-year totals appear once all four quarters of a year are in.</div></div>`;
 }
 
@@ -1367,13 +1456,14 @@ function sortValue(d) {
   if (sortBy === "stress") { const r = stressNow(d); return r ? r.score : "N/D"; }
   if (sortBy === "run") return accelRun(d).n + "Q";
   if (sortBy === "pe" || sortBy === "peg") { const v = valuation(d), x = v && v[sortBy]; return x == null ? "N/A" : x.toFixed(sortBy === "peg" ? 2 : 1); }
+  if (sortBy === "brk") { const b = breakout(d); return b.cur ? b.ratio.toFixed(2) + "×" : b.last ? "last Q" : "–"; }
   if (sortBy === "fos") { const f = fosOf(d); return f && f.score != null ? f.score + (f.prov ? "*" : "") + " (" + f.grade + ")" : "N/D"; }
   if (METRIC_SORTS[sortBy]) { const v = metrics(d)[sortBy];
     return v == null ? "N/D" : sortBy === "streak" ? v + "Q" : sortBy === "opm" ? (v > 0 ? "+" : "") + v.toFixed(1) + " pp" : (v > 0 ? "+" : "") + v.toFixed(1) + " pts"; }
   if (sortBy === "latest") return d.date || "";
   return "";
 }
-const sortLabel = () => ({ growth: (gKey === "eps" ? "EPS" : "NP") + " YoY", ttm: (gKey === "eps" ? "EPS" : "NP") + " TTM YoY", stress: "Stress", fos: "Earnings Strength", run: (gKey === "eps" ? "EPS" : "NP") + " Acceleration run", pe: "P/E", peg: "PEG", opm: "OPM YoY", accel: (gKey === "eps" ? "EPS" : "NP") + " Acceleration",
+const sortLabel = () => ({ growth: (gKey === "eps" ? "EPS" : "NP") + " YoY", ttm: (gKey === "eps" ? "EPS" : "NP") + " TTM YoY", stress: "Stress", fos: "Earnings Strength", run: (gKey === "eps" ? "EPS" : "NP") + " Acceleration run", pe: "P/E", peg: "PEG", brk: "Breakout", opm: "OPM YoY", accel: (gKey === "eps" ? "EPS" : "NP") + " Acceleration",
   streak: (gKey === "eps" ? "EPS" : "NP") + " Streak", latest: "Result date", name: "" })[sortBy];
 function renderTop(list, how) {
   topList = list;
@@ -1394,7 +1484,7 @@ function exportCsv() {
   const head = ["Rank", "Symbol", "Company", "Sector", "Industry", "Basis", "Quarter", "Result date", "Source", "Sales (Cr)", "Sales YoY %", "Sales QoQ %",
     "Operating Profit (Cr)", "OP YoY %", "OPM %", "OPM YoY (pp)", "PBT (Cr)", "Net Profit (Cr)", "NP YoY %", "NP QoQ %", "EPS (Rs)", "EPS YoY %",
     "NP Acceleration (pts)", "EPS Acceleration (pts)", "NP Growth Streak (Q)", "EPS Growth Streak (Q)",
-    "Sales TTM YoY %", "NP TTM YoY %", "EPS TTM YoY %", "Record quarter", "Profit-quality flag", "Stress score", "Earnings Strength", "Earnings Strength provisional", "Grade", "Risk flags", "Acceleration run (Q)", "Price", "Price date", "EPS 4Q (Rs)", "P/E", "PEG"];
+    "Sales TTM YoY %", "NP TTM YoY %", "EPS TTM YoY %", "Record quarter", "Profit-quality flag", "Stress score", "Earnings Strength", "Earnings Strength provisional", "Grade", "Risk flags", "Acceleration run (Q)", "Price", "Price date", "EPS 4Q (Rs)", "P/E", "PEG", "Debt (Cr)", "Debt as of", "Debt/Equity", "Debt vs year earlier %", "Debt label"];
   const lines = topList.map((d, i) => {
     const mN = metrics(d, "np"), mE = metrics(d, "eps"), og = gOf(d, "opm", 0), x = extras(d);
     return [i + 1, d.symbol || "", String(d.name).toUpperCase(), secOf(d), indOf(d), d.basis, d.periods[2], d.src === "screener" || d.src === "history" ? "" : d.date,
@@ -1403,7 +1493,8 @@ function exportCsv() {
       d.pbt[2], d.np[2], gNum(gOf(d, "np", 0)), gNum(gOf(d, "np", 1)), d.eps[2], gNum(gOf(d, "eps", 0)),
       mN.accel == null ? "" : Math.round(mN.accel * 10) / 10, mE.accel == null ? "" : Math.round(mE.accel * 10) / 10, mN.streak, mE.streak,
       gNum(x.ttm.sales), gNum(x.ttm.np), gNum(x.ttm.eps), x.rec.join(" "), x.qual ? "Yes" : "", (stressNow(d) || {}).score ?? "", (fosOf(d) || {}).score ?? "", fosOf(d) && fosOf(d).prov ? "Yes" : "", (fosOf(d) || {}).grade || "", ((fosOf(d) || {}).flags || []).join("; "), accelRun(d).n,
-      ...(v => v ? [v.price, v.asOf, v.eps ?? "", v.pe == null ? "" : Math.round(v.pe * 10) / 10, v.peg == null ? "" : Math.round(v.peg * 100) / 100] : ["", "", "", "", ""])(valuation(d))].map(q).join(",");
+      ...(v => v ? [v.price, v.asOf, v.eps ?? "", v.pe == null ? "" : Math.round(v.pe * 10) / 10, v.peg == null ? "" : Math.round(v.peg * 100) / 100] : ["", "", "", "", ""])(valuation(d)),
+      ...(x => x ? [x.debt, qMonth(x.p), x.de == null ? "" : Math.round(x.de * 100) / 100, x.chg == null ? "" : Math.round(x.chg * 10) / 10, debtLabel(d).replace(/<[^>]+>/g, "")] : ["", "", "", "", ""])(debtNow(d))].map(q).join(",");
   });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob(["\ufeff" + head.join(",") + "\r\n" + lines.join("\r\n") + "\r\n"], { type: "text/csv" }));
@@ -1417,7 +1508,7 @@ function strText() {
   return `, ${STR[flt]}: ${flt === "fresh" ? `weak in ${pq}, strong in ${quarter}` : flt === "sust" ? `strong in both ${pq} and ${quarter}` : `strong in ${pq}, weak in ${quarter}`} (strong = ${strong})`;
 }
 function render() {
-  mCache = new Map(); sCache = new Map(); hCache = new Map(); fCache = new Map();
+  mCache = new Map(); sCache = new Map(); hCache = new Map(); brkCache.clear(); fCache = new Map();
   // Dropdown: the latest quarter and the three before it (older quarters are rebuilt from history).
   const latestQ = allData().map(d => d.periods[2]).sort((a, z) => qRank(z) - qRank(a))[0];
   const qs = latestQ ? [0, 1, 2, 3].map(i => prevQ(latestQ, i)) : [];
@@ -1442,7 +1533,7 @@ function render() {
   let list = data.filter(d => d.periods[2] === quarter &&
     (term ? (d.name.toLowerCase().includes(term) || (d.symbol && String(d.symbol).toLowerCase().includes(term))) : tab === 0 || bucket(d) === tab) && passFlt(d));
   // Sort By options for this view (Growth only where every company has a % growth: Best / Worst Performer)
-  const opts = [["growth", "Growth"], ["fos", "Earnings Strength (highest first)"], ["ttm", "TTM Growth"], ["run", "Acceleration run"], ["pe", "P/E (lowest first)"], ["peg", "PEG (lowest first)"], ["stress", "Stress (lowest first)"], ["opm", "OPM Change"], ["accel", "Acceleration"], ["streak", "Growth Streak"], ["latest", "Latest"], ["name", "Name"]];
+  const opts = [["growth", "Growth"], ["fos", "Earnings Strength (highest first)"], ["ttm", "TTM Growth"], ["run", "Acceleration run"], ["pe", "P/E (lowest first)"], ["peg", "PEG (lowest first)"], ["brk", "Breakout (profit vs old high)"], ["stress", "Stress (lowest first)"], ["opm", "OPM Change"], ["accel", "Acceleration"], ["streak", "Growth Streak"], ["latest", "Latest"], ["name", "Name"]];
   if (!opts.some(o => o[0] === sortBy)) sortBy = defaultSort();
   document.getElementById("sortby").innerHTML = opts.map(([v, l]) => `<option value="${v}"${v === sortBy ? " selected" : ""}>${l}</option>`).join("");
 
@@ -1457,6 +1548,10 @@ function render() {
   else if (sortBy === "fos") list.sort((x, y) => {   // highest score first; no score last
     const a = fosOf(x), z = fosOf(y), sa = a && a.score != null ? a.score : null, sz = z && z.score != null ? z.score : null;
     return (sa == null) - (sz == null) || (sz ?? 0) - (sa ?? 0) || byLatest(x, y);
+  });
+  else if (sortBy === "brk") list.sort((x, y) => {   // this quarter's breakouts first (biggest jump over the old profit high), then last quarter's
+    const a = breakout(x), z = breakout(y), ra = a.cur ? 2 : a.last ? 1 : 0, rz = z.cur ? 2 : z.last ? 1 : 0;
+    return rz - ra || z.ratio - a.ratio || byLatest(x, y);
   });
   else if (sortBy === "pe" || sortBy === "peg") list.sort((x, y) => {   // lowest first; N/A and no price last
     const a = (valuation(x) || {})[sortBy], z = (valuation(y) || {})[sortBy];
@@ -1494,6 +1589,7 @@ function render() {
   const how = sortBy === "growth" ? (tab === 2 ? `ranked by ${gName} growth, biggest fall first` : `ranked by ${gName} growth, highest first`)
     : sortBy === "fos" ? "ranked by Quarterly Earnings Strength (0–100), highest first; companies without enough history last"
     : sortBy === "pe" ? `ranked by P/E (price ${esc((allPrices() || {}).asOf || "not loaded")} ÷ EPS of the last 4 quarters), lowest first; loss-makers and stocks without a price last`
+    : sortBy === "brk" ? "ranked by breakout: this quarter's breakouts first, by how far net profit cleared its best of the last 8 quarters, then last quarter's breakouts"
     : sortBy === "peg" ? `ranked by PEG (P/E ÷ 4-quarter EPS growth), lowest first; no growth or no price last`
     : sortBy === "run" ? `ranked by acceleration run: quarters in a row of rising ${gName} growth backed by rising operating profit growth, longest first, then Earnings Strength`
     : sortBy === "stress" ? "ranked by stress score, lowest first (companies without XBRL stress data last)"
@@ -1502,7 +1598,7 @@ function render() {
     : sortBy === "accel" ? `ranked by ${gName} growth acceleration (this quarter's YoY minus last quarter's YoY), highest first`
     : sortBy === "streak" ? `ranked by consecutive quarters of ${gName} growth YoY, longest first`
     : sortBy === "name" ? "sorted by name (A–Z)" : "sorted by latest result date";
-  document.getElementById("basisline").textContent = quarter ? `${what}${minSales ? ", Sales ≥ ₹" + minSales + " Cr" : ""}${fSec ? ", sector " + fSec : ""}${fInd ? ", industry " + fInd : ""}${preset ? ` — ${PRESET[preset].name}: Grade ${preset === "gradeA" ? "A" : "A/B"} only, ${preset === "accel" ? "net profit ₹10 Cr+, " : ""}${preset === "gems" ? `sales ₹1,000 Cr or less, accelerating 2Q+ or Fresh strength, PEG below 1 (year-earlier 4Q EPS positive, 4Q EPS growth 200% or less), final score only, ${hasSec() ? "cyclical industries left out" : "no industry data so cyclicals not left out"}, ` : ""}no Check NP, stress 40 or less` : ""}${flt === "acc3" ? ", accelerating 3 quarters or more only" : flt === "sbrk" ? ", stress break this quarter only" : flt === "rec" ? ", record quarters only" : flt === "qual" ? ", profit-quality flags only" : STR[flt] ? strText() : ""}, ${how}.` : "";
+  document.getElementById("basisline").textContent = quarter ? `${what}${minSales ? ", Sales ≥ ₹" + minSales + " Cr" : ""}${fSec ? ", sector " + fSec : ""}${fInd ? ", industry " + fInd : ""}${preset ? ` — ${PRESET[preset].name}: Grade ${preset === "gradeA" ? "A" : "A/B"} only, ${preset === "accel" ? "net profit ₹10 Cr+, " : ""}${preset === "delev" ? "debt down 20%+ from a year earlier, sales and EPS up YoY, " : ""}${preset === "breakout" ? "record sales after a flat 8-quarter base, net profit 1.25× its old high, OPM at an 8-quarter high (and last quarter's breakouts still growing YoY), banks and cyclical industries left out, " : ""}${preset === "gems" ? `sales ₹1,000 Cr or less, accelerating 2Q+ or Fresh strength, PEG below 1 (year-earlier 4Q EPS positive, 4Q EPS growth 200% or less), final score only, ${hasSec() ? "cyclical industries left out" : "no industry data so cyclicals not left out"}, ` : ""}no Check NP, stress 40 or less` : ""}${fDebt === "free" ? ", debt-free only (borrowings under 5% of equity)" : fDebt === "down" ? ", debt down 20%+ from a year earlier only" : fDebt === "up" ? ", debt up 20%+ from a year earlier with D/E above 0.3 only" : ""}${flt === "acc3" ? ", accelerating 3 quarters or more only" : flt === "sbrk" ? ", stress break this quarter only" : flt === "rec" ? ", record quarters only" : flt === "qual" ? ", profit-quality flags only" : STR[flt] ? strText() : ""}, ${how}.` : "";
   // A search that finds exactly one company opens its history once; after that Hide/Show history is the user's choice.
   if (term && list.length === 1 && autoOpened !== companyKey(list[0])) { openKeys.add(companyKey(list[0])); autoOpened = companyKey(list[0]); }
   if (!term) autoOpened = "";
@@ -1959,7 +2055,7 @@ function saveFile() {
     ROWS.forEach(([, k]) => v[k] = [0, 1].map(i => { const r = byP[d.periods[i]]; return r ? (r[k] ?? null) : (d[k] ? d[k][i] : null); }).concat([d[k] && d[k][2] != null ? d[k][2] : (byP[d.periods[2]] || {})[k] ?? null]));   // blanks filled from Screener
     return v;
   });
-  window.BACKFILL_DATA = bfOut; bfCache = null; hCache = new Map();
+  window.BACKFILL_DATA = bfOut; bfCache = null; hCache = new Map(); brkCache.clear();
   const note = document.getElementById("bfline");
   note.innerHTML = `<b>Saved.</b> ${dropped} Screener quarter${dropped === 1 ? "" : "s"} replaced by XBRL ${dropped === 1 ? "was" : "were"} dropped.`;
   note.hidden = false; clearTimeout(bfTimer); bfTimer = setTimeout(() => { note.hidden = true; }, 5000);
@@ -1996,6 +2092,7 @@ document.querySelectorAll("input[name=mode]").forEach(r =>
 document.getElementById("sortby").addEventListener("change", e => { sortBy = e.target.value; render(); });   // re-sorting keeps the quick list
 document.getElementById("fsec").addEventListener("change", e => { fSec = e.target.value; fInd = ""; render(); });   // filters compose with quick lists
 document.getElementById("find").addEventListener("change", e => { fInd = e.target.value; render(); });
+document.getElementById("fdebt").addEventListener("change", e => { fDebt = e.target.value; render(); });   // composes with quick lists
 document.getElementById("secpanel").addEventListener("click", e => {
   const h = e.target.closest("th[data-k]");
   if (h) { const k = h.dataset.k; secSort = secSort.k === k ? { k, dir: -secSort.dir } : { k, dir: k === "name" ? 1 : -1 }; render(); return; }
