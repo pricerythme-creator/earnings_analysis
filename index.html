@@ -203,6 +203,7 @@
   .stag svg { width:13px; height:13px; flex:none; }
   .sitags .chev { color:#6b7280; font-size:15px; line-height:1; margin:0 2px; }
   #fsec, #find { width:auto; max-width:200px; min-width:0; }
+  .gmore { text-align:center; padding:14px 0 6px; } .gmore button { border:1px solid #cfe0f1; background:#f3f8fd; color:var(--blue); font-size:13px; font-weight:600; padding:7px 18px; border-radius:18px; cursor:pointer; font-family:Inter,sans-serif; }
   .secwrap { margin:0 0 14px; font-size:12px; color:#374151; }
   .secwrap summary { cursor:pointer; font-weight:600; color:var(--green-ink); font-size:13px; margin-bottom:6px; }
   .sectable { border-collapse:collapse; width:100%; background:#fff; border:1px solid var(--line); }
@@ -443,7 +444,7 @@ let local = (() => {
   catch (e) { return { items:[], removed:[] }; }
 })();
 const loadLocal = () => local;
-function saveLocal(s) { local = s; adCache = adByCk = null; hCache = new Map(); brkCache.clear(); try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {} }
+function saveLocal(s) { local = s; adCache = adByCk = null; hCache = new Map(); brkCache.clear(); dataVer++; try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {} }
 // The combined list is built once and reused until the stored data changes (saveLocal clears it).
 let adCache = null, adByCk = null;
 function allData() { if (!adCache) adCache = buildAllData(); return adCache.slice(); }
@@ -491,14 +492,14 @@ function allBackfill() {
   return (bfCache = out);
 }
 function removeBackfill(ck) {
-  bfCache = null; hCache = new Map(); brkCache.clear();
+  bfCache = null; hCache = new Map(); brkCache.clear(); dataVer++;
   if (anLocal[ck]) { delete anLocal[ck]; try { localStorage.setItem(AN_STORE, JSON.stringify(anLocal)); } catch (e) {} }
   delete bfLocal[ck];
   try { localStorage.setItem(BF_STORE, JSON.stringify(bfLocal)); } catch (e) {}
   if (!bfRemoved.includes(ck)) { bfRemoved.push(ck); saveBfRemoved(); }
 }
 function addBackfill(ck, quarters) {
-  bfCache = null; hCache = new Map(); brkCache.clear();
+  bfCache = null; hCache = new Map(); brkCache.clear(); dataVer++;
   if (bfRemoved.includes(ck)) { bfRemoved = bfRemoved.filter(k => k !== ck); saveBfRemoved(); }   // loading its CSV again brings it back
   bfLocal[ck] = Object.assign(bfLocal[ck] || {}, quarters);
   try { localStorage.setItem(BF_STORE, JSON.stringify(bfLocal)); } catch (e) {}
@@ -514,7 +515,7 @@ function addEntries(list, removeKeys) {
   const s = loadLocal(), add = new Map(list.map(d => [keyOf(d), d])), rm = new Set(removeKeys);
   s.items = s.items.filter(x => !add.has(keyOf(x)) && !rm.has(keyOf(x))).concat([...add.values()]);
   const removed = new Set(s.removed.filter(k => !add.has(k))); rm.forEach(k => removed.add(k)); s.removed = [...removed];
-  local = s; adCache = adByCk = null; hCache = new Map(); brkCache.clear();
+  local = s; adCache = adByCk = null; hCache = new Map(); brkCache.clear(); dataVer++;
   try { localStorage.setItem(STORE, JSON.stringify(s)); return true; } catch (e) { return false; }
 }
 function removeEntry(k) {
@@ -1015,7 +1016,7 @@ function addPriceCsv(text, fileName) {
   const LQ = AD.map(d => d.periods[2]).sort((a, z) => qRank(z) - qRank(a))[0], have = new Set(AD.map(d => String(d.symbol || "").toUpperCase()));
   const day = asOf || new Date().toISOString().slice(0, 10);
   if (LQ) { const snap = {}; Object.keys(prices).forEach(k => { if (have.has(k)) snap[k] = prices[k]; }); byQ[LQ] = { asOf: day, prices: snap }; }
-  prLocal = { asOf: day, prices, sector, industry, byQ };
+  prLocal = { asOf: day, prices, sector, industry, byQ }; dataVer++;
   fSec = ""; fInd = "";
   try { localStorage.setItem(PR_STORE, JSON.stringify(prLocal)); } catch (e) {}
   const el = document.getElementById("bfline"); el.innerHTML = `<b>Prices loaded:</b> ${n} symbols, as of ${esc(prLocal.asOf)}${Object.keys(industry).length ? `, with sector and industry for ${Object.keys(industry).length}` : si < 0 && ii < 0 ? " (no SECTOR / INDUSTRY columns in this file)" : ""}. P/E and PEG now show on the cards. Click <b>Save data file</b> to keep them.`;
@@ -1194,7 +1195,9 @@ function card(d) {
 const companyKey = d => `${d.symbol || d.name}|${d.basis}`.toLowerCase().replace(/\s+/g, " ").trim();
 const slug = d => d.name.toLowerCase().replace(/\b(limited|ltd)\b\.?/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 let openKeys = new Set();
-let hCache = new Map();   // history per company; cleared whenever data changes and on every render
+let hCache = new Map();   // history per company; cleared whenever data changes
+let dataVer = 0, renderSig = "";   // dataVer goes up whenever cards, history or prices change
+const cfCache = new Map(), gCache = new Map();   // cardsFor per quarter; sector / industry tables
 function historyOf(d) {
   const hk = companyKey(d); if (hCache.has(hk)) return hCache.get(hk);
   const out = historyRaw(d); hCache.set(hk, out); return out;
@@ -1393,6 +1396,7 @@ function setShareLinks() {
 // Cards for a quarter: stored cards first; every other company with that quarter in its history gets a
 // view-only card rebuilt from history (not stored, no edit/remove).
 function cardsFor(Q) {
+  if (cfCache.has(Q)) return cfCache.get(Q).slice();
   const all = allData(), out = [], seen = new Set(), meta = new Map();
   // Stored cards: the current quarter as stored; the two comparison columns read live from history,
   // so a quarter's XBRL added later replaces the copy frozen in this card.
@@ -1416,7 +1420,7 @@ function cardsFor(Q) {
     ROWS.forEach(([, k]) => v[k] = v.periods.map(p => byP[p] ? (byP[p][k] ?? null) : null));
     out.push(v);
   });
-  return out;
+  cfCache.set(Q, out); return out.slice();
 }
 // ---------- earnings screen → AmiBroker watchlist ----------
 // Passes when: EPS YoY ≥ X%, Sales YoY ≥ Y%, (optionally) EPS YoY higher than last quarter's,
@@ -1508,7 +1512,9 @@ function strText() {
   return `, ${STR[flt]}: ${flt === "fresh" ? `weak in ${pq}, strong in ${quarter}` : flt === "sust" ? `strong in both ${pq} and ${quarter}` : `strong in ${pq}, weak in ${quarter}`} (strong = ${strong})`;
 }
 function render() {
-  mCache = new Map(); sCache = new Map(); hCache = new Map(); brkCache.clear(); fCache = new Map();
+  // Rebuild the derived caches only when the data or the settings they depend on change, not on every keystroke.
+  const sig = dataVer + "|" + gKey + "|" + JSON.stringify(stLevels());
+  if (sig !== renderSig) { mCache = new Map(); sCache = new Map(); hCache = new Map(); brkCache.clear(); fCache = new Map(); cfCache.clear(); gCache.clear(); renderSig = sig; }
   // Dropdown: the latest quarter and the three before it (older quarters are rebuilt from history).
   const latestQ = allData().map(d => d.periods[2]).sort((a, z) => qRank(z) - qRank(a))[0];
   const qs = latestQ ? [0, 1, 2, 3].map(i => prevQ(latestQ, i)) : [];
@@ -1609,16 +1615,38 @@ function render() {
   const pc = document.getElementById("pr-csv"); pc.hidden = !preset; pc.textContent = `List (.csv) (${list.length})`; pc.disabled = !list.length;
   const tb = document.getElementById("st-tls"); tb.textContent = `Watchlist (.tls) (${list.length})`; tb.disabled = !list.length;
   const bEl = document.getElementById("breadth"); bEl.innerHTML = quarter ? breadthHtml(data) : ""; bEl.hidden = !bEl.innerHTML;
-  const prevData = quarter && hasSec() ? cardsFor(prevQ(quarter, 1)).filter(d => d.periods[2] === prevQ(quarter, 1) && (!minSales || (d.sales && d.sales[2] != null && d.sales[2] >= minSales))) : [];
-  const qd = data.filter(d => d.periods[2] === quarter);
-  const sp = quarter ? groupHtml(qd, prevData, secOf, secSort, "sec") : ""; document.getElementById("secpanel").innerHTML = sp; document.getElementById("secwrap").hidden = !sp;
-  const ip = quarter ? groupHtml(qd, prevData, indOf, indSort, "ind", 7) : ""; document.getElementById("indpanel").innerHTML = ip; document.getElementById("indwrap").hidden = !ip;
+  const gOpen = { sec: document.getElementById("secwrap").open, ind: document.getElementById("indwrap").open };
+  const gKeyS = [dataVer, quarter, minSales, gKey, fSec, fInd, JSON.stringify(secSort), JSON.stringify(indSort)].join("|");
+  const grpBuild = what => { const k = what + "|" + gKeyS; if (!gCache.has(k)) gCache.set(k, buildGroups(what)); return gCache.get(k); };
+  const buildGroups = what => { const prevData = quarter && hasSec() ? cardsFor(prevQ(quarter, 1)).filter(d => d.periods[2] === prevQ(quarter, 1) && (!minSales || (d.sales && d.sales[2] != null && d.sales[2] >= minSales))) : [];
+    const qd = data.filter(d => d.periods[2] === quarter);
+    return what === "sec" ? groupHtml(qd, prevData, secOf, secSort, "sec") : groupHtml(qd, prevData, indOf, indSort, "ind", 7); };
+  const showG = !!(quarter && hasSec() && data.length);   // the tables are built only while open
+  [["sec", "secpanel", "secwrap"], ["ind", "indpanel", "indwrap"]].forEach(([w, pId, wId]) => {
+    document.getElementById(wId).hidden = !showG; document.getElementById(pId).innerHTML = showG && gOpen[w] ? grpBuild(w) : ""; });
   if (ADMIN) runScreen(data);
   renderTop(list, how);
   document.getElementById("tblbtn").textContent = tableMode ? "Card view" : "Table view";
-  document.getElementById("grid").innerHTML = tableMode && list.length ? renderTable(list) : list.length ? list.map(card).join("")
-    : `<div class="empty">${term ? "No company matches “" + esc(search.trim()) + "”." : "No companies in this list."}</div>`;
+  const grid = document.getElementById("grid");
+  if (tableMode || !list.length) { gridList = []; gridShown = 0;
+    grid.innerHTML = tableMode && list.length ? renderTable(list) : `<div class="empty">${term ? "No company matches “" + esc(search.trim()) + "”." : "No companies in this list."}</div>`; }
+  else { gridList = list; gridShown = 0; grid.innerHTML = ""; moreCards(CARD_BATCH); }
 }
+// Cards are drawn in batches: the first batch at once, the next as you scroll down (or with "Show more").
+const CARD_BATCH = 60; let gridList = [], gridShown = 0, moreObs = null;
+function moreCards(n) {
+  const grid = document.getElementById("grid"), old = document.getElementById("gmore"); if (old) old.remove();
+  const next = gridList.slice(gridShown, gridShown + n); gridShown += next.length;
+  grid.insertAdjacentHTML("beforeend", next.map(card).join(""));
+  if (gridShown < gridList.length) {
+    grid.insertAdjacentHTML("beforeend", `<div class="gmore" id="gmore"><button data-more="1">Show more (${gridList.length - gridShown} more)</button></div>`);
+    if ("IntersectionObserver" in window) {
+      if (!moreObs) moreObs = new IntersectionObserver(es => { if (es.some(x => x.isIntersecting)) moreCards(CARD_BATCH); }, { rootMargin: "800px" });
+      moreObs.disconnect(); moreObs.observe(document.getElementById("gmore"));
+    }
+  } else if (moreObs) moreObs.disconnect();
+}
+function showAllCards() { if (gridShown < gridList.length) moreCards(gridList.length); }   // before jumping to a card further down
 
 // ---------- reading NSE XBRL (.xml) ----------
 // Locked definitions (₹ crore except EPS). Ind-AS = normal companies, Banking = banks.
@@ -2055,7 +2083,7 @@ function saveFile() {
     ROWS.forEach(([, k]) => v[k] = [0, 1].map(i => { const r = byP[d.periods[i]]; return r ? (r[k] ?? null) : (d[k] ? d[k][i] : null); }).concat([d[k] && d[k][2] != null ? d[k][2] : (byP[d.periods[2]] || {})[k] ?? null]));   // blanks filled from Screener
     return v;
   });
-  window.BACKFILL_DATA = bfOut; bfCache = null; hCache = new Map(); brkCache.clear();
+  window.BACKFILL_DATA = bfOut; bfCache = null; hCache = new Map(); brkCache.clear(); dataVer++;
   const note = document.getElementById("bfline");
   note.innerHTML = `<b>Saved.</b> ${dropped} Screener quarter${dropped === 1 ? "" : "s"} replaced by XBRL ${dropped === 1 ? "was" : "were"} dropped.`;
   note.hidden = false; clearTimeout(bfTimer); bfTimer = setTimeout(() => { note.hidden = true; }, 5000);
@@ -2092,6 +2120,7 @@ document.querySelectorAll("input[name=mode]").forEach(r =>
 document.getElementById("sortby").addEventListener("change", e => { sortBy = e.target.value; render(); });   // re-sorting keeps the quick list
 document.getElementById("fsec").addEventListener("change", e => { fSec = e.target.value; fInd = ""; render(); });   // filters compose with quick lists
 document.getElementById("find").addEventListener("change", e => { fInd = e.target.value; render(); });
+["secwrap", "indwrap"].forEach(id => document.getElementById(id).addEventListener("toggle", e => { if (e.target.open) render(); }));
 document.getElementById("fdebt").addEventListener("change", e => { fDebt = e.target.value; render(); });   // composes with quick lists
 document.getElementById("secpanel").addEventListener("click", e => {
   const h = e.target.closest("th[data-k]");
@@ -2117,10 +2146,12 @@ document.getElementById("csvbtn").addEventListener("click", exportCsv);
 document.getElementById("toptable").addEventListener("click", e => {   // a row opens that company's card with its history
   const tr = e.target.closest("tr[data-c]"); if (!tr) return;
   openKeys.add(tr.dataset.c); render();
+  showAllCards();
   const el = [...document.querySelectorAll("#grid .card")].find(c => c.querySelector(".histbtn") && c.querySelector(".histbtn").dataset.h === tr.dataset.c);
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 });
-document.getElementById("search").addEventListener("input", e => { search = e.target.value; render(); });
+let searchT = null;   // wait for a short pause in typing before redrawing
+document.getElementById("search").addEventListener("input", e => { search = e.target.value; clearTimeout(searchT); searchT = setTimeout(render, 180); });
 document.getElementById("quarter").addEventListener("change", e => { quarter = e.target.value; render(); });
 document.getElementById("files").addEventListener("change", e => { addFiles(e.target.files); e.target.value = ""; });
 document.getElementById("xfolder").addEventListener("change", e => { const f = [...e.target.files]; e.target.value = ""; addFolder(f); });
@@ -2140,6 +2171,7 @@ function startEdit(k) {
 }
 document.getElementById("tblbtn").addEventListener("click", () => { tableMode = !tableMode; render(); });
 document.getElementById("grid").addEventListener("click", e => {
+  if (e.target.dataset.more) { moreCards(CARD_BATCH); return; }
   const sn = e.target.closest(".sn[data-sq]");
   if (sn) {   // stress timeline: show that quarter's breakdown
     const w = sn.closest(".stwrap");
@@ -2182,7 +2214,7 @@ window.addEventListener("drop", e => { e.preventDefault(); depth = 0; drop.class
   const d = allData().filter(x => slug(x) === c.toLowerCase()).sort((a, z) => qRank(z.periods[2]) - qRank(a.periods[2]))[0];
   if (d) { quarter = d.periods[2]; openKeys.add(companyKey(d)); }
   render();
-  if (d) { const el = document.getElementById("c-" + slug(d)); if (el) el.scrollIntoView({ block: "start" }); }
+  if (d) { showAllCards(); const el = document.getElementById("c-" + slug(d)); if (el) el.scrollIntoView({ block: "start" }); }
 })();
 
 </script>
