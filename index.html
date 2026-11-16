@@ -221,9 +221,15 @@
   .grp.fresh { color:var(--blue); background:#e6f0fa; } .grp.sust { color:var(--green-ink); background:#e3f5ea; } .grp.fade { color:var(--down); background:#fde8e8; }
   .stx.lo { color:var(--green-ink); background:#e3f5ea; } .stx.mid { color:#b45309; background:#fef3c7; } .stx.hi { color:var(--down); background:#fde8e8; }
   .fos.na { color:#4b5563; background:#eef1f5; } .grp.pe { color:#374151; background:#eef1f5; }
-  .gcards { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin:4px 0 6px; }
+  .gcards { display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin:4px 0 6px; }
+  .gcards + .gcards { margin-top:16px; }   /* space between chart rows */
+  .hist .hlabel { margin-top:26px; }   /* space between sections */
+  .gcard.wide { grid-column:1 / -1; }
   @media (max-width:640px) { .gcards { grid-template-columns:1fr; } }
+  .rcard .gct { display:flex; align-items:center; gap:7px; } .rmed { margin-left:auto; border:1.5px dashed currentColor; border-radius:12px; padding:1px 9px; font-size:11.5px; white-space:nowrap; } .rdot { width:9px; height:9px; border-radius:50%; flex:none; }
   .gcard { border:1px solid var(--line); border-radius:10px; padding:10px 10px 4px; background:#fff; }
+  .gcard.rcard { background:#fff; }
+  .rcard .gct { font-size:11px; font-weight:700; letter-spacing:.7px; text-transform:uppercase; color:#6b7280; }
   .gct { font-size:12px; font-weight:700; letter-spacing:.4px; margin:0 0 2px 4px; } .grp.acc { color:#0e7490; background:#e3f4f7; }
   .hidrow { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 0 4px; }
   .hid { font-weight:600; color:#374151; letter-spacing:0; text-transform:none; font-size:11.5px; }
@@ -320,7 +326,48 @@
   .hnote { font-size:11px; color:var(--muted); margin-top:8px; }
   @media (max-width:520px) { .htable { font-size:11.5px; } .htable th, .htable td { padding-left:4px; } } .share .swa { background:#25d366; } .share .sfb { background:#1877f2; }
   @media (max-width:520px) { .tbox { padding:8px 8px 4px; } .chip { padding:1px 4px; font-size:11px; } }
+
+  /* ---------- Dark theme (toggle in the header; screen only, printing stays light) ---------- */
+  @media screen {
+  html[data-theme="dark"] { color-scheme:dark;
+    --ink:#e6ebf4; --muted:#8e9ab1; --line:#26324a; --card:#141c2f; --green:#22c55e; --green-ink:#34d399; --blue:#4ea1ff; --up:#34d399; --down:#f87171; --accent:#4ea1ff; --flag:#3a3416; }
+  html[data-theme="dark"] body { background:#0a0f1b; color:var(--ink); }
+  html[data-theme="dark"] :is(.top, .card, .gcard, .gcard.rcard, .toplist, .tbox, .sd, .breadth, .screen, .review, .rtools, .panel, .box, .fosbox, .fos, .hist .fin, .empty, .bfline, #bfline, .season, .htable, .sectable, .rtable, .modal, .dialog, .note) { background:#131b2e !important; border-color:var(--line) !important; color:var(--ink); }
+  html[data-theme="dark"] .top, html[data-theme="dark"] .card { box-shadow:0 8px 28px rgba(0,0,0,.5) !important; }
+  html[data-theme="dark"] :is(th, .sectable th, .htable th, .rtable th) { background:#18223a !important; color:#a7b3c9 !important; border-color:var(--line) !important; }
+  html[data-theme="dark"] :is(td, tr) { border-color:var(--line) !important; }
+  html[data-theme="dark"] td { color:#d8e0ee; }
+  html[data-theme="dark"] :is(input, select, textarea, button, .btn, label.btn) { background:#18223a !important; color:var(--ink) !important; border-color:#2c3b5a !important; }
+  html[data-theme="dark"] :is(button, .btn):hover { background:#203051 !important; }
+  html[data-theme="dark"] .hchart text { fill:#9aa7bf; } html[data-theme="dark"] .hchart .v { fill:#e6ebf4; }
+  html[data-theme="dark"] .hchart line[stroke="#d6e2ee"], html[data-theme="dark"] .hchart line[stroke="#e3e6eb"] { stroke:#2c3b5a; }
+  html[data-theme="dark"] .rcard .gct { color:#a7b3c9; }
+  html[data-theme="dark"] .disclaimer { border-color:var(--line); color:#7f8ba3; }
+  html[data-theme="dark"] .contact a { color:#a7b3c9; }
+  html[data-theme="dark"] h1 #qtitle, html[data-theme="dark"] .name { color:#f3f6fb; }
+  html[data-theme="dark"] td:not(.up):not(.dn):not(.down):not(.g), html[data-theme="dark"] td b, html[data-theme="dark"] :is(label, .tab, .gsec, .hid, .q, .strset, #st-glab, p.hint, .gct, .key) { color:var(--ink) !important; }
+  html[data-theme="dark"] :is(.hid, .q, .gsec, .key, p.hint) { color:var(--muted) !important; }
+  html[data-theme="dark"] td.g.down, html[data-theme="dark"] td.dn, html[data-theme="dark"] td.down { color:#f87171 !important; } html[data-theme="dark"] td.g.flat { color:var(--muted) !important; }
+  html[data-theme="dark"] td.up, html[data-theme="dark"] td.g.up { color:#34d399 !important; }
+  /* generated: light-theme colours remapped for dark */
+  html[data-theme="dark"] .contact a, html[data-theme="dark"] .tab, html[data-theme="dark"] .searchwrap svg, html[data-theme="dark"] .sc-out, html[data-theme="dark"] .ttable th, html[data-theme="dark"] .card .tbox td:nth-child(3), html[data-theme="dark"] .card .tbox td:nth-child(4), html[data-theme="dark"] .card .tbox th:nth-child(4), html[data-theme="dark"] .rbar, html[data-theme="dark"] th, html[data-theme="dark"] .review .hint, html[data-theme="dark"] .form label, html[data-theme="dark"] .problems.info, html[data-theme="dark"] .card td:nth-child(3), html[data-theme="dark"] .sitags .chev, html[data-theme="dark"] .rcard .gct, html[data-theme="dark"] .cbox .r span, html[data-theme="dark"] .fosp .fd, html[data-theme="dark"] .card th, html[data-theme="dark"] .card th:first-child, html[data-theme="dark"] .htable th { color:#a7b3c9 !important; }
+  html[data-theme="dark"] .screen, html[data-theme="dark"] .presets, html[data-theme="dark"] .strset, html[data-theme="dark"] .card .tbox td:nth-child(2), html[data-theme="dark"] .sortby, html[data-theme="dark"] .audit, html[data-theme="dark"] .audit b, html[data-theme="dark"] .card td:first-child, html[data-theme="dark"] .secwrap, html[data-theme="dark"] .hid, html[data-theme="dark"] .fidl, html[data-theme="dark"] .cbox h4, html[data-theme="dark"] .cbox .r b, html[data-theme="dark"] .fosp .fh b, html[data-theme="dark"] .fosp .frh, html[data-theme="dark"] .sn .q, html[data-theme="dark"] .card td:nth-child(4), html[data-theme="dark"] .abbr-key b, html[data-theme="dark"] .htable tr.cur td, html[data-theme="dark"] .breadth, html[data-theme="dark"] .fy span { color:var(--ink) !important; }
+  html[data-theme="dark"] button, html[data-theme="dark"] .btn, html[data-theme="dark"] .screen, html[data-theme="dark"] .rwrap, html[data-theme="dark"] .ttable tr[data-c]:hover td, html[data-theme="dark"] .sortby select, html[data-theme="dark"] .review, html[data-theme="dark"] .vals input.unv, html[data-theme="dark"] .lockbox, html[data-theme="dark"] .audit, html[data-theme="dark"] .search, html[data-theme="dark"] .gmore button, html[data-theme="dark"] .sectable, html[data-theme="dark"] .sectable th, html[data-theme="dark"] .sectable tr[data-sec]:hover td, html[data-theme="dark"] .sectable tr.on td, html[data-theme="dark"] .cbox.s, html[data-theme="dark"] .cbox.p, html[data-theme="dark"] .cbox .acc, html[data-theme="dark"] .fosp, html[data-theme="dark"] .fosp .fb, html[data-theme="dark"] .sn::before, html[data-theme="dark"] .sn.on, html[data-theme="dark"] .sd, html[data-theme="dark"] .tbox, html[data-theme="dark"] .histbtn, html[data-theme="dark"] .histbtn:hover, html[data-theme="dark"] .breadth, html[data-theme="dark"] .fy span { background:#18223a !important; background-image:none !important; }
+  /* coloured pills: keep each pill's colour, on a dark tint of it, brightened for contrast */
+  html[data-theme="dark"] :is(.grp, .basis, .rec, .badge, .chip, .rs, .dl, .stag) { background:color-mix(in srgb, currentColor 20%, #131b2e) !important; filter:brightness(1.55) saturate(1.15); border-color:transparent !important; }
+  html[data-theme="dark"] .stag { background:none !important; }
+  html[data-theme="dark"] .card td:nth-child(2) { color:#ffffff !important; }
+  html[data-theme="dark"] .grp.pe { color:#cbd5e1 !important; filter:none; background:#26324a !important; }
+  html[data-theme="dark"] .fosp { background:#0f1626 !important; }
+  html[data-theme="dark"] .n { background:#26324a !important; color:#cbd5e1 !important; }
+  html[data-theme="dark"] :is(.fb, .fosp .fb) { background:#26324a !important; }
+  html[data-theme="dark"] :is(.fosp, .audit, .rwrap, .sn.on, .sd) { background:#131b2e !important; border-color:var(--line) !important; color:var(--ink); }
+  html[data-theme="dark"] .sn.on { background:#1b2742 !important; }
+  html[data-theme="dark"] td:is(.up, .m, .dn) { background-color:transparent !important; }
+  html[data-theme="dark"] tr.on td, html[data-theme="dark"] .sectable tr[data-sec]:hover td, html[data-theme="dark"] .sectable tr[data-ind]:hover td { background:#1b2742 !important; }
+  }
 </style>
+<script>try { document.documentElement.dataset.theme = localStorage.getItem("erTheme") || "dark"; } catch (e) { document.documentElement.dataset.theme = "dark"; }</script>
 </head>
 <body>
 <div class="drop" id="drop">Drop XBRL .xml or Screener .csv files</div>
@@ -339,6 +386,7 @@
       <label class="btn admin-only" title="Pick the NSE XBRL FETCHER folder: every .xml in its subfolders is read; files that pass the checks are added, the rest wait below for review">Add XBRL folder<input type="file" id="xfolder" webkitdirectory directory multiple hidden></label>
       <label class="btn admin-only" title="Prices for P/E and PEG: a CSV exported from an AmiBroker exploration (Ticker, Date/Time, Close)">Add prices<input type="file" id="pricefile" accept=".csv,text/csv" hidden></label>
       <button id="tblbtn" title="Show the selected quarter as one sortable table">Table view</button>
+      <button id="themebtn" title="Switch between dark and light">☀ Light</button>
       <button id="save" class="admin-only" title="Download results_data.js to replace the one in this folder">Save data file</button>
     </div>
   </div>
@@ -1004,6 +1052,19 @@ function addPriceCsv(text, fileName) {
   const si = head.findIndex(h => /^sector$/.test(h)), ii = head.findIndex(h => /^industry$/.test(h)), sector = {}, industry = {};
   const okName = v => v && !/^(undefined|-|none|n\/a)$/i.test(v);
   if (ti < 0) { alert(fileName + ": no Ticker / Symbol column. Export the AmiBroker exploration with columns Ticker, Date/Time, Close."); return; }
+  const fyCols = head.map((h, i) => [h, i]).filter(([h]) => /^fy\d{2}$/.test(h)), qCols = head.map((h, i) => [h, i]).filter(([h]) => /^q[1-4]fy\d{2}$/.test(h));
+  if (ci < 0 && (fyCols.length || qCols.length)) {   // past closes: FY26 = 31 March 2026 (31 MARCH CLOSES AFL); Q2FY27 = 30 Sep 2026 (QUARTER-END CLOSES AFL)
+    const base = Object.assign({}, allPrices() || { prices: {}, asOf: "" }), ye = Object.assign({}, base.ye || {}), qe = Object.assign({}, base.qe || {}), cnt = {};
+    const take = (store, cols, keyOf) => cols.forEach(([h, i]) => { const k = keyOf(h), m = Object.assign({}, store[k] || {}); let n = 0;
+      rows.slice(1).forEach(r => { const sym = (r[ti] || "").toUpperCase().replace(/\.(NS|NSE|BO)$/, ""), v = parseFloat(r[i]); if (sym && isFinite(v) && v > 0) { m[sym] = v; n++; } });
+      store[k] = m; cnt[k] = n; });
+    take(ye, fyCols, h => h.toUpperCase());
+    take(qe, qCols, h => "Q" + h[1] + " FY" + h.slice(-2));
+    prLocal = Object.assign(base, { ye, qe }); dataVer++;
+    try { localStorage.setItem(PR_STORE, JSON.stringify(prLocal)); } catch (e) {}
+    const el = document.getElementById("bfline"); el.innerHTML = `<b>Past closes loaded:</b> ${Object.keys(cnt).length} periods (${Object.keys(cnt).slice(0, 3).join(", ")}${Object.keys(cnt).length > 3 ? " …" : ""}), up to ${Math.max(...Object.values(cnt))} symbols each. P/E history and Mcap / Sales now show in History. Save data file to keep them.`;
+    el.hidden = false; clearTimeout(bfTimer); render(); return;
+  }
   const prices = {}; let asOf = "";
   rows.slice(1).forEach(r => { const sym = (r[ti] || "").toUpperCase().replace(/\.(NS|NSE|BO)$/, ""); const v = parseFloat(ci >= 0 ? r[ci] : r[r.length - 1]);
     if (sym && isFinite(v) && v > 0) { prices[sym] = v; if (di >= 0 && r[di] && !asOf) asOf = r[di].split(" ")[0]; }
@@ -1016,7 +1077,7 @@ function addPriceCsv(text, fileName) {
   const LQ = AD.map(d => d.periods[2]).sort((a, z) => qRank(z) - qRank(a))[0], have = new Set(AD.map(d => String(d.symbol || "").toUpperCase()));
   const day = asOf || new Date().toISOString().slice(0, 10);
   if (LQ) { const snap = {}; Object.keys(prices).forEach(k => { if (have.has(k)) snap[k] = prices[k]; }); byQ[LQ] = { asOf: day, prices: snap }; }
-  prLocal = { asOf: day, prices, sector, industry, byQ }; dataVer++;
+  prLocal = { asOf: day, prices, sector, industry, byQ, ye: old.ye || {}, qe: old.qe || {} }; dataVer++;   // keeps the past closes
   fSec = ""; fInd = "";
   try { localStorage.setItem(PR_STORE, JSON.stringify(prLocal)); } catch (e) {}
   const el = document.getElementById("bfline"); el.innerHTML = `<b>Prices loaded:</b> ${n} symbols, as of ${esc(prLocal.asOf)}${Object.keys(industry).length ? `, with sector and industry for ${Object.keys(industry).length}` : si < 0 && ii < 0 ? " (no SECTOR / INDUSTRY columns in this file)" : ""}. P/E and PEG now show on the cards. Click <b>Save data file</b> to keep them.`;
@@ -1348,6 +1409,107 @@ function debtHtml(d) {
     <div style="overflow-x:auto"><table class="htable" style="min-width:480px"><tr><th>As of</th><th>Total borrowings</th><th>Equity</th><th>Debt / Equity</th><th>Debt vs a year earlier</th></tr>${rows}</table></div>
     <div class="hnote">Borrowings = long-term + short-term. Each half is compared with the same half a year earlier (Sep with Sep, Mar with Mar), because short-term borrowing swings within the year.</div>`;
 }
+// ---------- Returns & efficiency: by financial year (from the Mar filings) and TTM ----------
+const fyOf = q => "FY" + q.slice(-2);   // "Q4 FY26" -> "FY26"
+function finYears(d) {
+  if (isFin(d)) return null;
+  const Q = qRank(d.periods[2]), cards = cardsOfCompany(companyKey(d)).filter(c => qRank(c.periods[2]) <= Q);
+  const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), byC = new Map(cards.map(c => [c.periods[2], c]));
+  const sum4 = (q4, k) => { let t = 0; for (let i = 0; i < 4; i++) { const r = byP[prevQ(q4, i)]; if (!r || r[k] == null) return null; t += r[k]; } return t; };
+  const finSum = q4 => { let t = 0; for (let i = 0; i < 4; i++) { const c = byC.get(prevQ(q4, i)); if (!c || !c.st || c.st.fin == null) return null; t += c.st.fin; } return t; };
+  const shOf = c => c && c.st && c.st.sh > 0 ? c.st.sh : c && c.np && c.eps && c.np[2] >= 1 && c.eps[2] > 0 ? c.np[2] / c.eps[2] : null;   // crore shares
+  const P = allPrices() || {}, sym = String(d.symbol || "").toUpperCase(), yrs = [];
+  const q4s = [...new Set([...Object.keys(byP), ...byC.keys()])].filter(q => /^Q4 /.test(q) && qRank(q) <= Q).sort((a, z) => qRank(a) - qRank(z));
+  q4s.forEach(q4 => {
+    const c = byC.get(q4), st = (c && c.st) || {}, y = st.y || {};
+    const s = sum4(q4, "sales") ?? y.s ?? null, np = sum4(q4, "np") ?? y.np ?? null, pbt = sum4(q4, "pbt") ?? y.pbt ?? null, fin = y.fin ?? finSum(q4), cogs = y.cogs > 0 ? y.cogs : null;
+    const ps = sum4(prevQ(q4, 4), "sales"), pn = sum4(prevQ(q4, 4), "np"), lab = fyOf(q4);
+    const px = (P.ye && P.ye[lab] && P.ye[lab][sym]) || (P.qe && P.qe[q4] && P.qe[q4][sym]) || null, sh = shOf(c), e4 = sum4(q4, "eps");
+    yrs.push({ lab, s, np,
+      sg: s != null && ps > 0 ? (s / ps - 1) * 100 : null, ng: np != null && pn ? growthK("np", pn, np) : null,
+      roe: np != null && st.eq > 0 ? np / st.eq * 100 : null,
+      roce: pbt != null && fin != null && st.eq > 0 ? (pbt + fin) / (st.eq + (st.debt || 0)) * 100 : null,
+      roa: np != null && st.as > 0 ? np / st.as * 100 : null,
+      invD: st.inv != null && (cogs || s) ? st.inv / (cogs || s) * 365 : null, recD: st.rec != null && s ? st.rec / s * 365 : null, payD: st.pay != null && (cogs || s) ? st.pay / (cogs || s) * 365 : null,
+      ms: px && sh && s > 0 ? px * sh / s : null, pe: px && e4 > 0 ? px / e4 : null, peLoss: !!(px && e4 != null && e4 <= 0) });
+  });
+  // TTM: the last 4 quarters up to this card
+  const tq = d.periods[2], ts = sum4(tq, "sales"), tn = sum4(tq, "np"), ps = sum4(prevQ(tq, 4), "sales"), pn = sum4(prevQ(tq, 4), "np");
+  const v = valuation(d), lastC = [...byC.values()].sort((a, z) => qRank(z.periods[2]) - qRank(a.periods[2])).find(c => c.st && c.st.sh > 0) || byC.get(tq);
+  const now = v && v.pe != null && v.pe > 0 ? { lab: "Now", pe: v.pe } : null;
+  // P/E at each stored results-season price (Add prices keeps one per quarter): that price ÷ the 4 quarters' EPS to that quarter
+  const qpx = {};   // quarter -> price: the quarter-end close if loaded, else the price stored that results season
+  Object.entries(P.byQ || {}).forEach(([q, sn]) => { if (sn.prices && sn.prices[sym] > 0) qpx[q] = sn.prices[sym]; });
+  Object.entries(P.qe || {}).forEach(([q, m]) => { if (m[sym] > 0) qpx[q] = m[sym]; });
+  const qpe = Object.entries(qpx).filter(([q]) => qRank(q) <= Q)
+    .map(([q, px]) => { const e = sum4(q, "eps"); return e > 0 ? { lab: q.replace(" FY", "'"), r: qRank(q) + 0.5, pe: px / e } : null; }).filter(Boolean);
+  const ttm = /^Q4 /.test(tq) ? null : { lab: "TTM", sg: ts != null && ps > 0 ? (ts / ps - 1) * 100 : null, ng: tn != null && pn ? growthK("np", pn, tn) : null,
+    ms: v && v.price && shOf(lastC) && ts > 0 ? v.price * shOf(lastC) / ts : null };
+  // Mcap / Sales at each quarter end: price × shares ÷ the 4 quarters' sales to that quarter
+  const shAt = q => { const cs = [...byC.values()].filter(c => qRank(c.periods[2]) <= qRank(q)).sort((a, z) => qRank(z.periods[2]) - qRank(a.periods[2]));
+    const w = cs.find(c => c.st && c.st.sh > 0); if (w) return w.st.sh;
+    const later = [...byC.values()].filter(c => c.st && c.st.sh > 0).sort((a, z) => qRank(a.periods[2]) - qRank(z.periods[2]))[0];   // before the first filing: its share count
+    return later ? later.st.sh : shOf(byC.get(q)) || shOf(cs[0]); };
+  const qms = Object.entries(qpx).filter(([q]) => qRank(q) <= Q).map(([q, px]) => { const s4 = sum4(q, "sales"), sh = shAt(q); return s4 > 0 && sh ? { lab: q.replace(" FY", "'"), r: qRank(q), ms: px * sh / s4 } : null; })
+    .filter(Boolean).sort((a, z) => a.r - z.r).slice(-12);
+  // ROE / ROCE / ROA every half-year (Mar, Sep): the 4 quarters' profit to that date ÷ the balance sheet on that date
+  const hy = [...byC.values()].filter(c => c.st && c.st.eq > 0 && /^Q[24] /.test(c.periods[2])).sort((a, z) => qRank(a.periods[2]) - qRank(z.periods[2])).map(c => {
+    const q = c.periods[2], st = c.st, np = sum4(q, "np"), pbt = sum4(q, "pbt"), fin = /^Q4 /.test(q) && st.y && st.y.fin != null ? st.y.fin : finSum(q);
+    return { lab: qMonth(q).replace(/ 20(\d\d)$/, "'$1"),
+      roe: np != null ? np / st.eq * 100 : null, roce: pbt != null && fin != null ? (pbt + fin) / (st.eq + (st.debt || 0)) * 100 : null, roa: np != null && st.as > 0 ? np / st.as * 100 : null };
+  }).slice(-8);
+  return { yrs: yrs.slice(-5), ttm, now, qpe, qms, hy };
+}
+let barGid = 0;
+function barCard(title, pts, col, fmtV, opt = {}) {   // pts: [{lab, v}] ; v may be a growth object {kind,val} or a number
+  pts = pts.filter(x => x.v != null && !(typeof x.v === "object" && x.v.kind === "na")); if (!pts.length) return "";
+  const num = x => typeof x.v === "object" ? (x.v.kind === "num" ? x.v.val : x.v.kind === "pos" ? null : null) : x.v;
+  const CAP = opt.cap || Infinity, cv = v => v == null ? null : Math.max(-CAP, Math.min(CAP, v));
+  let posMax = Math.max(0, ...pts.map(x => cv(num(x)) ?? 0)), negMax = Math.max(0, ...pts.map(x => -(cv(num(x)) ?? 0)));
+  if (pts.some(x => typeof x.v === "object" && x.v.kind === "pos")) posMax = Math.max(posMax, 1); if (pts.some(x => typeof x.v === "object" && x.v.kind === "neg")) negMax = Math.max(negMax, 1);
+  posMax = posMax || 1;
+  const W = opt.wide ? 940 : 300, top = 20, area = 100, bot = 22, H = top + area + bot + (negMax ? 12 : 0), n = pts.length, gap = opt.wide ? 40 : 14;
+  const bw = Math.min(opt.wide ? 56 : 38, (W - 20 - gap * (n - 1)) / n), x0 = (W - (n * bw + (n - 1) * gap)) / 2;
+  const zero = top + area * (posMax / (posMax + negMax)), sc = area / (posMax + negMax), gid = "bg" + (++barGid), alt = opt.alt || col;
+  const defs = `<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${alt}"/><stop offset="1" stop-color="${col}"/></linearGradient>
+    <linearGradient id="${gid}n" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#f87171"/></linearGradient></defs>`;
+  const bars = pts.map((x, i) => {
+    const o = typeof x.v === "object" ? x.v : null, nv = num(x), X = x0 + i * (bw + gap), last = i === n - 1;
+    const v = o && o.kind === "pos" ? posMax : o && o.kind === "neg" ? -negMax : cv(nv), h = Math.max(1, Math.abs(v) * sc), Y = v >= 0 ? zero - h : zero, c = v >= 0 ? col : "#dc2626", fillU = v >= 0 ? `url(#${gid})` : `url(#${gid}n)`;
+    const t = o && o.kind === "pos" ? "L→P" : o && o.kind === "neg" ? "P→L" : fmtV(nv);
+    return `<rect x="${X}" y="${Y}" width="${bw}" height="${h}" rx="3" fill="${v >= 0 ? col : "#ef4444"}"${o && o.kind !== "num" ? ` stroke-dasharray="3 2" stroke="${c}" fill-opacity=".35"` : ""}/>
+      <text class="v" x="${X + bw / 2}" y="${v >= 0 ? Y - 4 : Y + h + 11}" text-anchor="middle" style="font-size:11px">${t}</text>
+      <text x="${X + bw / 2}" y="${H - 5}" text-anchor="middle" style="font-size:10.5px">${x.lab}</text>`;
+  }).join("");
+  let med = "", medT = "";
+  if (opt.median) { const a = pts.filter(x => x.lab !== "Now").map(num).filter(v => v != null && v > 0).sort((x, z) => x - z);   // median of the years, not "Now"
+    if (a.length >= 2) { const h2 = a.length >> 1, m = a.length % 2 ? a[h2] : (a[h2 - 1] + a[h2]) / 2, Y = zero - Math.min(cv(m), posMax) * sc;
+      med = `<line x1="8" x2="${W - 8}" y1="${Y}" y2="${Y}" stroke="${col}" stroke-width="1.2" stroke-dasharray="4 3" opacity=".8"/>`; medT = `<span class="rmed" style="color:${col}">Median ${fmtV(m)}</span>`; } }
+  return `<div class="gcard rcard${opt.wide ? " wide" : ""}" style="--rc:${col}"><div class="gct"><span class="rdot" style="background:${col}"></span>${title}${medT}</div>
+    <svg class="hchart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}"><line x1="8" x2="${W - 8}" y1="${zero}" y2="${zero}" stroke="#d6e2ee"/>${bars}${med}</svg></div>`;
+}
+function returnsHtml(d) {
+  const F = finYears(d); if (!F) return "";
+  const Y = F.yrs, T = F.ttm ? [F.ttm] : [], pct = v => (Math.abs(v) >= 1000 ? (v / 1000).toFixed(1) + "k" : Math.abs(v) >= 100 ? Math.round(v) : v.toFixed(1)) + "%";
+  const day = v => Math.round(v) + " d", xx = v => v.toFixed(2) + "×";
+  const pts = (k, withT) => Y.concat(withT ? T : []).map(r => ({ lab: r.lab, v: r[k] }));
+  const qR = new Set(F.qpe.map(x => Math.floor(x.r)));
+  const peP = Y.filter(r => r.pe != null && !qR.has(qRank("Q4 " + r.lab))).map(r => ({ lab: r.lab, r: qRank("Q4 " + r.lab), v: r.pe })).concat(F.qpe.map(x => ({ lab: x.lab, r: x.r, v: x.pe })))
+    .sort((a, z) => a.r - z.r).slice(-12).concat(F.now ? [{ lab: "Now", v: F.now.pe }] : []);
+  const msP = F.qms.map(x => ({ lab: x.lab, v: x.ms })).concat(F.ttm && F.ttm.ms != null ? [{ lab: "Now", v: F.ttm.ms }] : F.yrs.length && F.yrs[F.yrs.length - 1].ms != null && !F.qms.length ? [] : []);
+  const msPts = msP.length ? msP : pts("ms", true);   // quarter-end points when the QUARTER-END CLOSES export is loaded
+  const hyP = k => F.hy.map(r => ({ lab: r.lab, v: r[k] }));
+  const g1 = [barCard("Net sales growth % · by year", pts("sg", true), "#22c55e", pct, { cap: 300 }), barCard("PAT growth % · by year", pts("ng", true), "#14b8a6", pct, { cap: 300 })];
+  const gm = [barCard("Mcap / Sales · at each quarter end, and now", msPts, "#94a3b8", xx, { median: true, wide: true })];
+  const g0 = [peP.length ? barCard("P/E history · at each quarter end, and now", peP, "#ec4899", v => v >= 100 ? Math.round(v) + "" : v.toFixed(1), { cap: 150, median: true, wide: true }) : ""];
+  const g2 = [barCard("ROA · half-yearly", hyP("roa"), "#f97316", pct), barCard("ROE · half-yearly", hyP("roe"), "#8b5cf6", pct), barCard("ROCE · half-yearly", hyP("roce"), "#d946ef", pct)];
+  const g3 = [barCard("Inventory days · by year", pts("invD"), "#f5b82e", day), barCard("Receivable days · by year", pts("recD"), "#f87171", day), barCard("Payable days · by year", pts("payD"), "#60a5fa", day)];
+  const rows = [g1, g0, gm, g2, g3].map(g => g.filter(Boolean)).filter(g => g.length); if (!rows.length) return "";
+  return `<div class="hlabel">${idTag(d)}<span>RETURNS, VALUATION &amp; EFFICIENCY</span></div>
+    ${rows.map(g => `<div class="gcards">${g.join("")}</div>`).join("")}
+    <div class="hnote">Financial year = the 4 quarters to March; TTM = the last 4 quarters. Half-yearly (Mar, Sep): ROE = last 4 quarters' net profit ÷ equity on that date; ROCE = (PBT + interest) ÷ (equity + borrowings); ROA = net profit ÷ total assets.
+    Inventory and payable days use cost of materials (sales if not reported); receivable days use sales. Mcap / Sales = quarter-end close × shares ÷ last 4 quarters' sales ("Now": latest price). P/E = price ÷ EPS of the 4 quarters to that point: Q bars use the quarter-end close (QUARTER-END CLOSES export; otherwise the price stored when you added prices that quarter), "Now" the latest price; a loss has no P/E. Charts fill in as more years of filings are added.</div>`;
+}
 function historyHtml(d) {
   const rows = historyOf(d);
   const byP = Object.fromEntries(rows.map(r => [r.p, r]));
@@ -1374,6 +1536,7 @@ function historyHtml(d) {
     ${growthChart(d, rows)}
     ${fy ? `<div class="fy">${fy}</div>` : ""}
     ${debtHtml(d)}
+    ${returnsHtml(d)}
     <div class="hnote">${rows.length} quarters stored. Full-year totals appear once all four quarters of a year are in.</div></div>`;
 }
 
@@ -1768,6 +1931,20 @@ function xbrlEntry(text) {
   if (aud.length) st.aud = aud;
   const eqv = atEnd("Equity");
   if (eqv != null && !bank && !nbfc) { const b = [atEnd("BorrowingsNoncurrent"), atEnd("BorrowingsCurrent")]; st.eq = cr(eqv); st.debt = cr(b.reduce((t, v) => t + (v || 0), 0)); }
+  // Shares (crore) = paid-up equity capital ÷ face value, from every filing.
+  const anyV = n => { const f = (F[n] || []).find(f => !f.c.dim); return f ? num(f) : null; };
+  const pu = anyV("PaidUpValueOfEquityShareCapital"), fv = anyV("FaceValueOfEquityShareCapital");
+  if (pu > 0 && fv > 0) st.sh = Math.round(pu / fv / 1e5) / 100;
+  // Balance-sheet lines (Mar / Sep filings) and full-year figures (Mar filings) for Returns & efficiency.
+  if (!bank && !nbfc && eqv != null) {
+    const ast = atEnd("Assets"), inv = atEnd("Inventories"), rec = atEnd("TradeReceivablesCurrent"), pay = atEnd("TradePayablesCurrent");
+    if (ast != null) st.as = cr(ast); if (inv != null) st.inv = cr(inv); if (rec != null) st.rec = cr(rec); if (pay != null) st.pay = cr(pay);
+  }
+  if (!bank && longC && /-03-31$/.test(qc.e) && /-04-01$/.test(longC.s) && isoDay(qc.e) - isoDay(longC.s) > 300) {   // the full financial year
+    const lvAny = arr => { for (const n of arr) { const v = lv(n); if (v != null) return v; } return null; };
+    const cg = ["CostOfMaterialsConsumed", "PurchasesOfStockInTrade", "ChangesInInventoriesOfFinishedGoodsWorkInProgressAndStockInTrade"].map(lv);
+    st.y = { s: cr(lvAny(T.sales)), np: cr(lvAny(T.np)), pbt: cr(lvAny(T.pbt)), fin: cr(lv("FinanceCosts")), cogs: cg.every(v => v == null) ? null : cr(cg.reduce((t, v) => t + (v || 0), 0)) };
+  }
   return { st,
     name: str(["NameOfTheCompany", "NameOfBank"]),
     symbol: str(["Symbol"]).toUpperCase(),
@@ -2121,6 +2298,9 @@ document.getElementById("sortby").addEventListener("change", e => { sortBy = e.t
 document.getElementById("fsec").addEventListener("change", e => { fSec = e.target.value; fInd = ""; render(); });   // filters compose with quick lists
 document.getElementById("find").addEventListener("change", e => { fInd = e.target.value; render(); });
 ["secwrap", "indwrap"].forEach(id => document.getElementById(id).addEventListener("toggle", e => { if (e.target.open) render(); }));
+const themeBtn = document.getElementById("themebtn"), setThemeBtn = () => { themeBtn.textContent = document.documentElement.dataset.theme === "dark" ? "☀ Light" : "☾ Dark"; };
+setThemeBtn();
+themeBtn.addEventListener("click", () => { const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = t; try { localStorage.setItem("erTheme", t); } catch (e) {} setThemeBtn(); });
 document.getElementById("fdebt").addEventListener("change", e => { fDebt = e.target.value; render(); });   // composes with quick lists
 document.getElementById("secpanel").addEventListener("click", e => {
   const h = e.target.closest("th[data-k]");
