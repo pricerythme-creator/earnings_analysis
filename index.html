@@ -203,6 +203,7 @@
   .stag svg { width:13px; height:13px; flex:none; }
   .sitags .chev { color:#6b7280; font-size:15px; line-height:1; margin:0 2px; }
   #fsec, #find { width:auto; max-width:200px; min-width:0; }
+  .vmax input { width:62px; } .vmax { white-space:nowrap; }
   .gmore { text-align:center; padding:14px 0 6px; } .gmore button { border:1px solid #cfe0f1; background:#f3f8fd; color:var(--blue); font-size:13px; font-weight:600; padding:7px 18px; border-radius:18px; cursor:pointer; font-family:Inter,sans-serif; }
   .secwrap { margin:0 0 14px; font-size:12px; color:#374151; }
   .secwrap summary { cursor:pointer; font-weight:600; color:var(--green-ink); font-size:13px; margin-bottom:6px; }
@@ -432,6 +433,15 @@
       <label class="sortby">Debt
         <select id="fdebt"><option value="">All</option><option value="free">Debt-free</option><option value="down">Debt ↓</option><option value="up">Debt ↑</option></select>
       </label>
+      <label class="sortby vmax" title="Debt / Equity below this (latest Mar/Sep filing). Blank = no limit.">D/E &lt;
+        <input id="vde" type="number" min="0" step="0.1" placeholder="any">
+      </label>
+      <label class="sortby vmax" title="P/E below this (latest price ÷ last 4 quarters' EPS; loss-makers left out). Blank = no limit.">P/E &lt;
+        <input id="vpe" type="number" min="0" step="1" placeholder="any">
+      </label>
+      <label class="sortby vmax" title="PEG below this (P/E ÷ EPS growth). Blank = no limit.">PEG &lt;
+        <input id="vpeg" type="number" min="0" step="0.1" placeholder="any">
+      </label>
       <label class="sortby">Growth On
         <select id="gbasis"><option value="np">Net Profit</option><option value="eps">EPS</option></select>
       </label>
@@ -478,7 +488,7 @@ const STORE = "priceRythm.xbrlTest.v1", BF_STORE = "priceRythm.xbrlTest.backfill
 // Without it, everyone (including you) sees exactly what is in results_data.js.
 const ADMIN = /[?&]admin\b/i.test(location.search);
 if (ADMIN) document.body.classList.add("admin");
-let fSec = "", fInd = "", fDebt = "";   // fDebt: "free" | "down" | "up" (works with any quick list)   // Sector / Industry filters (from the AmiBroker price file)
+let fSec = "", fInd = "", fDebt = "", vMax = { de: null, pe: null, peg: null };   // vMax: blank = no limit   // fDebt: "free" | "down" | "up" (works with any quick list)   // Sector / Industry filters (from the AmiBroker price file)
 let preset = "";   // quick list: "core" | "early" | "" (off)
 let tab = 0, mode = "yoy", quarter = null, search = "", sortBy = "latest", minSales = 0, gKey = "np", flt = "";   // gKey: growth sorts on Net Profit or EPS
 // Best / Worst Performer rank by Net Profit growth by default; the other views by latest result date.
@@ -1140,7 +1150,14 @@ function setPreset(v) {
 // A setting changed by hand ends the quick list but keeps the settings; no button stays selected, so "Off" then resets the view.
 const clearPreset = () => { if (!preset) return; preset = ""; document.querySelectorAll('input[name=preset]').forEach(r => r.checked = false); };
 const passFlt = d => (!preset || presetKeep(d)) && passFlt0(d);
-const passSec = d => (!fSec || secOf(d) === fSec) && (!fInd || indOf(d) === fInd) && (!fDebt || debtKind(d) === fDebt);
+const passVal = d => {   // Max D/E, Max P/E, Max PEG (strictly below); a company without the figure is left out while that limit is set
+  if (vMax.de != null) { const x = debtNow(d); if (!x || x.de == null || !(x.de < vMax.de)) return false; }
+  if (vMax.pe != null || vMax.peg != null) { const v = valuation(d); if (!v) return false;
+    if (vMax.pe != null && !(v.pe != null && v.pe > 0 && v.pe < vMax.pe)) return false;
+    if (vMax.peg != null && !(v.peg != null && v.peg > 0 && v.peg < vMax.peg)) return false; }
+  return true;
+};
+const passSec = d => (!fSec || secOf(d) === fSec) && (!fInd || indOf(d) === fInd) && (!fDebt || debtKind(d) === fDebt) && passVal(d);
 const passFlt0 = d => passSec(d) && (!flt || (flt === "acc3" ? accelRun(d).n >= 3 : flt === "sbrk" ? !!(stressNow(d) && stressNow(d).brk) : STR[flt] ? strength(d).grp === flt : flt === "rec" ? extras(d).rec.length > 0 : !!extras(d).qual));
 let shownList = [];
 function exportStrength() {
@@ -1767,7 +1784,7 @@ function render() {
     : sortBy === "accel" ? `ranked by ${gName} growth acceleration (this quarter's YoY minus last quarter's YoY), highest first`
     : sortBy === "streak" ? `ranked by consecutive quarters of ${gName} growth YoY, longest first`
     : sortBy === "name" ? "sorted by name (A–Z)" : "sorted by latest result date";
-  document.getElementById("basisline").textContent = quarter ? `${what}${minSales ? ", Sales ≥ ₹" + minSales + " Cr" : ""}${fSec ? ", sector " + fSec : ""}${fInd ? ", industry " + fInd : ""}${preset ? ` — ${PRESET[preset].name}: Grade ${preset === "gradeA" ? "A" : "A/B"} only, ${preset === "accel" ? "net profit ₹10 Cr+, " : ""}${preset === "delev" ? "debt down 20%+ from a year earlier, sales and EPS up YoY, " : ""}${preset === "breakout" ? "record sales after a flat 8-quarter base, net profit 1.25× its old high, OPM at an 8-quarter high (and last quarter's breakouts still growing YoY), banks and cyclical industries left out, " : ""}${preset === "gems" ? `sales ₹1,000 Cr or less, accelerating 2Q+ or Fresh strength, PEG below 1 (year-earlier 4Q EPS positive, 4Q EPS growth 200% or less), final score only, ${hasSec() ? "cyclical industries left out" : "no industry data so cyclicals not left out"}, ` : ""}no Check NP, stress 40 or less` : ""}${fDebt === "free" ? ", debt-free only (borrowings under 5% of equity)" : fDebt === "down" ? ", debt down 20%+ from a year earlier only" : fDebt === "up" ? ", debt up 20%+ from a year earlier with D/E above 0.3 only" : ""}${flt === "acc3" ? ", accelerating 3 quarters or more only" : flt === "sbrk" ? ", stress break this quarter only" : flt === "rec" ? ", record quarters only" : flt === "qual" ? ", profit-quality flags only" : STR[flt] ? strText() : ""}, ${how}.` : "";
+  document.getElementById("basisline").textContent = quarter ? `${what}${minSales ? ", Sales ≥ ₹" + minSales + " Cr" : ""}${fSec ? ", sector " + fSec : ""}${fInd ? ", industry " + fInd : ""}${preset ? ` — ${PRESET[preset].name}: Grade ${preset === "gradeA" ? "A" : "A/B"} only, ${preset === "accel" ? "net profit ₹10 Cr+, " : ""}${preset === "delev" ? "debt down 20%+ from a year earlier, sales and EPS up YoY, " : ""}${preset === "breakout" ? "record sales after a flat 8-quarter base, net profit 1.25× its old high, OPM at an 8-quarter high (and last quarter's breakouts still growing YoY), banks and cyclical industries left out, " : ""}${preset === "gems" ? `sales ₹1,000 Cr or less, accelerating 2Q+ or Fresh strength, PEG below 1 (year-earlier 4Q EPS positive, 4Q EPS growth 200% or less), final score only, ${hasSec() ? "cyclical industries left out" : "no industry data so cyclicals not left out"}, ` : ""}no Check NP, stress 40 or less` : ""}${vMax.de != null ? ", D/E below " + vMax.de : ""}${vMax.pe != null ? ", P/E below " + vMax.pe : ""}${vMax.peg != null ? ", PEG below " + vMax.peg : ""}${fDebt === "free" ? ", debt-free only (borrowings under 5% of equity)" : fDebt === "down" ? ", debt down 20%+ from a year earlier only" : fDebt === "up" ? ", debt up 20%+ from a year earlier with D/E above 0.3 only" : ""}${flt === "acc3" ? ", accelerating 3 quarters or more only" : flt === "sbrk" ? ", stress break this quarter only" : flt === "rec" ? ", record quarters only" : flt === "qual" ? ", profit-quality flags only" : STR[flt] ? strText() : ""}, ${how}.` : "";
   // A search that finds exactly one company opens its history once; after that Hide/Show history is the user's choice.
   if (term && list.length === 1 && autoOpened !== companyKey(list[0])) { openKeys.add(companyKey(list[0])); autoOpened = companyKey(list[0]); }
   if (!term) autoOpened = "";
@@ -2301,6 +2318,9 @@ document.getElementById("find").addEventListener("change", e => { fInd = e.targe
 const themeBtn = document.getElementById("themebtn"), setThemeBtn = () => { themeBtn.textContent = document.documentElement.dataset.theme === "dark" ? "☀ Light" : "☾ Dark"; };
 setThemeBtn();
 themeBtn.addEventListener("click", () => { const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = t; try { localStorage.setItem("erTheme", t); } catch (e) {} setThemeBtn(); });
+let vT = null;   // valuation limits: work with any quick list
+[["vde", "de"], ["vpe", "pe"], ["vpeg", "peg"]].forEach(([id, k]) => document.getElementById(id).addEventListener("input", e => {
+  const v = parseFloat(e.target.value); vMax[k] = isFinite(v) && v > 0 ? v : null; clearTimeout(vT); vT = setTimeout(render, 250); }));
 document.getElementById("fdebt").addEventListener("change", e => { fDebt = e.target.value; render(); });   // composes with quick lists
 document.getElementById("secpanel").addEventListener("click", e => {
   const h = e.target.closest("th[data-k]");
