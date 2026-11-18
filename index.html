@@ -1576,10 +1576,10 @@ function returnsHtml(d) {
     Inventory and payable days use cost of materials (sales if not reported); receivable days use sales. Mcap / Sales = quarter-end close × shares ÷ last 4 quarters' sales ("Now": latest price). P/E = price ÷ EPS of the 4 quarters to that point: Q bars use the quarter-end close (QUARTER-END CLOSES export; otherwise the price stored when you added prices that quarter), "Now" the latest price; a loss has no P/E. Charts fill in as more years of filings are added.</div>`;
 }
 // ---------- Compare: up to 4 stocks side by side, best figure per row highlighted ----------
-let cmpList = [];   // companyKeys
-try { cmpList = JSON.parse(localStorage.getItem("erCompare") || "[]").slice(0, 4); } catch (e) { cmpList = []; }
+let cmpList = [];   // companyKeys; kept only while the page is open
+try { localStorage.removeItem("erCompare"); } catch (e) {}
 const CMP_MAX = 4;
-const saveCmp = () => { try { localStorage.setItem("erCompare", JSON.stringify(cmpList)); } catch (e) {} };
+const saveCmp = () => {};
 function cmpCard(ck) {   // this company's card for the selected quarter, else its latest card up to it
   const c = cardsFor(quarter).find(d => companyKey(d) === ck); if (c) return c;
   const all = cardsOfCompany(ck).filter(d => !quarter || qRank(d.periods[2]) <= qRank(quarter)).sort((a, z) => qRank(z.periods[2]) - qRank(a.periods[2]));
@@ -1587,7 +1587,13 @@ function cmpCard(ck) {   // this company's card for the selected quarter, else i
 }
 function toggleCmp(ck) {
   const i = cmpList.indexOf(ck);
-  if (i >= 0) cmpList.splice(i, 1); else if (cmpList.length < CMP_MAX) cmpList.push(ck); else { alert(`Compare holds up to ${CMP_MAX} stocks. Remove one first.`); return; }
+  if (i >= 0) cmpList.splice(i, 1);
+  else {
+    // a stock from a different industry starts a new comparison (peers are compared within an industry)
+    const nd = cmpCard(ck), grp = d => d ? indOf(d) || secOf(d) : "";
+    if (cmpList.length && nd && grp(nd) && !cmpList.some(k => grp(cmpCard(k)) === grp(nd))) cmpList = [];
+    if (cmpList.length < CMP_MAX) cmpList.push(ck); else { alert(`Compare holds up to ${CMP_MAX} stocks. Remove one first.`); return; }
+  }
   saveCmp(); render(); drawTray();
 }
 function cmpPeers(ck, n) {   // same industry (else sector), this quarter, strongest first
