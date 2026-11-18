@@ -204,6 +204,52 @@
   .sitags .chev { color:#6b7280; font-size:15px; line-height:1; margin:0 2px; }
   #fsec, #find { width:auto; max-width:200px; min-width:0; }
   .vmax input { width:62px; } .vmax { white-space:nowrap; }
+  .cmpbtn { margin-left:8px; border:1px solid #d9d2f3; background:#f6f3fe; color:#6d4fd6; font-size:12px; font-weight:600; padding:5px 12px; border-radius:16px; cursor:pointer; font-family:Inter,sans-serif; }
+  .cmpbtn.on { background:#6d4fd6; color:#fff; border-color:#6d4fd6; }
+  .cmptray { position:fixed; left:50%; transform:translateX(-50%); bottom:14px; z-index:50; display:flex; flex-wrap:wrap; align-items:center; gap:8px; max-width:calc(100% - 24px);
+    background:#1a1d23; color:#fff; padding:9px 12px; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,.35); font-size:13px; }
+  .cmptray .cmptl { font-weight:700; margin-right:2px; } .cmpchip { background:#2f3542; border-radius:10px; padding:3px 4px 3px 10px; font-weight:600; }
+  .cmpchip button { background:none; border:0; color:#aab; cursor:pointer; font-size:14px; padding:0 4px; }
+  .cmptray > button { border:1px solid #3a4152; background:#262b36; color:#fff; border-radius:10px; padding:5px 11px; cursor:pointer; font-family:Inter,sans-serif; font-size:12.5px; }
+  .cmptray > button.go { background:#22c55e; border-color:#22c55e; color:#0b1a10; font-weight:700; }
+  .cmpmodal { position:fixed; inset:0; z-index:60; background:rgba(8,12,22,.6); display:flex; justify-content:center; align-items:flex-start; padding:28px 12px; overflow:auto; }
+  .cmpmodal[hidden] { display:none; }
+  .cmpbox { background:#fff; color:#1a1d23; border-radius:14px; padding:18px 20px; width:min(1100px, 100%); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+  .cmptop { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
+  .cmptitle { font-size:20px; font-weight:800; } .cmpsub { font-size:12px; color:var(--muted); margin-top:2px; }
+  .cmpact { display:flex; gap:8px; flex-wrap:wrap; } .cmpact button, .cmpact select { font:12.5px Inter,sans-serif; padding:6px 10px; border-radius:8px; border:1px solid var(--line); background:#f5f7fa; cursor:pointer; color:inherit; max-width:260px; }
+  .cmpverdict { margin:12px 0; padding:10px 12px; border-radius:10px; background:#eef8f2; font-size:14px; }
+  .cmpwrap { overflow-x:auto; } .cmptable { border-collapse:collapse; width:100%; min-width:620px; font-size:13px; }
+  .cmptable th, .cmptable td { padding:7px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  .cmptable th { font-weight:400; background:none; } .cmph { display:flex; justify-content:space-between; align-items:center; gap:6px; } .cmph b { font-size:15px; }
+  .cmpx { border:0; background:none; cursor:pointer; color:var(--muted); font-size:16px; } .cmpn { font-size:11.5px; color:var(--muted); } .cmpi { font-size:11px; color:var(--blue); } .cmpq { font-size:10.5px; color:var(--muted); }
+  .cmptable td.cmpl { color:#374151; } .cmptable td.cmpl small { display:block; font-size:10.5px; color:var(--muted); }
+  .cmptable td small { color:var(--muted); font-size:10.5px; }
+  .cmptable td.best { background:#e3f5ea; color:#0f7a3d; font-weight:700; }
+  .cmptable tr.cmpg td { background:#f3f6fa; font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:#6b7280; padding:6px 10px; }
+  .cmpwin { color:#0f7a3d; font-weight:800; text-transform:none; letter-spacing:0; }
+  .cmpempty { padding:30px; text-align:center; color:var(--muted); }
+  html[data-theme="dark"] .cmpbox { background:#131b2e !important; color:var(--ink); }
+  html[data-theme="dark"] .cmpverdict { background:#12352a; }
+  html[data-theme="dark"] .cmpbox .cmptable td.best.best.best { background:#12352a !important; color:#34d399 !important; }
+  html[data-theme="dark"] .cmpbox .cmptable tr.cmpg.cmpg td:not(.x) { background:#18223a !important; color:#a7b3c9 !important; }
+  html[data-theme="dark"] .cmpbox .cmptable td.cmpl.cmpl.cmpl { color:var(--ink) !important; } html[data-theme="dark"] .cmpwin { color:#34d399; }
+  html[data-theme="dark"] .cmpbtn { background:#211b3d !important; color:#b8a6ff !important; border-color:#3b3170 !important; } html[data-theme="dark"] .cmpbtn.on { background:#6d4fd6 !important; color:#fff !important; }
+  html[data-theme="dark"] .cmptray > button.go { background:#22c55e !important; color:#0b1a10 !important; }
+  @media print { .cmptray, .cmpmodal { display:none !important; } }
+  /* History and Compare: solid, easy-to-spot buttons */
+  .cbl { display:inline-flex; gap:10px; align-items:center; } .cbl .cmpbtn { margin-left:0; }
+  .cbar .histbtn, .cbar .cmpbtn { font-size:13px; font-weight:700; padding:7px 16px; border-radius:18px; letter-spacing:.2px; box-shadow:0 2px 6px rgba(0,0,0,.12); }
+  .cbar .histbtn { background:var(--blue); color:#fff; border:1px solid var(--blue); }
+  .cbar .histbtn:hover { filter:brightness(1.1); }
+  .card.open .cbar .histbtn { background:#0b4f86; border-color:#0b4f86; }
+  .cbar .cmpbtn { background:#6d4fd6; color:#fff; border:1px solid #6d4fd6; }
+  .cbar .cmpbtn:hover { filter:brightness(1.1); }
+  .cbar .cmpbtn.on { background:#fff; color:#6d4fd6; border:2px solid #6d4fd6; }
+  html[data-theme="dark"] .card .cbar .histbtn { background:#2f7fe0 !important; color:#fff !important; border-color:#2f7fe0 !important; }
+  html[data-theme="dark"] .card.open .cbar .histbtn { background:#1d5fae !important; border-color:#1d5fae !important; }
+  html[data-theme="dark"] .card .cbar .cmpbtn { background:#7c5cf0 !important; color:#fff !important; border-color:#7c5cf0 !important; }
+  html[data-theme="dark"] .card .cbar .cmpbtn.on { background:#131b2e !important; color:#b8a6ff !important; border:2px solid #7c5cf0 !important; }
   .gmore { text-align:center; padding:14px 0 6px; } .gmore button { border:1px solid #cfe0f1; background:#f3f8fd; color:var(--blue); font-size:13px; font-weight:600; padding:7px 18px; border-radius:18px; cursor:pointer; font-family:Inter,sans-serif; }
   .secwrap { margin:0 0 14px; font-size:12px; color:#374151; }
   .secwrap summary { cursor:pointer; font-weight:600; color:var(--green-ink); font-size:13px; margin-bottom:6px; }
@@ -468,6 +514,8 @@
   </div>
   <div class="abbr-key"><b>Key:</b> L→P Loss to Profit · P→L Profit to Loss · LR Loss Reduced · LW Loss Widened</div>
   <div class="grid" id="grid"></div>
+<div id="cmptray" class="cmptray" hidden></div>
+<div id="cmpmodal" class="cmpmodal" hidden><div id="cmpbox" class="cmpbox"></div></div>
   <div class="foot"><img src="logo.png" alt="price rythm">
     <div class="contact">
       <a href="mailto:price.rythme@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>price.rythme@gmail.com</a>
@@ -1260,7 +1308,7 @@ function card(d) {
     <div class="name"><span>${esc(d.name)}${d.symbol ? `<span class="sym">${esc(String(d.symbol).toUpperCase())}</span>` : ""}</span><img class="nlogo" src="logo.png" alt="price rythm"></div>${((sc, ic) => sc || ic ? `<div class="sitags">${sc ? `<span class="stag" title="Sector">${ICO_SEC}${esc(sc)}</span>` : ""}${sc && ic && ic !== sc ? `<span class="chev">›</span>` : ""}${ic && ic !== sc ? `<span class="stag" title="Industry">${ICO_IND}${esc(ic)}</span>` : ""}</div>` : "")(secOf(d), indOf(d))}
     <div class="tbox"><div class="tlabel">FINANCIALS (₹ CRORE)${historyOf(d).some(r => r.epsAdj && d.periods.includes(r.p)) ? ` <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">· older EPS adjusted for a share split / bonus</span>` : ""}</div>
     <table><tr><th></th><th>${esc(d.periods[2])}</th><th>${esc(d.periods[1])}</th><th>${esc(d.periods[0])}</th><th>QoQ</th><th>YoY</th></tr>${rows}</table></div>
-    <div class="cbar"><button class="histbtn" data-h="${esc(ck)}">${open ? "Hide history ▴" : "History ▾"}</button>
+    <div class="cbar"><span class="cbl"><button class="histbtn" data-h="${esc(ck)}">${open ? "Hide history ▴" : "History ▾"}</button><button class="cmpbtn${cmpList.includes(ck) ? " on" : ""}" data-cmp="${esc(ck)}" title="Add to the side-by-side comparison (up to 4)">${cmpList.includes(ck) ? "✓ In compare" : "Compare +"}</button></span>
       ${!d.view ? `<div class="cfoot admin-only" style="margin:0"><button class="edit" data-e="${esc(keyOf(d))}" title="Edit">✎</button><button class="del" data-k="${esc(keyOf(d))}" title="Remove">×</button></div>`
         : !allData().some(x => companyKey(x) === ck) ? `<div class="cfoot admin-only" style="margin:0"><button class="del" data-hk="${esc(ck)}" data-hn="${esc(d.name)}" title="Delete this company's history">×</button></div>`
         : ""}</div>
@@ -1526,6 +1574,164 @@ function returnsHtml(d) {
     ${rows.map(g => `<div class="gcards">${g.join("")}</div>`).join("")}
     <div class="hnote">Financial year = the 4 quarters to March; TTM = the last 4 quarters. Half-yearly (Mar, Sep): ROE = last 4 quarters' net profit ÷ equity on that date; ROCE = (PBT + interest) ÷ (equity + borrowings); ROA = net profit ÷ total assets.
     Inventory and payable days use cost of materials (sales if not reported); receivable days use sales. Mcap / Sales = quarter-end close × shares ÷ last 4 quarters' sales ("Now": latest price). P/E = price ÷ EPS of the 4 quarters to that point: Q bars use the quarter-end close (QUARTER-END CLOSES export; otherwise the price stored when you added prices that quarter), "Now" the latest price; a loss has no P/E. Charts fill in as more years of filings are added.</div>`;
+}
+// ---------- Compare: up to 4 stocks side by side, best figure per row highlighted ----------
+let cmpList = [];   // companyKeys
+try { cmpList = JSON.parse(localStorage.getItem("erCompare") || "[]").slice(0, 4); } catch (e) { cmpList = []; }
+const CMP_MAX = 4;
+const saveCmp = () => { try { localStorage.setItem("erCompare", JSON.stringify(cmpList)); } catch (e) {} };
+function cmpCard(ck) {   // this company's card for the selected quarter, else its latest card up to it
+  const c = cardsFor(quarter).find(d => companyKey(d) === ck); if (c) return c;
+  const all = cardsOfCompany(ck).filter(d => !quarter || qRank(d.periods[2]) <= qRank(quarter)).sort((a, z) => qRank(z.periods[2]) - qRank(a.periods[2]));
+  return all[0] || null;
+}
+function toggleCmp(ck) {
+  const i = cmpList.indexOf(ck);
+  if (i >= 0) cmpList.splice(i, 1); else if (cmpList.length < CMP_MAX) cmpList.push(ck); else { alert(`Compare holds up to ${CMP_MAX} stocks. Remove one first.`); return; }
+  saveCmp(); render(); drawTray();
+}
+function cmpPeers(ck, n) {   // same industry (else sector), this quarter, strongest first
+  const base = cmpCard(ck); if (!base) return [];
+  const ind = indOf(base), sec = secOf(base);
+  // Same industry first, then the same sector; prefer companies of a meaningful size, relax the size limit only if nothing is left.
+  const Q = base.periods[2], all = cardsFor(Q).filter(d => d.periods[2] === Q && companyKey(d) !== ck && !cmpList.includes(companyKey(d)) && d.sales && d.sales[2] != null);
+  const sc = d => { const f = fosOf(d); return f && f.score != null ? f.score : -1; };
+  const tiers = [[ind, "ind", Math.max(minSales || 0, 25)], [ind, "ind", 25], [ind, "ind", 0], [sec, "sec", 25], [sec, "sec", 0]];
+  const out = [], seen = new Set();   // fill tier by tier until n are found
+  for (const [val, kind, minS] of tiers) {
+    if (!val || out.length >= n) continue;
+    all.filter(d => d.sales[2] >= minS && (kind === "ind" ? indOf(d) === val : secOf(d) === val) && !seen.has(companyKey(d)))
+      .sort((a, z) => sc(z) - sc(a) || (z.sales[2] || 0) - (a.sales[2] || 0)).slice(0, n - out.length).forEach(d => { seen.add(companyKey(d)); out.push(d); });
+  }
+  return out;
+}
+function cmpMetrics(d) {
+  const g = k => { const x = gOf(d, k, 0); return x.kind === "num" ? { v: x.val, t: (x.val >= 0 ? "+" : "") + x.val.toFixed(1) + "%" } : x.kind === "pos" ? { v: 1e6, t: "L→P" } : x.kind === "neg" ? { v: -1e6, t: "P→L" } : null; };
+  const F = finYears(d) || { yrs: [], ttm: null, now: null, qpe: [], qms: [], hy: [] }, f = fosOf(d), st = stressNow(d), x = debtNow(d), v = valuation(d), ex = extras(d), ar = accelRun(d);
+  const lastY = k => { for (let i = F.yrs.length - 1; i >= 0; i--) if (F.yrs[i][k] != null) return { v: F.yrs[i][k], lab: F.yrs[i].lab }; return null; };
+  const lastH = k => { for (let i = F.hy.length - 1; i >= 0; i--) if (F.hy[i][k] != null) return { v: F.hy[i][k], lab: F.hy[i].lab }; return null; };
+  const byP = Object.fromEntries(historyOf(d).map(r => [r.p, r])), s4 = (() => { let t = 0; for (let i = 0; i < 4; i++) { const r = byP[prevQ(d.periods[2], i)]; if (!r || r.sales == null) return null; t += r.sales; } return t; })();
+  const tsg = F.ttm && F.ttm.sg != null ? F.ttm.sg : (lastY("sg") || {}).v;
+  const pes = F.qpe.map(q => q.pe).sort((a, z) => a - z), med = pes.length >= 2 ? (pes.length % 2 ? pes[pes.length >> 1] : (pes[pes.length / 2 - 1] + pes[pes.length / 2]) / 2) : null;
+  const ms = F.ttm && F.ttm.ms != null ? F.ttm.ms : null, mcap = ms != null && s4 ? ms * s4 : null;
+  const pct = (o, dp = 1) => o == null || o.v == null ? null : { v: o.v, t: o.v.toFixed(dp) + "%" + (o.lab ? ` <small>${o.lab}</small>` : "") };
+  const opm = d.opm ? d.opm[2] : null, dopm = d.opm && d.opm[0] != null && opm != null ? opm - d.opm[0] : null;
+  return {
+    sy: g("sales"), ny: g("np"), ey: g("eps"),
+    tsg: tsg == null ? null : { v: tsg, t: (tsg >= 0 ? "+" : "") + tsg.toFixed(1) + "%" },
+    acc: { v: ar.n, t: ar.n ? ar.n + "Q" : "–" },
+    opm: opm == null ? null : { v: opm, t: opm.toFixed(1) + "%" },
+    dopm: dopm == null ? null : { v: dopm, t: (dopm >= 0 ? "+" : "") + dopm.toFixed(1) + " pp" },
+    roe: pct(lastH("roe")), roce: pct(lastH("roce")),
+    fos: f && f.score != null ? { v: f.prov ? f.score - 0.5 : f.score, t: `${f.score}${f.prov ? "*" : ""} <small>Grade ${f.grade || "–"}</small>` } : null,
+    stress: st ? { v: st.score, t: st.score + "/100" + (st.brk ? " <small>BREAK</small>" : "") } : null,
+    qual: { v: ex.qual ? 0 : 1, t: ex.qual ? `<span title="${esc(ex.qual)}">⚠ Check NP</span>` : "Clean" },
+    de: x && x.de != null ? { v: x.de, t: x.de.toFixed(2) } : null,
+    dchg: x && x.de != null && x.de < 0.05 ? { v: -999, t: "debt-free" } : x && x.chg != null ? { v: x.chg, t: (x.chg >= 0 ? "+" : "") + x.chg.toFixed(0) + "%" } : null,
+    recd: (o => o ? { v: o.v, t: Math.round(o.v) + " d <small>" + o.lab + "</small>" } : null)(lastY("recD")),
+    invd: (o => o ? { v: o.v, t: Math.round(o.v) + " d <small>" + o.lab + "</small>" } : null)(lastY("invD")),
+    pe: v && v.pe > 0 ? { v: v.pe, t: v.pe.toFixed(1) } : null,
+    pemed: v && v.pe > 0 && med ? { v: v.pe / med, t: (v.pe / med).toFixed(2) + "× <small>median " + med.toFixed(1) + "</small>" } : null,
+    peg: v && v.peg > 0 ? { v: v.peg, t: v.peg.toFixed(2) } : null,
+    ms: ms != null ? { v: ms, t: ms.toFixed(2) + "×" } : null,
+    sales: s4 != null ? { v: s4, t: "₹" + Math.round(s4).toLocaleString("en-IN") + " Cr" } : null,
+    mcap: mcap != null ? { v: mcap, t: "₹" + Math.round(mcap).toLocaleString("en-IN") + " Cr" } : null,
+  };
+}
+const CMP_ROWS = [   // [group, key, label, better: "hi" | "lo" | ""]
+  ["Growth", "sy", "Sales YoY (latest quarter)", "hi"], ["Growth", "ny", "Net Profit YoY", "hi"], ["Growth", "ey", "EPS YoY", "hi"], ["Growth", "tsg", "Sales growth, last 4 quarters", "hi"], ["Growth", "acc", "Acceleration run", "hi"],
+  ["Profitability", "opm", "OPM", "hi"], ["Profitability", "dopm", "OPM change vs a year ago", "hi"], ["Profitability", "roe", "ROE (latest half-year)", "hi"], ["Profitability", "roce", "ROCE (latest half-year)", "hi"],
+  ["Quality", "fos", "Earnings Strength", "hi"], ["Quality", "stress", "Stress score", "lo"], ["Quality", "qual", "Profit quality", "hi"],
+  ["Balance sheet", "de", "Debt / Equity", "lo"], ["Balance sheet", "dchg", "Debt vs a year earlier", "lo"], ["Balance sheet", "recd", "Receivable days", "lo"], ["Balance sheet", "invd", "Inventory days", "lo"],
+  ["Valuation", "pe", "P/E", "lo"], ["Valuation", "pemed", "P/E vs its own median", "lo"], ["Valuation", "peg", "PEG", "lo"], ["Valuation", "ms", "Mcap / Sales", "lo"],
+  ["Size", "sales", "Sales, last 4 quarters", ""], ["Size", "mcap", "Market cap", ""],
+];
+const CMP_GROUPS = ["Growth", "Profitability", "Quality", "Balance sheet", "Valuation"];
+function cmpModel() {
+  const cards = cmpList.map(cmpCard).filter(Boolean), M = cards.map(cmpMetrics);
+  const wins = cards.map(() => Object.fromEntries(CMP_GROUPS.map(g => [g, 0])));
+  const rows = CMP_ROWS.map(([grp, k, label, dir]) => {
+    const vals = M.map(m => m[k]), have = vals.map((c, i) => c && c.v != null ? i : -1).filter(i => i >= 0); let best = [];
+    const shown = c => { const t = String(c.t).replace(/<[^>]+>/g, " "), m = /-?[\d,]+(\.\d+)?/.exec(t); return Math.abs(c.v) >= 999 || !m ? c.v : parseFloat(m[0].replace(/,/g, "")); };
+    if (dir && have.length >= 2) { have.forEach(i => { vals[i] = Object.assign({}, vals[i], { v: shown(vals[i]) }); }); const nums = have.map(i => vals[i].v), b = dir === "hi" ? Math.max(...nums) : Math.min(...nums);
+      if (!nums.every(n => n === b)) best = have.filter(i => vals[i].v === b); best.forEach(i => wins[i][grp]++); }
+    return { grp, k, label, dir, vals, best };
+  });
+  const gWin = Object.fromEntries(CMP_GROUPS.map(g => { const w = wins.map(x => x[g]), m = Math.max(...w); const ix = w.map((n, i) => n === m && m > 0 ? i : -1).filter(i => i >= 0); return [g, ix.length === 1 ? ix[0] : -1]; }));
+  return { cards, rows, gWin };
+}
+function cmpVerdict(md) {
+  const nm = i => String(md.cards[i].symbol || md.cards[i].name).toUpperCase(), cnt = md.cards.map((_, i) => CMP_GROUPS.filter(g => md.gWin[g] === i).length);
+  const top = cnt.indexOf(Math.max(...cnt)), gv = md.gWin.Growth, vv = md.gWin.Valuation;
+  if (cnt[top] >= 4) return `<b>${nm(top)}</b> leads on ${cnt[top]} of 5: the clearest pick on these numbers.`;
+  if (gv >= 0 && vv >= 0 && gv !== vv) return `Trade-off: <b>${nm(gv)}</b> is growing faster; <b>${nm(vv)}</b> is cheaper. Check which story the chart is backing.`;
+  if (cnt[top] >= 3) return `<b>${nm(top)}</b> leads on ${cnt[top]} of 5 groups.`;
+  return "No clear leader: the strengths are split. Look at the groups that matter most for your setup.";
+}
+function compareHtml() {
+  const md = cmpModel(); if (!md.cards.length) return `<div class="cmpempty">Add stocks with “Compare +” on any card.</div>`;
+  const nm = d => String(d.symbol || "").toUpperCase(), n = md.cards.length;
+  const head = md.cards.map((d, i) => `<th><div class="cmph"><b>${esc(nm(d) || d.name)}</b><button class="cmpx" data-cmpx="${esc(companyKey(d))}" title="Remove">×</button></div>
+    <div class="cmpn">${esc(d.name)}</div><div class="cmpi">${esc([secOf(d), indOf(d)].filter(Boolean).join(" › ") || "")}</div><div class="cmpq">${esc(d.periods[2])} · ${esc(d.basis || "")}</div></th>`).join("");
+  let body = "", last = "";
+  md.rows.forEach(r => {
+    if (r.grp !== last) { last = r.grp; const w = md.gWin[r.grp];
+      body += `<tr class="cmpg"><td>${r.grp}</td>${md.cards.map((_, i) => `<td>${r.grp !== "Size" && w === i ? '<span class="cmpwin">★ Leads</span>' : ""}</td>`).join("")}</tr>`; }
+    body += `<tr><td class="cmpl">${r.label}${r.dir ? `<small>${r.dir === "hi" ? "higher is better" : "lower is better"}</small>` : ""}</td>${r.vals.map((c, i) => `<td class="${r.best.includes(i) ? "best" : ""}">${c ? c.t : "–"}</td>`).join("")}</tr>`;
+  });
+  const peers = cmpList.length ? cmpPeers(cmpList[0], 12) : [];
+  return `<div class="cmptop"><div><div class="cmptitle">Compare · ${esc(quarter || "")}</div><div class="cmpsub">Best figure in each row is highlighted; ★ = most row wins in that group.</div></div>
+    <div class="cmpact">${n < CMP_MAX && peers.length ? `<select id="cmpadd"><option value="">+ Add ${esc(indOf(md.cards[0]) ? "industry" : "sector")} peer…</option>${peers.map(p => `<option value="${esc(companyKey(p))}">${esc(nm(p))} · ${esc(p.name)}${(f => f && f.score != null ? " · " + f.score : "")(fosOf(p))}</option>`).join("")}</select>
+      <button id="cmpfill">Fill with top peers</button>` : ""}<button id="cmppng">Export as image</button><button id="cmpclose">Close</button></div></div>
+    <div class="cmpverdict">${cmpVerdict(md)}</div>
+    <div class="cmpwrap"><table class="cmptable"><tr><th></th>${head}</tr>${body}</table></div>
+    <div class="hnote">From the XBRL filings and your AmiBroker prices. ROE/ROCE: the latest Mar/Sep balance sheet; days: the latest financial year. Not investment advice.</div>`;
+}
+function drawTray() {
+  const t = document.getElementById("cmptray"); if (!t) return;
+  if (!cmpList.length) { t.hidden = true; return; }
+  t.hidden = false;
+  t.innerHTML = `<span class="cmptl">Compare</span>${cmpList.map(ck => { const d = cmpCard(ck); return `<span class="cmpchip">${esc(d ? String(d.symbol || d.name).toUpperCase() : ck)}<button data-cmpx="${esc(ck)}" title="Remove">×</button></span>`; }).join("")}
+    ${cmpList.length < CMP_MAX ? `<button data-cmppeers="1" title="Add the strongest companies from the same industry">+ Industry peers</button>` : ""}
+    <button class="go" data-cmpopen="1">Compare ${cmpList.length} ▸</button><button data-cmpclear="1">Clear</button>`;
+}
+function openCompare() { const m = document.getElementById("cmpmodal"); document.getElementById("cmpbox").innerHTML = compareHtml(); m.hidden = false; document.body.style.overflow = "hidden"; }
+function closeCompare() { document.getElementById("cmpmodal").hidden = true; document.body.style.overflow = ""; }
+function fillPeers() {
+  if (!cmpList.length) return;
+  const ps = cmpPeers(cmpList[0], CMP_MAX - cmpList.length), base = cmpCard(cmpList[0]);
+  if (!ps.length) { alert(base && (indOf(base) || secOf(base)) ? `No other companies from ${indOf(base) || secOf(base)} have ${base.periods[2]} results yet.`
+      : "This company has no sector / industry yet. Load the AmiBroker price file with SECTOR and INDUSTRY (Add prices), or add peers with Compare + on their cards."); return; }
+  ps.forEach(p => cmpList.push(companyKey(p))); saveCmp(); render(); drawTray();
+}
+// Export: the comparison drawn on a canvas as a branded PNG
+function compareImage() {
+  const md = cmpModel(); if (!md.cards.length) return;
+  const dark = document.documentElement.dataset.theme === "dark", C = dark ? { bg: "#0f1626", ink: "#e6ebf4", mut: "#8e9ab1", line: "#26324a", best: "#12352a", bestInk: "#34d399", grp: "#18223a" } : { bg: "#ffffff", ink: "#1a1d23", mut: "#6b7280", line: "#e3e6eb", best: "#e3f5ea", bestInk: "#0f7a3d", grp: "#f3f6fa" };
+  const n = md.cards.length, LW = 300, CW = 210, W = LW + n * CW + 40, RH = 30, rows = md.rows.length + CMP_GROUPS.length + 1;
+  const H = 150 + 70 + rows * RH + 70, cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
+  const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = C.bg; g.fillRect(0, 0, W, H);
+  const T = (t, x, y, o = {}) => { g.font = `${o.w || 400} ${o.s || 13}px Inter, Arial, sans-serif`; g.fillStyle = o.c || C.ink; g.textAlign = o.a || "left"; g.fillText(t, x, y); };
+  const strip = h => String(h).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  T("Earnings comparison · " + (quarter || ""), 20, 42, { s: 26, w: 800 });
+  T(strip(cmpVerdict(md)), 20, 70, { s: 14, c: C.mut });
+  g.font = "800 22px Inter, Arial"; g.textAlign = "right"; g.fillStyle = "rgb(66,122,233)"; const rw = g.measureText("rythm").width; g.fillText("price", W - 24 - rw - 4, 42); g.fillStyle = "rgb(247,111,185)"; g.fillText("rythm", W - 20, 42);
+  let y = 110;
+  md.cards.forEach((d, i) => { const x = LW + 20 + i * CW; T(String(d.symbol || "").toUpperCase(), x, y, { s: 17, w: 800 }); const cut = (t, n) => (t = String(t || "")).length > n ? t.slice(0, n - 1) + "…" : t;
+    T(cut(d.name, 27), x, y + 18, { s: 11, c: C.mut }); T(cut(indOf(d) || secOf(d), 29), x, y + 34, { s: 11, c: C.mut });
+    g.fillStyle = ["#22c55e", "#4ea1ff", "#f59e0b", "#ec4899"][i]; g.fillRect(x, y + 42, CW - 20, 3); });
+  y += 70; let last = "";
+  md.rows.forEach(r => {
+    if (r.grp !== last) { last = r.grp; g.fillStyle = C.grp; g.fillRect(20, y - 19, W - 40, RH - 2); T(r.grp.toUpperCase(), 28, y, { s: 12, w: 700, c: C.mut });
+      const w = md.gWin[r.grp]; if (w >= 0 && r.grp !== "Size") T("★ Leads", LW + 20 + w * CW, y, { s: 12, w: 700, c: C.bestInk }); y += RH; }
+    T(r.label, 28, y, { s: 13 });
+    r.vals.forEach((c, i) => { const x = LW + 20 + i * CW; if (r.best.includes(i)) { g.fillStyle = C.best; g.fillRect(x - 8, y - 19, CW - 12, RH - 4); }
+      T(c ? strip(c.t) : "–", x, y, { s: 13, w: r.best.includes(i) ? 700 : 400, c: r.best.includes(i) ? C.bestInk : C.ink }); });
+    g.strokeStyle = C.line; g.beginPath(); g.moveTo(20, y + 9); g.lineTo(W - 20, y + 9); g.stroke(); y += RH;
+  });
+  y += 14; T("Source: NSE XBRL filings · Earnings Rythm by Price Rythm · Not investment advice", 20, y, { s: 11, c: C.mut });
+  const out = document.createElement("canvas"); out.width = cv.width; out.height = Math.ceil((y + 22) * sc);   // trim to the content
+  out.getContext("2d").drawImage(cv, 0, 0); const a = document.createElement("a"); a.download = `Compare_${md.cards.map(d => String(d.symbol || "").toUpperCase()).join("_")}_${(quarter || "").replace(/\s+/g, "")}.png`; a.href = out.toDataURL("image/png"); a.click();
 }
 function historyHtml(d) {
   const rows = historyOf(d);
@@ -2321,6 +2527,21 @@ themeBtn.addEventListener("click", () => { const t = document.documentElement.da
 let vT = null;   // valuation limits: work with any quick list
 [["vde", "de"], ["vpe", "pe"], ["vpeg", "peg"]].forEach(([id, k]) => document.getElementById(id).addEventListener("input", e => {
   const v = parseFloat(e.target.value); vMax[k] = isFinite(v) && v > 0 ? v : null; clearTimeout(vT); vT = setTimeout(render, 250); }));
+document.getElementById("cmptray").addEventListener("click", e => {
+  const x = e.target.closest("[data-cmpx]"); if (x) { toggleCmp(x.dataset.cmpx); return; }
+  if (e.target.closest("[data-cmppeers]")) { fillPeers(); return; }
+  if (e.target.closest("[data-cmpopen]")) { openCompare(); return; }
+  if (e.target.closest("[data-cmpclear]")) { cmpList = []; saveCmp(); render(); drawTray(); }
+});
+document.getElementById("cmpmodal").addEventListener("click", e => {
+  if (e.target.id === "cmpmodal" || e.target.id === "cmpclose") { closeCompare(); return; }
+  const x = e.target.closest("[data-cmpx]"); if (x) { toggleCmp(x.dataset.cmpx); if (cmpList.length) openCompare(); else closeCompare(); return; }
+  if (e.target.id === "cmpfill") { fillPeers(); openCompare(); return; }
+  if (e.target.id === "cmppng") compareImage();
+});
+document.getElementById("cmpmodal").addEventListener("change", e => { if (e.target.id === "cmpadd" && e.target.value) { toggleCmp(e.target.value); openCompare(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !document.getElementById("cmpmodal").hidden) closeCompare(); });
+drawTray();
 document.getElementById("fdebt").addEventListener("change", e => { fDebt = e.target.value; render(); });   // composes with quick lists
 document.getElementById("secpanel").addEventListener("click", e => {
   const h = e.target.closest("th[data-k]");
@@ -2372,6 +2593,7 @@ function startEdit(k) {
 document.getElementById("tblbtn").addEventListener("click", () => { tableMode = !tableMode; render(); });
 document.getElementById("grid").addEventListener("click", e => {
   if (e.target.dataset.more) { moreCards(CARD_BATCH); return; }
+  const cb = e.target.closest("[data-cmp]"); if (cb) { toggleCmp(cb.dataset.cmp); return; }
   const sn = e.target.closest(".sn[data-sq]");
   if (sn) {   // stress timeline: show that quarter's breakdown
     const w = sn.closest(".stwrap");
