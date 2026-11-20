@@ -225,7 +225,8 @@
   .cmptable th { font-weight:400; background:none; } .cmph { display:flex; justify-content:space-between; align-items:center; gap:6px; } .cmph b { font-size:15px; }
   .cmpx { border:0; background:none; cursor:pointer; color:var(--muted); font-size:16px; } .cmpn { font-size:11.5px; color:var(--muted); } .cmpi { font-size:11px; color:var(--blue); } .cmpq { font-size:10.5px; color:var(--muted); }
   .cmptable td.cmpl { color:#374151; } .cmptable td.cmpl small { display:block; font-size:10.5px; color:var(--muted); }
-  .cmptable td small { color:var(--muted); font-size:10.5px; }
+  .cmptable td small { color:var(--muted); font-size:10.5px; } .cmptable td small.dil { color:#b45309; font-weight:700; }
+  html[data-theme="dark"] .cmptable td small.dil { color:#f5b82e; }
   .cmptable td.best { background:#e3f5ea; color:#0f7a3d; font-weight:700; }
   .cmptable tr.cmpg td { background:#f3f6fa; font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:#6b7280; padding:6px 10px; }
   .cmpwin { color:#0f7a3d; font-weight:800; text-transform:none; letter-spacing:0; }
@@ -1115,10 +1116,11 @@ function brkLabel(d) {
 const isCyclical = d => { const i = indOf(d).toLowerCase(); return !!i && CYCLICAL.some(c => c.toLowerCase() === i); };
 // AmiBroker exploration export: "Ticker,Date/Time,Close" (any order; Symbol works for Ticker; a "Close" column, else the last number).
 function addPriceCsv(text, fileName) {
+  const first = (text.replace(/^\ufeff/, "").split(/\r?\n/)[0] || ""), sep = first.includes("\t") && !first.includes(",") ? "\t" : first.includes(";") && !first.includes(",") ? ";" : ",";   // comma, tab or semicolon
   const split = l => { const out = []; let c = "", q = false;   // quote-aware: "Oil, Gas & Fuels" stays one field
     for (let i = 0; i < l.length; i++) { const ch = l[i];
       if (q) { if (ch === '"') { if (l[i + 1] === '"') { c += '"'; i++; } else q = false; } else c += ch; }
-      else if (ch === '"') q = true; else if (ch === ",") { out.push(c.trim()); c = ""; } else c += ch; }
+      else if (ch === '"') q = true; else if (ch === sep) { out.push(c.trim()); c = ""; } else c += ch; }
     out.push(c.trim()); return out; };
   const rows = text.replace(/^\ufeff/, "").split(/\r?\n/).filter(l => l.trim()).map(split);
   const head = rows[0].map(h => h.toLowerCase()), ti = head.findIndex(h => /^(ticker|symbol)$/.test(h)), ci = head.findIndex(h => /^close$/.test(h)), di = head.findIndex(h => /date/.test(h));
@@ -1149,11 +1151,16 @@ function addPriceCsv(text, fileName) {
   const old = allPrices() || {}, byQ = Object.assign({}, old.byQ || {}), AD = allData();
   const LQ = AD.map(d => d.periods[2]).sort((a, z) => qRank(z) - qRank(a))[0], have = new Set(AD.map(d => String(d.symbol || "").toUpperCase()));
   const day = asOf || new Date().toISOString().slice(0, 10);
-  if (LQ) { const snap = {}; Object.keys(prices).forEach(k => { if (have.has(k)) snap[k] = prices[k]; }); byQ[LQ] = { asOf: day, prices: snap }; }
-  prLocal = { asOf: day, prices, sector, industry, byQ, ye: old.ye || {}, qe: old.qe || {} }; dataVer++;   // keeps the past closes
+  // A price file only adds or updates the stocks in it; every other stock keeps its price, sector and industry.
+  const oldN = Object.keys(old.prices || {}).length, added = Object.keys(prices).filter(k => !(old.prices || {})[k]).length;
+  const allP = Object.assign({}, old.prices || {}, prices), allS = Object.assign({}, old.sector || {}, sector), allI = Object.assign({}, old.industry || {}, industry);
+  if (LQ) { const prev = byQ[LQ] && byQ[LQ].prices || {}, snap = Object.assign({}, prev); Object.keys(prices).forEach(k => { if (have.has(k)) snap[k] = prices[k]; });
+    byQ[LQ] = { asOf: n >= oldN / 2 ? day : (byQ[LQ] && byQ[LQ].asOf) || day, prices: snap }; }
+  const asOfAll = n >= oldN / 2 || !old.asOf ? day : old.asOf;   // a small top-up keeps the main file's date
+  prLocal = { asOf: asOfAll, prices: allP, sector: allS, industry: allI, byQ, ye: old.ye || {}, qe: old.qe || {} }; dataVer++;   // keeps the past closes
   fSec = ""; fInd = "";
   try { localStorage.setItem(PR_STORE, JSON.stringify(prLocal)); } catch (e) {}
-  const el = document.getElementById("bfline"); el.innerHTML = `<b>Prices loaded:</b> ${n} symbols, as of ${esc(prLocal.asOf)}${Object.keys(industry).length ? `, with sector and industry for ${Object.keys(industry).length}` : si < 0 && ii < 0 ? " (no SECTOR / INDUSTRY columns in this file)" : ""}. P/E and PEG now show on the cards. Click <b>Save data file</b> to keep them.`;
+  const el = document.getElementById("bfline"); el.innerHTML = `<b>Prices loaded:</b> ${n} symbols from this file (${added} new), ${Object.keys(allP).length} in all, as of ${esc(day)}${Object.keys(industry).length ? `, with sector and industry for ${Object.keys(industry).length}` : si < 0 && ii < 0 ? " (no SECTOR / INDUSTRY columns in this file)" : ""}. P/E and PEG now show on the cards. Click <b>Save data file</b> to keep them.`;
   el.hidden = false; clearTimeout(bfTimer); render();
 }
 // ---------- acceleration run ----------
@@ -1640,13 +1647,14 @@ function cmpMetrics(d) {
   const pct = (o, dp = 1) => o == null || o.v == null ? null : { v: o.v, t: o.v.toFixed(dp) + "%" + (o.lab ? ` <small>${o.lab}</small>` : "") };
   const opm = d.opm ? d.opm[2] : null, dopm = d.opm && d.opm[0] != null && opm != null ? opm - d.opm[0] : null;
   return {
-    sy: g("sales"), ny: g("np"), ey: g("eps"),
+    sy: g("sales"), ny: g("np"), ey: (() => { const e = g("eps"), n = gOf(d, "np", 0), x = gOf(d, "eps", 0);   // EPS well behind net profit = more shares
+      if (e && n.kind === "num" && x.kind === "num" && n.val - x.val >= 20 && x.val < n.val * 0.7) e.t += ` <small class="dil" title="EPS grew much less than net profit (${n.text}): more shares were issued">diluted</small>`; return e; })(),
     tsg: tsg == null ? null : { v: tsg, t: (tsg >= 0 ? "+" : "") + tsg.toFixed(1) + "%" },
     acc: { v: ar.n, t: ar.n ? ar.n + "Q" : "–" },
     opm: opm == null ? null : { v: opm, t: opm.toFixed(1) + "%" },
     dopm: dopm == null ? null : { v: dopm, t: (dopm >= 0 ? "+" : "") + dopm.toFixed(1) + " pp" },
     roe: pct(lastH("roe")), roce: pct(lastH("roce")),
-    fos: f && f.score != null ? { v: f.prov ? f.score - 0.5 : f.score, t: `${f.score}${f.prov ? "*" : ""} <small>Grade ${f.grade || "–"}</small>` } : null,
+    fos: f && f.score != null ? { v: ({ A: 4, B: 3, C: 2, D: 1 }[f.grade] || 0) * 1000 + (f.prov ? f.score - 0.5 : f.score), t: `${f.score}${f.prov ? "*" : ""} <small>Grade ${f.grade || "–"}</small>` } : null,   // grade first, then score
     stress: st ? { v: st.score, t: st.score + "/100" + (st.brk ? " <small>BREAK</small>" : "") } : null,
     qual: { v: ex.qual ? 0 : 1, t: ex.qual ? `<span title="${esc(ex.qual)}">⚠ Check NP</span>` : "Clean" },
     de: x && x.de != null ? { v: x.de, t: x.de.toFixed(2) } : null,
@@ -1685,11 +1693,18 @@ function cmpModel() {
 }
 function cmpVerdict(md) {
   const nm = i => String(md.cards[i].symbol || md.cards[i].name).toUpperCase(), cnt = md.cards.map((_, i) => CMP_GROUPS.filter(g => md.gWin[g] === i).length);
-  const top = cnt.indexOf(Math.max(...cnt)), gv = md.gWin.Growth, vv = md.gWin.Valuation;
+  const rc = (md.rows.find(r => r.k === "roce") || {}).best || [];   // returns = return on capital (ROCE), not margins
+  const top = cnt.indexOf(Math.max(...cnt)), gv = md.gWin.Growth, vv = md.gWin.Valuation, pv = rc.length === 1 ? rc[0] : -1, bv = md.gWin["Balance sheet"];
   if (cnt[top] >= 4) return `<b>${nm(top)}</b> leads on ${cnt[top]} of 5: the clearest pick on these numbers.`;
-  if (gv >= 0 && vv >= 0 && gv !== vv) return `Trade-off: <b>${nm(gv)}</b> is growing faster; <b>${nm(vv)}</b> is cheaper. Check which story the chart is backing.`;
-  if (cnt[top] >= 3) return `<b>${nm(top)}</b> leads on ${cnt[top]} of 5 groups.`;
-  return "No clear leader: the strengths are split. Look at the groups that matter most for your setup.";
+  // the returns / balance-sheet leader, when it is not already named
+  const named = new Set(), add = (i, t) => { if (i >= 0 && !named.has(i)) { named.add(i); return t; } return ""; };
+  let main;
+  if (gv >= 0 && vv >= 0 && gv !== vv) { named.add(gv); named.add(vv); main = `Trade-off: <b>${nm(gv)}</b> is growing faster; <b>${nm(vv)}</b> is cheaper.`; }
+  else if (cnt[top] >= 3) { named.add(top); main = `<b>${nm(top)}</b> leads on ${cnt[top]} of 5 groups.`; }
+  else main = "No clear leader: the strengths are split.";
+  const extra = pv >= 0 && pv === bv ? add(pv, ` <b>${nm(pv)}</b> earns the best return on capital and has the strongest balance sheet.`)
+    : add(pv, pv >= 0 ? ` <b>${nm(pv)}</b> earns the best return on capital.` : "") + add(bv, bv >= 0 ? ` <b>${nm(bv)}</b> has the strongest balance sheet.` : "");
+  return main + extra + (main.startsWith("Trade-off") ? " Check which story the chart is backing." : "");
 }
 function compareHtml() {
   const md = cmpModel(); if (!md.cards.length) return `<div class="cmpempty">Add stocks with “Compare +” on any card.</div>`;
@@ -1736,7 +1751,10 @@ function compareImage() {
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = C.bg; g.fillRect(0, 0, W, H);
   const T = (t, x, y, o = {}) => { g.font = `${o.w || 400} ${o.s || 13}px Inter, Arial, sans-serif`; g.fillStyle = o.c || C.ink; g.textAlign = o.a || "left"; g.fillText(t, x, y); };
   const strip = h => String(h).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-  T("Earnings comparison · " + (quarter || ""), 20, 42, { s: 26, w: 800 });
+  const brandG = dark ? "#22c55e" : "#009245", brandB = dark ? "#4ea1ff" : "#0071bc";   // the page's EARNINGS RYTHM colours
+  g.font = "800 26px Inter, Arial, sans-serif"; g.textAlign = "left"; g.fillStyle = brandG; g.fillText("EARNINGS", 20, 42); let bx = 20 + g.measureText("EARNINGS ").width;
+  g.fillStyle = brandB; g.fillText("RYTHM", bx, 42); bx += g.measureText("RYTHM").width;
+  T(" · Comparison · " + (quarter || ""), bx, 42, { s: 26, w: 800 });
   T(strip(cmpVerdict(md)), 20, 70, { s: 14, c: C.mut });
   g.font = "800 22px Inter, Arial"; g.textAlign = "right"; g.fillStyle = "rgb(66,122,233)"; const rw = g.measureText("rythm").width; g.fillText("price", W - 24 - rw - 4, 42); g.fillStyle = "rgb(247,111,185)"; g.fillText("rythm", W - 20, 42);
   let y = 110;
@@ -1749,7 +1767,8 @@ function compareImage() {
       const w = md.gWin[r.grp]; if (w >= 0 && r.grp !== "Size") T("★ Leads", LW + 20 + w * CW, y, { s: 12, w: 700, c: C.bestInk }); y += RH; }
     T(r.label, 28, y, { s: 13 });
     r.vals.forEach((c, i) => { const x = LW + 20 + i * CW; if (r.best.includes(i)) { g.fillStyle = C.best; g.fillRect(x - 8, y - 19, CW - 12, RH - 4); }
-      T(c ? strip(c.t) : "–", x, y, { s: 13, w: r.best.includes(i) ? 700 : 400, c: r.best.includes(i) ? C.bestInk : C.ink }); });
+      const txt = c ? strip(c.t) : "–", dil = / diluted$/.test(txt), main = dil ? txt.replace(/ diluted$/, "") : txt, o = { s: 13, w: r.best.includes(i) ? 700 : 400, c: r.best.includes(i) ? C.bestInk : C.ink };
+      T(main, x, y, o); if (dil) { g.font = `${o.w} 13px Inter, Arial, sans-serif`; T("diluted", x + g.measureText(main + " ").width, y, { s: 12, w: 700, c: dark ? "#f5b82e" : "#b45309" }); } });
     g.strokeStyle = C.line; g.beginPath(); g.moveTo(20, y + 9); g.lineTo(W - 20, y + 9); g.stroke(); y += RH;
   });
   y += 14; T("Source: NSE filings · Earnings Rythm by Price Rythm · Not investment advice", 20, y, { s: 11, c: C.mut });
